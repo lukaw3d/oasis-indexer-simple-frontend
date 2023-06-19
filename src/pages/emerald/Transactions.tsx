@@ -1,6 +1,6 @@
 import { Link, useSearchParams } from 'react-router-dom'
-import { CustomDisplayContext, DisplayData } from '../../DisplayData'
-import { useGetRuntimeTransactions, Runtime } from '../../oasis-indexer/generated/api'
+import { CustomDisplayProvider, DisplayData } from '../../DisplayData'
+import { useGetRuntimeTransactions, Runtime, RuntimeTransactionList } from '../../oasis-indexer/generated/api'
 import BigNumber from 'bignumber.js'
 
 export function Transactions({ paratime = 'emerald' as Runtime }) {
@@ -8,7 +8,7 @@ export function Transactions({ paratime = 'emerald' as Runtime }) {
   return (
     <>
       <h2>Transactions</h2>
-      <CustomDisplayContext.Provider value={{
+      <CustomDisplayProvider<RuntimeTransactionList> value={{
         fieldPriority: {
           'transactions[*].round': -4,
           'transactions[*].success': -3,
@@ -45,7 +45,7 @@ export function Transactions({ paratime = 'emerald' as Runtime }) {
         },
       }}>
         <DisplayData result={useGetRuntimeTransactions(paratime, { ...searchParams })}></DisplayData>
-      </CustomDisplayContext.Provider>
+      </CustomDisplayProvider>
     </>
   )
 }

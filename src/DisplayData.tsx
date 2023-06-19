@@ -2,42 +2,62 @@ import { UseQueryResult } from '@tanstack/react-query'
 import { AxiosResponse } from 'axios'
 import isPlainObject from 'is-plain-obj';
 import { createContext, useContext } from 'react';
+import tb from 'ts-toolbelt';
 
-type ShallowValue<T, TProp> = T extends Record<string | number, any>
-    ? (TProp extends '*' ? T[number] : T[TProp & string])
-    : never
+// From https://stackoverflow.com/questions/58434389/typescript-deep-keyof-of-a-nested-object/58436959#58436959
+type Prev = [never, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+  11, 12, 13, 14, 15, 16, 17, 18, 19, 20, ...0[]]
+type Join<K, P> = K extends string | number ?
+    P extends string | number ?
+    `${K}${"" extends P ? "" : "."}${P}`
+    : never : never;
+type Paths<T, D extends number = 10> = [D] extends [never] ? never : T extends object ?
+    { [K in keyof T]-?: K extends string | number ?
+        `${K}` | Join<K, Paths<T[K], Prev[D]>>
+        : never
+    }[keyof T] : ""
 
-export type DeepValue<T, TProp> = T extends Record<string | number, any>
-  ? TProp extends `${infer TBranch}.${infer TDeepProp}`
-    ? DeepValue<ShallowValue<T, TBranch>, TDeepProp>
-    : ShallowValue<T, TProp>
-  : never
-
-type TestDeep = DeepValue<{a: {b: [{c: { d: 5 }}]}}, 'a.b.0.c.d'>
-5 satisfies TestDeep
-// @ts-expect-error Does not satisfy
-3 satisfies TestDeep
-
-
-type BB = 5 extends DeepValue<{a: {b: [{c: { d: 5 }}]}}, infer R> ? R : never
-
-const bb: BB = 'f'
-
-
-type AA = {
-  [K in string]: (a: DeepValue<{a: {b: [{c: { d: 5 }}]}}, K>) => void
+type FieldDisplay<T> = {
+  [K in Paths<T>]?: React.FC<{
+    path: K,
+    value: tb.Object.Path<T, tb.String.Split<K, '.'>>,
+    parentValue: tb.Object.Path<T, tb.List.Pop<tb.String.Split<K, '.'>>>,
+  }>
 }
 
-const a: AA = {
-  'a.b': (aaaaaaaaaaaaa) => {
+type FieldPriority<T> = {
+  [K in Paths<T>]?: number
+}
 
+export function typeTest() {
+  const testPaths: Paths<{a: {b: [{c: { d: 5 }}]}}> = 'a.b.0.c.d'
+  console.log(testPaths)
+  const testPop: tb.List.Pop<tb.String.Split<'a.b.0.c.d', '.'>> = ['a', 'b', '0', 'c']
+  console.log(testPop)
+  const testFieldDisplay: FieldDisplay<{a: {b: [{c: { d: 5 }}]}}> = {
+    'a.b.0.c.d': ({path, value, parentValue}) => {
+      console.log(path)
+      console.log(value)
+      console.log(parentValue)
+      return <div></div>
+    },
   }
+  console.log(testFieldDisplay)
 }
 
-export const CustomDisplayContext = createContext({
-  fieldDisplay: {} as Record<string, React.FC<{ path: string, value: any, parentValue: any }>>,
-  fieldPriority: {} as Record<string, number>,
+export interface TypedCustomDisplay<T> {
+  fieldDisplay: FieldDisplay<T>
+  fieldPriority: FieldPriority<T>
+}
+
+const CustomDisplayContext = createContext<TypedCustomDisplay<any>>({
+  fieldDisplay: {},
+  fieldPriority: {},
 })
+
+export const CustomDisplayProvider = <T,>({value, children}: {value: TypedCustomDisplay<T>, children: React.ReactNode}) => {
+  return <CustomDisplayContext.Provider value={value}>{children}</CustomDisplayContext.Provider>
+}
 
 export function DisplayData({ result }: { result: UseQueryResult<AxiosResponse<any> | undefined> }) {
   if (result.isLoading) return <div>Loading...</div>
