@@ -36,9 +36,16 @@ export function typeTest() {
   console.log(testPop)
   const testFieldDisplay: FieldDisplay<{a: {b: [{c: { d: 5 }}]}}> = {
     'a.b.0.c.d': ({path, value, parentValue}) => {
-      console.log(path)
-      console.log(value)
-      console.log(parentValue)
+      const testPath: 'a.b.0.c.d' = path
+      // @ts-expect-error Test
+      const testPathErr: 'a.b.0.c.d.2' = path
+      const testValue: 5 = value
+      // @ts-expect-error Test
+      const testValueErr: 6 = value
+      const testParentValue: { d: 5 } = parentValue
+      // @ts-expect-error Test
+      const testParentValueErr: { a: 5 } = parentValue
+      console.log(testPath, testPathErr, testValue, testValueErr, testParentValue, testParentValueErr)
       return <div></div>
     },
   }
