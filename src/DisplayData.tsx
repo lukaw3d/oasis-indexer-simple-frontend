@@ -3,6 +3,37 @@ import { AxiosResponse } from 'axios'
 import isPlainObject from 'is-plain-obj';
 import { createContext, useContext } from 'react';
 
+type ShallowValue<T, TProp> = T extends Record<string | number, any>
+    ? (TProp extends '*' ? T[number] : T[TProp & string])
+    : never
+
+export type DeepValue<T, TProp> = T extends Record<string | number, any>
+  ? TProp extends `${infer TBranch}.${infer TDeepProp}`
+    ? DeepValue<ShallowValue<T, TBranch>, TDeepProp>
+    : ShallowValue<T, TProp>
+  : never
+
+type TestDeep = DeepValue<{a: {b: [{c: { d: 5 }}]}}, 'a.b.*.c.d'>
+5 satisfies TestDeep
+// @ts-expect-error Does not satisfy
+3 satisfies TestDeep
+
+
+type BB = 5 extends DeepValue<{a: {b: [{c: { d: 5 }}]}}, infer R> ? R : never
+
+const bb: BB = 'f'
+
+
+type AA = {
+  [K in string]: (a: DeepValue<{a: {b: [{c: { d: 5 }}]}}, K>) => void
+}
+
+const a: AA = {
+  'a.b': (aaaaaaaaaaaaa) => {
+
+  }
+}
+
 export const CustomDisplayContext = createContext({
   fieldDisplay: {} as Record<string, React.FC<{ path: string, value: any, parentValue: any }>>,
   fieldPriority: {} as Record<string, number>,
