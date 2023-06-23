@@ -7,6 +7,10 @@ export function Home() {
     <>
       <h2>Consensus status</h2>
       <DisplayData result={useGetStatus()}></DisplayData>
+      <Link to="/consensus/blocks?limit=100&offset=0">Blocks</Link>, <Link to="/consensus/blocks?limit=1000&to=10000000">Blocks&lt;10000000</Link><br />
+      <Link to="/consensus/transactions?limit=100&offset=0">Transactions</Link><br />
+      <Link to="/consensus/events?limit=100&offset=0">Events</Link><br />
+      <Link to="/consensus/accounts/oasis1qzp86dykm9nfqr83es07c324u64f6dgsdvk0fapj">Accounts</Link><br />
 
       <h2>Emerald status</h2>
       <DisplayData result={useGetRuntimeStatus('emerald')}></DisplayData>
