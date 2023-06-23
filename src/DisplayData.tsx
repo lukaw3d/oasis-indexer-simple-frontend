@@ -13,7 +13,7 @@ export type DeepValue<T, TProp> = T extends Record<string | number, any>
     : ShallowValue<T, TProp>
   : never
 
-type TestDeep = DeepValue<{a: {b: [{c: { d: 5 }}]}}, 'a.b.*.c.d'>
+type TestDeep = DeepValue<{a: {b: [{c: { d: 5 }}]}}, 'a.b.0.c.d'>
 5 satisfies TestDeep
 // @ts-expect-error Does not satisfy
 3 satisfies TestDeep
