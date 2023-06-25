@@ -22,7 +22,7 @@ export function Tokens({ paratime = 'emerald' as Runtime }) {
             return <Link to={`/${paratime}/accounts/${value}`}>{value}</Link>
           },
           'evm_tokens[*].evm_contract_addr': ({ value }) => {
-            if (!value) return null
+            if (value == null) return null
             return <span>0x{value}</span>
           },
           'evm_tokens[*].total_supply': ({ value, parentValue }: { value: number, parentValue: EvmTokenList['evm_tokens'][number] }) => {
