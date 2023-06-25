@@ -4,20 +4,18 @@ import isPlainObject from 'is-plain-obj';
 import { createContext, useContext } from 'react';
 import tb from 'ts-toolbelt';
 
-// From https://stackoverflow.com/questions/58434389/typescript-deep-keyof-of-a-nested-object/58436959#58436959
-type Prev = [never, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
-  11, 12, 13, 14, 15, 16, 17, 18, 19, 20, ...0[]]
-type Join<K, P> = K extends string | number ?
-    P extends string | number ?
-    `${K}${"" extends P ? "" : "."}${P}`
-    : never : never;
-type Paths<T, D extends number = 10> = [D] extends [never] ? never : T extends object ?
-    { [K in keyof T]-?: K extends string | number ?
-        `${K}` | Join<K, Paths<T[K], Prev[D]>>
-        : never
-    }[keyof T] : ""
+// Adjusted from https://dev.to/pffigueiredo/typescript-utility-keyof-nested-object-2pa3
+type Paths<ObjectType extends object> =
+  ObjectType extends Array<any>
+  ? `0.${Paths<ObjectType[0]>}`
+  : {[Key in keyof ObjectType & (string | number)]:
+      ObjectType[Key] extends object
+        ? `${Key}` | `${Key}.${Paths<ObjectType[Key]>}`
+        : `${Key}`
+    }[keyof ObjectType & (string | number)];
 
-type FieldDisplay<T> = {
+
+type FieldDisplay<T extends object> = {
   [K in Paths<T>]?: React.FC<{
     path: K,
     value: tb.Object.Path<T, tb.String.Split<K, '.'>>,
@@ -25,7 +23,7 @@ type FieldDisplay<T> = {
   }>
 }
 
-type FieldPriority<T> = {
+type FieldPriority<T extends object> = {
   [K in Paths<T>]?: number
 }
 
