@@ -1,7 +1,7 @@
 import { UseQueryResult } from '@tanstack/react-query'
 import { AxiosResponse } from 'axios'
 import isPlainObject from 'is-plain-obj';
-import { createContext, useContext } from 'react';
+import { createContext, memo } from 'react';
 
 // Adjusted from https://dev.to/pffigueiredo/typescript-utility-keyof-nested-object-2pa3
 type Paths<ObjectType extends object> =
@@ -58,48 +58,39 @@ export interface TypedCustomDisplay<T extends object> {
   fieldPriority: FieldPriority<T>
 }
 
-const CustomDisplayContext = createContext<TypedCustomDisplay<any>>({
-  fieldDisplay: {},
-  fieldPriority: {},
-})
-
-export const CustomDisplayProvider = <T extends object,>({value, children}: {value: TypedCustomDisplay<T>, children: React.ReactNode}) => {
-  return <CustomDisplayContext.Provider value={value}>{children}</CustomDisplayContext.Provider>
-}
-
-export function DisplayData({ result }: { result: UseQueryResult<AxiosResponse<any> | undefined> }) {
+export const DisplayData: <T extends object>({ result, customDisplay }: { result: UseQueryResult<AxiosResponse<T> | undefined>, customDisplay: TypedCustomDisplay<T> }) => React.ReactNode = memo(({ result, customDisplay }) => {
   if (result.isLoading) return <div>Loading...</div>
   if (result.error) return <div>{result.error.toString()}</div>
   return (<div>
-    <Recursive field='' value={result.data?.data} path='' parentValue={result.data?.data} />
+    <Recursive field='' value={result.data?.data} path='' parentValue={result.data?.data} customDisplay={customDisplay} />
   </div>
   )
-}
+})
 
-export function Recursive({ field, value, path, parentValue }: {
+export function Recursive({ field, value, path, parentValue, customDisplay }: {
   field?: string
   value: any
   path: string
   parentValue: any
+  customDisplay: TypedCustomDisplay<any>
 }) {
   if (!field) {
-    return <RecursiveValue value={value} path={path} parentValue={parentValue} />
+    return <RecursiveValue value={value} path={path} parentValue={parentValue} customDisplay={customDisplay} />
   }
   return (
     <div style={{ marginLeft: '2ex' }}>
       <strong style={field === 'error' ? { color: 'red'} : {}}>{field}: </strong>
-      <RecursiveValue value={value} path={path} parentValue={parentValue} />
+      <RecursiveValue value={value} path={path} parentValue={parentValue} customDisplay={customDisplay} />
     </div>
   )
 }
 
-export function RecursiveValue({ value, path, parentValue }: {
+export function RecursiveValue({ value, path, parentValue, customDisplay }: {
   value: any
   path: string
   parentValue: any
+  customDisplay: TypedCustomDisplay<any>
 }) {
-  const customDisplay = useContext(CustomDisplayContext);
-
   const CustomFieldDisplay = customDisplay.fieldDisplay[path]
   if (CustomFieldDisplay) {
     return <span title={path + '  ' + JSON.stringify(value)}>
@@ -135,7 +126,12 @@ export function RecursiveValue({ value, path, parentValue }: {
             <tr key={index}>
               {fields.map((field) =>
                 <td key={field + index}>
-                  <RecursiveValue value={value[field]} path={path ? path + '.0.' + field : field} parentValue={value} />
+                  <RecursiveValue
+                    value={value[field]}
+                    path={path ? path + '.0.' + field : field}
+                    parentValue={value}
+                    customDisplay={customDisplay}
+                  />
                 </td>
               )}
             </tr>
@@ -158,6 +154,7 @@ export function RecursiveValue({ value, path, parentValue }: {
               value={value[field]}
               path={path ? path + '.0' : '.0'}
               parentValue={value}
+              customDisplay={customDisplay}
             />
           ))
         }
@@ -181,6 +178,7 @@ export function RecursiveValue({ value, path, parentValue }: {
               value={value[field]}
               path={path ? path + '.' + field : field}
               parentValue={value}
+              customDisplay={customDisplay}
             />
           ))
       }

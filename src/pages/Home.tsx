@@ -12,7 +12,10 @@ export function Home() {
       <Link to="/consensus/accounts/oasis1qzp86dykm9nfqr83es07c324u64f6dgsdvk0fapj">Accounts</Link><br />
       Status:
       <div style={{minHeight: '5em'}}>
-        <DisplayData result={useGetStatus()}></DisplayData>
+        <DisplayData
+          result={useGetStatus()}
+          customDisplay={{ fieldDisplay: {}, fieldPriority: {} }}
+        />
       </div>
 
       <h2>Emerald</h2>
@@ -23,7 +26,10 @@ export function Home() {
       <Link to="/emerald/tokens?limit=100&offset=0">Tokens</Link><br />
       Status:
       <div style={{minHeight: '5em'}}>
-        <DisplayData result={useGetRuntimeStatus('emerald')}></DisplayData>
+        <DisplayData
+          result={useGetRuntimeStatus('emerald')}
+          customDisplay={{ fieldDisplay: {}, fieldPriority: {} }}
+        />
       </div>
 
       <h2>Sapphire</h2>
@@ -34,13 +40,19 @@ export function Home() {
       <Link to="/sapphire/tokens?limit=100&offset=0">Tokens</Link><br />
       Status:
       <div style={{minHeight: '5em'}}>
-        <DisplayData result={useGetRuntimeStatus('sapphire')}></DisplayData>
+        <DisplayData
+          result={useGetRuntimeStatus('sapphire')}
+          customDisplay={{ fieldDisplay: {}, fieldPriority: {} }}
+        />
       </div>
 
       <h2>Cipher</h2>
       Status:
       <div style={{minHeight: '5em'}}>
-        <DisplayData result={useGetRuntimeStatus('cipher')}></DisplayData>
+        <DisplayData
+          result={useGetRuntimeStatus('cipher')}
+          customDisplay={{ fieldDisplay: {}, fieldPriority: {} }}
+        />
       </div>
 
       <br />
