@@ -17,9 +17,17 @@ export function StatusDisplay({ layer }: { layer: Layer }) {
             const outdated = result.dataUpdatedAt - new Date(value).getTime() > 10 * 60 * 1000
             return <span style={outdated ? {color: 'red'} : {}}>{value}</span>
           },
-          'latest_update': ({ value }) => {
-            const outdated = result.dataUpdatedAt - new Date(value).getTime() > 10 * 60 * 1000
+          'latest_update_age_ms': ({ value }) => {
+            const outdated = value > 10 * 60 * 1000
             return <span style={outdated ? {color: 'red'} : {}}>{value}</span>
+          },
+          'latest_block': ({ value, parentValue }) => {
+            if ('latest_node_block' in parentValue) {
+              if ((parentValue.latest_node_block - value) > 10 * 60 / 6) {
+                return <span style={{color: 'red'}}>{value}</span>
+              }
+            }
+            return <span>{value}</span>
           },
         },
       }}>
