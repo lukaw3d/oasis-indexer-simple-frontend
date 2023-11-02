@@ -48,15 +48,6 @@ import getRuntimeAccountsAddressMutator from '../largePages';
 import getRuntimeStatusMutator from '../largePages';
 import getLayerStatsTxVolumeMutator from '../largePages';
 import getLayerStatsActiveAccountsMutator from '../largePages';
-export type GetLayerStatsActiveAccountsWindowStepSeconds = typeof GetLayerStatsActiveAccountsWindowStepSeconds[keyof typeof GetLayerStatsActiveAccountsWindowStepSeconds];
-
-
-// eslint-disable-next-line @typescript-eslint/no-redeclare
-export const GetLayerStatsActiveAccountsWindowStepSeconds = {
-  NUMBER_300: 300,
-  NUMBER_86400: 86400,
-} as const;
-
 export type GetLayerStatsActiveAccountsParams = {
 /**
  * The maximum numbers of items to return.
@@ -74,7 +65,7 @@ The backend supports a limited number of step sizes: 300 (5 minutes) and
 86400 (1 day). Requests with other values may be rejected.
 
  */
-window_step_seconds?: GetLayerStatsActiveAccountsWindowStepSeconds;
+window_step_seconds?: number;
 };
 
 export type GetLayerStatsTxVolumeParams = {
@@ -89,12 +80,19 @@ limit?: number;
  */
 offset?: number;
 /**
- * The size of buckets into which the statistic is grouped, in seconds.
-The backend supports a limited number of bucket sizes: 300 (5 minutes) and
+ * The size of windows into which the statistic is grouped, in seconds.
+The backend supports a limited number of window sizes: 300 (5 minutes) and
 86400 (1 day). Requests with other values may be rejected.
 
  */
-bucket_size_seconds?: number;
+window_size_seconds?: number;
+/**
+ * The size of the step between returned statistic windows, in seconds.
+The backend supports a limited number of step sizes: 300 (5 minutes) and
+86400 (1 day). Requests with other values may be rejected.
+
+ */
+window_step_seconds?: number;
 };
 
 export type GetRuntimeEvmTokensAddressHoldersParams = {
@@ -562,7 +560,7 @@ export type HumanReadableErrorResponse = {
 export interface ActiveAccounts {
   /** The date for the end of the daily active accounts measurement window. */
   window_end: string;
-  /** The number of active accounts for the 24hour window starting at bucket_start. */
+  /** The number of active accounts for the 24hour window ending at window_end. */
   active_accounts: number;
 }
 
@@ -577,9 +575,9 @@ export interface ActiveAccountsList {
 }
 
 export interface TxVolume {
-  /** The date for this daily transaction volume measurement. */
-  bucket_start: string;
-  /** The transaction volume on this day. */
+  /** The end timestamp for this daily transaction volume measurement. */
+  window_end: string;
+  /** The transaction volume for this window. */
   tx_volume: number;
 }
 
@@ -588,9 +586,9 @@ export interface TxVolume {
 
  */
 export interface TxVolumeList {
-  bucket_size_seconds: number;
+  window_size_seconds: number;
   /** The list of daily transaction volumes. */
-  buckets: TxVolume[];
+  windows: TxVolume[];
 }
 
 export interface AccountStats {
@@ -624,6 +622,9 @@ detected or is not supported, this field will be null/absent.
   type: EvmTokenType;
   /** The total number of base units available. */
   total_supply?: string;
+  /** The total number of transfers of this token.
+ */
+  num_transfers?: number;
   /** The number of addresses that have a nonzero balance of this token.
  */
   num_holders: number;
@@ -664,8 +665,8 @@ export interface RuntimeStatus {
   latest_block: number;
   /** The RFC 3339 formatted consensus time of when the latest indexed block for this runtime was produced. */
   latest_block_time: string;
-  /** The RFC 3339 formatted time when Nexus processed the latest block for this runtime. Compare with current time for approximate indexing progress with the Oasis Network. */
-  latest_update: string;
+  /** The number of milliseconds since Nexus processed the latest block. */
+  latest_update_age_ms: number;
 }
 
 export interface RuntimeAccount {
@@ -751,7 +752,7 @@ execute it.
 ParaTime base units, as a string).
 Calculated as `gas_price * gas_used`, where `gas_price = fee / gas_limit`.
  */
-  charged_fee?: string;
+  charged_fee: string;
   /** The total byte size of the transaction. */
   size: number;
   /** The method that was called. Defined by the runtime. In theory, this could be any string as the runtimes evolve.
@@ -759,6 +760,8 @@ In practice, Nexus currently expects only the following methods:
   - "accounts.Transfer"
   - "consensus.Deposit"
   - "consensus.Withdraw"
+  - "consensus.Delegate"
+  - "consensus.Undelegate"
   - "evm.Create"
   - "evm.Call"
 May be null if the transaction was malformed or encrypted.
@@ -778,7 +781,9 @@ Note: Other transactions with method "evm.Call", and possibly "evm.Create", may 
 if applicable. The meaning varies based on the transaction method. Some notable examples:
   - For `method = "accounts.Transfer"`, this is the paratime account receiving the funds.
   - For `method = "consensus.Deposit"`, this is the paratime account receiving the funds.
-  - For `method = "consensus.Withdraw"`, this is a consensus (!) account receiving the funds.
+  - For `method = "consensus.Withdraw"`, this is the consensus (!) account receiving the funds.
+  - For `method = "consensus.Delegate"`, this is the consensus (!) account receiving the funds.
+  - For `method = "consensus.Undelegate"`, this is the consensus (!) account to which funds were previously delegated. Note that this corresponds with the `.from` field in the transaction body.
   - For `method = "evm.Create"`, this is the address of the newly created smart contract.
   - For `method = "evm.Call"`, this is the address of the called smart contract
  */
@@ -856,6 +861,8 @@ it separately, so the field may be missing for very fresh contracts (or if the f
 process is stalled).
  */
   runtime_bytecode?: string;
+  /** The total amount of gas used to create or call this contract. */
+  gas_used: number;
   /** Additional information obtained from contract verification. Only available for smart
 contracts that have been verified successfully by Sourcify.
  */
@@ -904,6 +911,9 @@ export const RuntimeEventType = {
   accountsmint: 'accounts.mint',
   consensus_accountsdeposit: 'consensus_accounts.deposit',
   consensus_accountswithdraw: 'consensus_accounts.withdraw',
+  consensus_accountsdelegate: 'consensus_accounts.delegate',
+  consensus_accountsundelegate_start: 'consensus_accounts.undelegate_start',
+  consensus_accountsundelegate_done: 'consensus_accounts.undelegate_done',
   coregas_used: 'core.gas_used',
   evmlog: 'evm.log',
 } as const;
@@ -997,6 +1007,8 @@ export interface RuntimeBlock {
 export type RuntimeBlockListAllOf = {
   blocks: RuntimeBlock[];
 };
+
+export type RuntimeBlockList = List & RuntimeBlockListAllOf;
 
 export interface ProposalVote {
   /** The staking address casting this vote. */
@@ -1564,12 +1576,16 @@ export type BlockListAllOf = {
 };
 
 export interface Status {
-  /** The height of the most recent indexed block. Query a synced Oasis node for the latest block produced. */
+  /** The height of the most recent indexed block. Compare with latest_node_block to measure
+how far behind Nexus is from the chain. 
+ */
   latest_block: number;
-  /** The RFC 3339 formatted consensus time of when the most recent block was produced. */
+  /** The height of the most recently produced block on-chain as seen by Nexus. */
+  latest_node_block: number;
+  /** The RFC 3339 formatted consensus time of when the most recently indexed block was produced. */
   latest_block_time: string;
-  /** The RFC 3339 formatted time when Nexus processed the latest block. Compare with current time for approximate indexing progress with the Oasis Network. */
-  latest_update: string;
+  /** The number of milliseconds since Nexus processed the latest block. */
+  latest_update_age_ms: number;
 }
 
 export interface List {
@@ -1580,8 +1596,6 @@ the query would return with limit=infinity.
   /** Whether total_count is clipped for performance reasons. */
   is_total_count_clipped: boolean;
 }
-
-export type RuntimeBlockList = List & RuntimeBlockListAllOf;
 
 /**
  * A list of consensus blocks.
@@ -3233,7 +3247,7 @@ export const useGetRuntimeEvmTokensAddress = <TData = Awaited<ReturnType<typeof 
 
 
 /**
- * @summary Returns the list of holders of an EVM (ERC-20, ...) token. 
+ * @summary Returns the list of holders of an EVM (ERC-20, ...) token.
 This endpoint does not verify that `address` is actually an EVM token; if it is not, it will simply return an empty list.
 
  */
@@ -3277,7 +3291,7 @@ export type GetRuntimeEvmTokensAddressHoldersQueryResult = NonNullable<Awaited<R
 export type GetRuntimeEvmTokensAddressHoldersQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
- * @summary Returns the list of holders of an EVM (ERC-20, ...) token. 
+ * @summary Returns the list of holders of an EVM (ERC-20, ...) token.
 This endpoint does not verify that `address` is actually an EVM token; if it is not, it will simply return an empty list.
 
  */
