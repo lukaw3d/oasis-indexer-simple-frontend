@@ -1,10 +1,8 @@
 :root {
+  color-scheme: dark light;
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -21,16 +19,13 @@ body {
   min-height: 100vh;
 }
 
-a { color: lightblue; }
-a:visited { color: orchid; }
-
 table { border-spacing: 3px 0px; }
 th, td { padding: 3px 1ex; }
 
 thead {
   position: sticky;
   top: 0;
-  background-color: #191919;
+  background-color: #88888888;
 }
 
 td {
