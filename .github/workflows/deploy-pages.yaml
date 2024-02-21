@@ -38,8 +38,8 @@ jobs:
       #   run: yarn build --base=/oasis-indexer-simple-frontend/
       - run: VITE_APP_INDEXER_API=https://testnet.nexus.stg.oasis.io/v1/  yarn build --outDir dist/staging-testnet/ --base=/oasis-indexer-simple-frontend/staging-testnet/
       - run: VITE_APP_INDEXER_API=https://nexus.stg.oasis.io/v1/  yarn build --outDir dist/staging-mainnet/ --base=/oasis-indexer-simple-frontend/staging-mainnet/
-      - run: VITE_APP_INDEXER_API=https://testnet.nexus.oasis.io/v1/  yarn build --outDir dist/production-testnet/ --base=/oasis-indexer-simple-frontend/production-testnet/
-      - run: VITE_APP_INDEXER_API=https://nexus.oasis.io/v1/  yarn build --outDir dist/production-mainnet/ --base=/oasis-indexer-simple-frontend/production-mainnet/
+      - run: VITE_APP_INDEXER_API=https://testnet.nexus.prd.oasis.io/v1/  yarn build --outDir dist/production-testnet/ --base=/oasis-indexer-simple-frontend/production-testnet/
+      - run: VITE_APP_INDEXER_API=https://nexus.prd.oasis.io/v1/  yarn build --outDir dist/production-mainnet/ --base=/oasis-indexer-simple-frontend/production-mainnet/
       - run: echo '' > dist/index.html
       - run: echo '<!DOCTYPE html>' >> dist/index.html
       - run: echo '<html><head><meta http-equiv="refresh" content="0; URL=production-mainnet" /></head></html>' >> dist/index.html
