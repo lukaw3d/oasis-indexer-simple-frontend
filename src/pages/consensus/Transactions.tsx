@@ -17,7 +17,10 @@ export function Transactions() {
         ...originalResult.data,
         data: {
           ...originalResult.data.data,
-          transactions: originalResult.data.data.transactions.filter(a => a.nonce <= 1000)
+          transactions: originalResult.data.data.transactions.filter(a => {
+            // @ts-expect-error Bad method types
+            return a.nonce <= 1000 && a.method !== 'consensus.Meta'
+          })
         }
       }
     }
@@ -26,7 +29,7 @@ export function Transactions() {
   return (
     <>
       <h2>Transactions</h2>
-      <label><input type="checkbox" checked={removeSpam} onChange={(e) => setRemoveSpam(e.target.checked)} /> remove spam (nonce&gt;1000)</label>
+      <label><input type="checkbox" checked={removeSpam} onChange={(e) => setRemoveSpam(e.target.checked)} /> remove spam (nonce&gt;1000 and not consensus.Meta (always has nonce 0))</label>
       <CustomDisplayProvider<TransactionList> value={{
         fieldPriority: {
           'transactions.0.hash': -5,
