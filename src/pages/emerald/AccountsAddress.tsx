@@ -18,21 +18,22 @@ export function AccountsAddress({ paratime = 'emerald' as Runtime }) {
         },
         fieldDisplay: {
           'address': ({ value, parentValue }) => {
+            const ethAddress = getEthAccountAddress(parentValue.address_preimage)
             return <span>
-              {getEthAccountAddress(parentValue.address_preimage)
+              {ethAddress
                 ? <>
-                    {getEthAccountAddress(parentValue.address_preimage)}
-                    &nbsp;(<Link to={`/${paratime}/accounts/${value}`}>{value}</Link>)
+                    <Link to={`/${paratime}/accounts/${ethAddress}`}>{ethAddress}</Link>
+                    &nbsp;({value})
                   </>
                 : <Link to={`/${paratime}/accounts/${value}`}>{value}</Link>
               }
               ,&nbsp;
-              <Link to={`/${paratime}/transactions?offset=0&limit=100&rel=${value}`}>transactions</Link>
+              <Link to={`/${paratime}/transactions?offset=0&limit=100&rel=${ethAddress ?? value}`}>transactions</Link>
               ,&nbsp;
-              <Link to={`/${paratime}/events?offset=0&limit=100&rel=${value}`}>events</Link>
-              {getEthAccountAddress(parentValue.address_preimage) && parentValue.evm_contract && <>
+              <Link to={`/${paratime}/events?offset=0&limit=100&rel=${ethAddress ?? value}`}>events</Link>
+              {ethAddress && parentValue.evm_contract && <>
                 ,&nbsp;
-                <Link to={`https://sourcify.dev/#/lookup/${getEthAccountAddress(parentValue.address_preimage)}`}>Sourcify</Link>
+                <Link to={`https://sourcify.dev/#/lookup/${ethAddress}`}>Sourcify</Link>
               </>}
             </span>
           },
@@ -43,6 +44,9 @@ export function AccountsAddress({ paratime = 'emerald' as Runtime }) {
             return <span>{new BigNumber(value).shiftedBy(-parentValue.token_decimals).toFixed()}</span>
           },
           'evm_balances.0.token_contract_addr': ({ value }) => {
+            return <Link to={`/${paratime}/accounts/${value}`}>{value}</Link>
+          },
+          'evm_balances.0.token_contract_addr_eth': ({ value }) => {
             return <Link to={`/${paratime}/accounts/${value}`}>{value}</Link>
           },
           'stats.total_received': ({ value }) => {

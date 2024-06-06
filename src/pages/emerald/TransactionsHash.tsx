@@ -66,12 +66,18 @@ export function TransactionsHash({ paratime = 'emerald' as Runtime }) {
           },
           'transactions.0.eth_hash': ({ value }) => {
             if (value == null) return null
-            return <span>0x{value}</span>
+            return <Link to={`/${paratime}/transactions/${value}`}>0x{value}</Link>
           },
           'transactions.0.sender_0': ({ value }) => {
             return <Link to={`/${paratime}/accounts/${value}`}>{value}</Link>
           },
+          'transactions.0.sender_0_eth': ({ value }) => {
+            return <Link to={`/${paratime}/accounts/${value}`}>{value}</Link>
+          },
           'transactions.0.to': ({ value }) => {
+            return <Link to={`/${paratime}/accounts/${value}`}>{value}</Link>
+          },
+          'transactions.0.to_eth': ({ value }) => {
             return <Link to={`/${paratime}/accounts/${value}`}>{value}</Link>
           },
         },

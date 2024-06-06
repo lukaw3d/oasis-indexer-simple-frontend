@@ -21,6 +21,9 @@ export function Tokens({ paratime = 'emerald' as Runtime }) {
           'evm_tokens.0.contract_addr': ({ value }) => {
             return <Link to={`/${paratime}/accounts/${value}`}>{value}</Link>
           },
+          'evm_tokens.0.eth_contract_addr': ({ value }) => {
+            return <Link to={`/${paratime}/accounts/${value}`}>{value}</Link>
+          },
           'evm_tokens.0.total_supply': ({ value, parentValue }) => {
             if (value == null) return null
             return <span>{new BigNumber(value).shiftedBy(-(parentValue.decimals ?? 0)).toFixed()}</span>
