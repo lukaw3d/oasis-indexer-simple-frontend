@@ -31,7 +31,11 @@ export function TransactionsHash() {
             return <span>{new BigNumber(value).shiftedBy(-9).toFixed()}</span>
           },
           'hash': ({ value }) => {
-            return <Link to={`/consensus/transactions/${value}`}>{value}</Link>
+            return <span>
+              <Link to={`/consensus/transactions/${value}`}>{value}</Link>
+              ,&nbsp;
+              <Link to={`/consensus/events?offset=0&limit=100&tx_hash=${value}`}>events</Link>
+            </span>
           },
           'sender': ({ value }) => {
             return <Link to={`/consensus/accounts/${value}`}>{value}</Link>
