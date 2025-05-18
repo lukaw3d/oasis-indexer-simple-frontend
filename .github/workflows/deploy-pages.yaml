@@ -40,6 +40,8 @@ jobs:
       - run: VITE_APP_INDEXER_API=https://nexus.stg.oasis.io/v1/  yarn build --outDir dist/staging-mainnet/ --base=/oasis-indexer-simple-frontend/staging-mainnet/
       - run: VITE_APP_INDEXER_API=https://testnet.nexus.prd.oasis.io/v1/  yarn build --outDir dist/production-testnet/ --base=/oasis-indexer-simple-frontend/production-testnet/
       - run: VITE_APP_INDEXER_API=https://nexus.prd.oasis.io/v1/  yarn build --outDir dist/production-mainnet/ --base=/oasis-indexer-simple-frontend/production-mainnet/
+      - run: VITE_APP_INDEXER_API=https://nexus-blue-testnet.prd0-gke.oasis.io/v1/  yarn build --outDir dist/blue-testnet/ --base=/oasis-indexer-simple-frontend/blue-testnet/
+      - run: VITE_APP_INDEXER_API=https://nexus-blue-mainnet.prd0-gke.oasis.io/v1/  yarn build --outDir dist/blue-mainnet/ --base=/oasis-indexer-simple-frontend/blue-mainnet/
       - run: echo '' > dist/index.html
       - run: echo '<!DOCTYPE html>' >> dist/index.html
       - run: echo '<html><head><meta http-equiv="refresh" content="0; URL=production-mainnet" /></head></html>' >> dist/index.html
