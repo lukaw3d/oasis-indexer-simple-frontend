@@ -3,6 +3,10 @@
  * Do not edit manually.
  * Oasis Nexus API V1
  * An API for accessing indexed data from the Oasis Network.
+
+<!-- Acts as a separator after search in sidebar -->
+# Endpoints
+
  * OpenAPI spec version: 0.1.0
  */
 import {
@@ -15,17 +19,21 @@ import type {
   QueryKey
 } from '@tanstack/react-query'
 import getStatusMutator from '../largePages';
+import getConsensusTotalSupplyRawMutator from '../largePages';
+import getConsensusCirculatingSupplyRawMutator from '../largePages';
 import getConsensusBlocksMutator from '../largePages';
 import getConsensusBlocksHeightMutator from '../largePages';
 import getConsensusTransactionsMutator from '../largePages';
 import getConsensusTransactionsTxHashMutator from '../largePages';
 import getConsensusEventsMutator from '../largePages';
+import getConsensusRoothashMessagesMutator from '../largePages';
 import getConsensusEntitiesMutator from '../largePages';
-import getConsensusEntitiesEntityIdMutator from '../largePages';
-import getConsensusEntitiesEntityIdNodesMutator from '../largePages';
-import getConsensusEntitiesEntityIdNodesNodeIdMutator from '../largePages';
+import getConsensusEntitiesAddressMutator from '../largePages';
+import getConsensusEntitiesAddressNodesMutator from '../largePages';
+import getConsensusEntitiesAddressNodesNodeIdMutator from '../largePages';
 import getConsensusValidatorsMutator from '../largePages';
-import getConsensusValidatorsEntityIdMutator from '../largePages';
+import getConsensusValidatorsAddressMutator from '../largePages';
+import getConsensusValidatorsAddressHistoryMutator from '../largePages';
 import getConsensusAccountsMutator from '../largePages';
 import getConsensusAccountsAddressMutator from '../largePages';
 import getConsensusAccountsAddressDelegationsMutator from '../largePages';
@@ -49,6 +57,17 @@ import getRuntimeEvmTokensAddressNftsIdMutator from '../largePages';
 import getRuntimeAccountsAddressMutator from '../largePages';
 import getRuntimeAccountsAddressNftsMutator from '../largePages';
 import getRuntimeStatusMutator from '../largePages';
+import getRuntimeRoflAppsMutator from '../largePages';
+import getRuntimeRoflAppsIdMutator from '../largePages';
+import getRuntimeRoflAppsIdTransactionsMutator from '../largePages';
+import getRuntimeRoflAppsIdInstanceTransactionsMutator from '../largePages';
+import getRuntimeRoflAppsIdInstancesMutator from '../largePages';
+import getRuntimeRoflAppsIdInstancesRakMutator from '../largePages';
+import getRuntimeRoflAppsIdInstancesRakTransactionsMutator from '../largePages';
+import getRuntimeRoflmarketProvidersMutator from '../largePages';
+import getRuntimeRoflmarketProvidersAddressMutator from '../largePages';
+import getRuntimeRoflmarketProvidersAddressOffersMutator from '../largePages';
+import getRuntimeRoflmarketProvidersAddressInstancesMutator from '../largePages';
 import getLayerStatsTxVolumeMutator from '../largePages';
 import getLayerStatsActiveAccountsMutator from '../largePages';
 export type GetLayerStatsActiveAccountsParams = {
@@ -98,6 +117,147 @@ The backend supports a limited number of step sizes: 300 (5 minutes) and
 window_step_seconds?: number;
 };
 
+export type GetRuntimeRoflmarketProvidersAddressInstancesParams = {
+/**
+ * The maximum numbers of items to return.
+
+ */
+limit?: number;
+/**
+ * The number of items to skip before starting to collect the result set.
+
+ */
+offset?: number;
+};
+
+export type GetRuntimeRoflmarketProvidersAddressOffersParams = {
+/**
+ * The maximum numbers of items to return.
+
+ */
+limit?: number;
+/**
+ * The number of items to skip before starting to collect the result set.
+
+ */
+offset?: number;
+};
+
+export type GetRuntimeRoflmarketProvidersParams = {
+/**
+ * The maximum numbers of items to return.
+
+ */
+limit?: number;
+/**
+ * The number of items to skip before starting to collect the result set.
+
+ */
+offset?: number;
+};
+
+export type GetRuntimeRoflAppsIdInstancesRakTransactionsParams = {
+/**
+ * The maximum numbers of items to return.
+
+ */
+limit?: number;
+/**
+ * The number of items to skip before starting to collect the result set.
+
+ */
+offset?: number;
+/**
+ * A filter on the runtime transaction method.
+
+In addition to the existing method names, the following special values are supported:
+  - 'native_transfers': Returns transactions "likely to be native transfers".
+    - These include accounts.Transfer transactions and evm.Calls with an empty 'body' field.
+
+  - 'evm.Call_no_native': Returns EVM calls that are "not likely to be native transfers".
+
+ */
+method?: string;
+};
+
+export type GetRuntimeRoflAppsIdInstancesParams = {
+/**
+ * The maximum numbers of items to return.
+
+ */
+limit?: number;
+/**
+ * The number of items to skip before starting to collect the result set.
+
+ */
+offset?: number;
+};
+
+export type GetRuntimeRoflAppsIdInstanceTransactionsParams = {
+/**
+ * The maximum numbers of items to return.
+
+ */
+limit?: number;
+/**
+ * The number of items to skip before starting to collect the result set.
+
+ */
+offset?: number;
+/**
+ * A filter on the runtime transaction method.
+
+In addition to the existing method names, the following special values are supported:
+  - 'native_transfers': Returns transactions "likely to be native transfers".
+    - These include accounts.Transfer transactions and evm.Calls with an empty 'body' field.
+
+  - 'evm.Call_no_native': Returns EVM calls that are "not likely to be native transfers".
+
+ */
+method?: string;
+};
+
+export type GetRuntimeRoflAppsIdTransactionsParams = {
+/**
+ * The maximum numbers of items to return.
+
+ */
+limit?: number;
+/**
+ * The number of items to skip before starting to collect the result set.
+
+ */
+offset?: number;
+/**
+ * A filter on the runtime transaction method.
+
+In addition to the existing method names, the following special values are supported:
+  - 'native_transfers': Returns transactions "likely to be native transfers".
+    - These include accounts.Transfer transactions and evm.Calls with an empty 'body' field.
+
+  - 'evm.Call_no_native': Returns EVM calls that are "not likely to be native transfers".
+
+ */
+method?: string;
+};
+
+export type GetRuntimeRoflAppsParams = {
+/**
+ * The maximum numbers of items to return.
+
+ */
+limit?: number;
+/**
+ * The number of items to skip before starting to collect the result set.
+
+ */
+offset?: number;
+/**
+ * A filter on the name of the ROFL app.
+ */
+name?: string;
+};
+
 export type GetRuntimeAccountsAddressNftsParams = {
 /**
  * The maximum numbers of items to return.
@@ -112,7 +272,7 @@ offset?: number;
 /**
  * Only return NFT instances from the token contract at the given staking address.
  */
-token_address?: StakingAddress;
+token_address?: EthOrOasisAddress;
 };
 
 export type GetRuntimeEvmTokensAddressNftsParams = {
@@ -141,6 +301,15 @@ limit?: number;
 offset?: number;
 };
 
+export type GetRuntimeEvmTokensSortBy = typeof GetRuntimeEvmTokensSortBy[keyof typeof GetRuntimeEvmTokensSortBy];
+
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const GetRuntimeEvmTokensSortBy = {
+  total_holders: 'total_holders',
+  market_cap: 'market_cap',
+} as const;
+
 export type GetRuntimeEvmTokensParams = {
 /**
  * The maximum numbers of items to return.
@@ -156,6 +325,17 @@ offset?: number;
  * A filter on the name, the name or symbol must contain this value as a substring.
  */
 name?: string;
+/**
+ * The field to sort the tokens by.
+If unset, the tokens will be sorted by number of holders.
+
+ */
+sort_by?: GetRuntimeEvmTokensSortBy;
+/**
+ * The type of tokens to return.
+
+ */
+type?: EvmTokenType;
 };
 
 export type GetRuntimeEventsParams = {
@@ -201,7 +381,7 @@ this account. For example, for a `accounts.Transfer` event, this will be
 the sender or the recipient of tokens.
 
  */
-rel?: string;
+rel?: EthOrOasisAddress;
 /**
  * A filter on the evm log signatures.
 Note: The filter will only match on parsed (verified) EVM events.
@@ -210,10 +390,10 @@ Note: The filter will only match on parsed (verified) EVM events.
 evm_log_signature?: string;
 /**
  * A filter on a smart contract. Every returned event will have been
-emitted by the contract at this Oasis address.
+emitted by the contract at this address.
 
  */
-contract_address?: string;
+contract_address?: EthOrOasisAddress;
 /**
  * A filter on NFT events. Every returned event will be specifically
 about this NFT instance ID. You must specify the contract_address
@@ -260,11 +440,20 @@ this account in a way. For example, for an `accounts.Transfer` tx, this will be
 the sender or the recipient of tokens.
 Nexus detects related accounts inside EVM transactions and events on a
 best-effort basis. For example, it inspects ERC20 methods inside `evm.Call` txs.
-However, you must provide the Oasis-style derived address here, not the Eth address.
-See `AddressPreimage` for more info on Oasis-style vs Eth addresses.
 
  */
-rel?: StakingAddress;
+rel?: EthOrOasisAddress;
+/**
+ * A filter on the runtime transaction method.
+
+In addition to the existing method names, the following special values are supported:
+  - 'native_transfers': Returns transactions "likely to be native transfers".
+    - These include accounts.Transfer transactions and evm.Calls with an empty 'body' field.
+
+  - 'evm.Call_no_native': Returns EVM calls that are "not likely to be native transfers".
+
+ */
+method?: string;
 };
 
 export type GetRuntimeBlocksParams = {
@@ -410,38 +599,27 @@ limit?: number;
 
  */
 offset?: number;
+};
+
+export type GetConsensusValidatorsAddressHistoryParams = {
 /**
- * A filter on the minimum available account balance.
+ * The maximum numbers of items to return.
+
  */
-minAvailable?: TextBigInt;
+limit?: number;
 /**
- * A filter on the maximum available account balance.
+ * The number of items to skip before starting to collect the result set.
+
  */
-maxAvailable?: TextBigInt;
+offset?: number;
 /**
- * A filter on the minimum active escrow account balance.
+ * A filter on minimum epoch number, inclusive.
  */
-minEscrow?: TextBigInt;
+from?: number;
 /**
- * A filter on the maximum active escrow account balance.
+ * A filter on maximum epoch number, inclusive.
  */
-maxEscrow?: TextBigInt;
-/**
- * A filter on the minimum debonding account balance.
- */
-minDebonding?: TextBigInt;
-/**
- * A filter on the maximum debonding account balance.
- */
-maxDebonding?: TextBigInt;
-/**
- * A filter on the minimum total account balance.
- */
-minTotalBalance?: TextBigInt;
-/**
- * A filter on the maximum total account balance.
- */
-maxTotalBalance?: TextBigInt;
+to?: number;
 };
 
 export type GetConsensusValidatorsParams = {
@@ -455,9 +633,15 @@ limit?: number;
 
  */
 offset?: number;
+/**
+ * A filter on the validator name. Every returned validator will have
+a name that is a superstring of the input param.
+
+ */
+name?: string;
 };
 
-export type GetConsensusEntitiesEntityIdNodesParams = {
+export type GetConsensusEntitiesAddressNodesParams = {
 /**
  * The maximum numbers of items to return.
 
@@ -481,6 +665,23 @@ limit?: number;
 
  */
 offset?: number;
+};
+
+export type GetConsensusRoothashMessagesParams = {
+/**
+ * The maximum numbers of items to return.
+
+ */
+limit?: number;
+/**
+ * The number of items to skip before starting to collect the result set.
+
+ */
+offset?: number;
+runtime: Runtime;
+round?: number;
+type?: RoothashMessageType;
+rel?: StakingAddress;
 };
 
 export type GetConsensusEventsParams = {
@@ -555,18 +756,6 @@ sender?: StakingAddress;
  */
 rel?: string;
 /**
- * A filter on minimum transaction fee, inclusive.
- */
-minFee?: TextBigInt;
-/**
- * A filter on maximum transaction fee, inclusive.
- */
-maxFee?: TextBigInt;
-/**
- * A filter on transaction status code.
- */
-code?: number;
-/**
  * A filter on minimum transaction time, inclusive.
  */
 after?: string;
@@ -607,6 +796,10 @@ before?: string;
  * A filter on the block hash.
  */
 hash?: string;
+/**
+ * A filter on the proposer of the block.
+ */
+proposed_by?: StakingAddress;
 };
 
 /**
@@ -618,6 +811,247 @@ export type HumanReadableErrorResponse = {
   /** An error message. */
   msg: string;
 };
+
+export type RoflMarketInstanceListAllOf = {
+  instances: RoflMarketInstance[];
+};
+
+export type RoflMarketInstanceList = List & RoflMarketInstanceListAllOf;
+
+/**
+ * The commands for this instance.
+ */
+export type RoflMarketInstanceCmdsItem = { [key: string]: any };
+
+/**
+ * The payment information for this instance.
+ */
+export type RoflMarketInstancePayment = { [key: string]: any };
+
+/**
+ * The deployment configuration for this instance.
+ */
+export type RoflMarketInstanceDeployment = { [key: string]: any };
+
+/**
+ * The resources allocated to this instance.
+ */
+export type RoflMarketInstanceResources = { [key: string]: any };
+
+/**
+ * Arbitrary metadata key-value pairs assigned by the provider.
+ */
+export type RoflMarketInstanceMetadata = { [key: string]: any };
+
+export interface RoflMarketInstance {
+  /** Unique instance identifier. */
+  id: string;
+  /** The address of the ROFL market provider that created this instance. */
+  provider: string;
+  /** The identifier of the offer that this instance belongs to. */
+  offer_id: string;
+  /** The status of the instance. */
+  status: number;
+  /** The address of the creator of the instance. */
+  creator: string;
+  /** The address of the administrator of the instance. */
+  admin: string;
+  /** The identifier of the node that this instance is deployed on. */
+  node_id: string;
+  /** Arbitrary metadata key-value pairs assigned by the provider. */
+  metadata: RoflMarketInstanceMetadata;
+  /** The resources allocated to this instance. */
+  resources: RoflMarketInstanceResources;
+  /** The deployment configuration for this instance. */
+  deployment: RoflMarketInstanceDeployment;
+  /** The date and time when the instance was created. */
+  created_at: string;
+  /** The date and time when the instance was last updated. */
+  updated_at: string;
+  /** The date and time from which the instance has been paid for and not yet claimed by the provider. */
+  paid_from: string;
+  /** The date and time until which the instance has been paid for. */
+  paid_until: string;
+  /** The payment information for this instance. */
+  payment: RoflMarketInstancePayment;
+  /** The payment address for this instance. */
+  payment_address: string;
+  /** The method-specific refund information. */
+  refund_data: string;
+  /** The next command ID for this instance. */
+  cmd_next_id: string;
+  /** The number of commands for this instance. */
+  cmd_count: number;
+  cmds?: RoflMarketInstanceCmdsItem[];
+  /** Whether the instance has been removed. */
+  removed: boolean;
+}
+
+export type RoflMarketOfferListAllOf = {
+  offers: RoflMarketOffer[];
+};
+
+export type RoflMarketOfferList = List & RoflMarketOfferListAllOf;
+
+/**
+ * Arbitrary metadata key-value pairs assigned by the provider.
+ */
+export type RoflMarketOfferMetadata = { [key: string]: any };
+
+/**
+ * The payment configuration for this offer.
+ */
+export type RoflMarketOfferPayment = { [key: string]: any };
+
+/**
+ * The offered resources by this offer.
+ */
+export type RoflMarketOfferResources = { [key: string]: any };
+
+export interface RoflMarketOffer {
+  /** Unique offer identifier. */
+  id: string;
+  /** The address of the ROFL market provider that created this offer. */
+  provider: string;
+  /** The offered resources by this offer. */
+  resources: RoflMarketOfferResources;
+  /** The payment configuration for this offer. */
+  payment: RoflMarketOfferPayment;
+  /** Amount of available instances for this offer. */
+  capacity: number;
+  /** Arbitrary metadata key-value pairs assigned by the provider. */
+  metadata: RoflMarketOfferMetadata;
+  /** Whether the offer has been removed. */
+  removed: boolean;
+}
+
+export type RoflMarketProviderList = List & RoflMarketProviderListAllOf;
+
+/**
+ * Arbitrary metadata key-value pairs, assigned by the provider.
+ */
+export type RoflMarketProviderMetadata = { [key: string]: any };
+
+/**
+ * The payment address configuration for this provider.
+ */
+export type RoflMarketProviderPaymentAddress = { [key: string]: any };
+
+export interface RoflMarketProvider {
+  /** The address of the ROFL market provider. */
+  address: string;
+  /** The nodes that are part of the ROFL market provider. */
+  nodes: string[];
+  /** The authorized scheduler ROFL app ID for this provider. */
+  scheduler: string;
+  /** The payment address configuration for this provider. */
+  payment_address: RoflMarketProviderPaymentAddress;
+  /** Arbitrary metadata key-value pairs, assigned by the provider. */
+  metadata: RoflMarketProviderMetadata;
+  /** The amount staked for provider registration. */
+  stake: TextBigInt;
+  /** The next offer ID for this provider. */
+  offers_next_id: string;
+  /** The number of offers. */
+  offers_count: number;
+  /** The next instance ID for this provider. */
+  instances_next_id: string;
+  /** The number of instances. */
+  instances_count: number;
+  /** The date and time when the provider was created. */
+  created_at: string;
+  /** The date and time when the provider was last updated. */
+  updated_at: string;
+  /** Whether the provider has been removed. */
+  removed: boolean;
+}
+
+export type RoflMarketProviderListAllOf = {
+  providers: RoflMarketProvider[];
+};
+
+export interface RoflInstance {
+  /** The runtime attestation public key (Ed25519). */
+  rak: string;
+  /** The runtime encryption public key (x25519). */
+  rek: string;
+  /** The identifier of the endorsing node. */
+  endorsing_node_id: string;
+  /** The optional identifier of the endorsing entity. */
+  endorsing_entity_id?: string;
+  /** The epoch at which the instance expires. */
+  expiration_epoch: number;
+  /** The extra endorsed public keys. Extra keys can be Ed25519, Secp256k1, or Sr25519. And
+are stored as json with included type information.
+ */
+  extra_keys: string[];
+}
+
+export type RoflAppInstanceListAllOf = {
+  instances: RoflInstance[];
+};
+
+export type RoflAppInstanceList = List & RoflAppInstanceListAllOf;
+
+/**
+ * Arbitrary SEK-encrypted key-value pairs.
+ */
+export type RoflAppSecrets = { [key: string]: any };
+
+/**
+ * Arbitrary key-value pairs.
+ */
+export type RoflAppMetadata = { [key: string]: any };
+
+/**
+ * The application authentication policy.
+ */
+export type RoflAppPolicy = { [key: string]: any };
+
+export interface RoflApp {
+  /** The identifier of the ROFL application. */
+  id: string;
+  /** The application administrator address. */
+  admin: string;
+  /** The Ethereum address of the application administrator (only provided if known). */
+  admin_eth?: string;
+  /** The amount of stake in escrow by the administrator. */
+  stake: TextBigInt;
+  /** The application authentication policy. */
+  policy: RoflAppPolicy;
+  /** The secrets encryption public key. */
+  sek: string;
+  /** Arbitrary key-value pairs. */
+  metadata: RoflAppMetadata;
+  /** Arbitrary SEK-encrypted key-value pairs. */
+  secrets: RoflAppSecrets;
+  /** Whether the application has been removed. */
+  removed: boolean;
+  /** The date and time when the application was created. */
+  date_created: string;
+  /** The date and time when the application was last active. */
+  last_activity: string;
+  /** The most recent transaction associated with this ROFL app.
+This field is only present when querying a single ROFL app.
+ */
+  last_activity_tx?: RuntimeTransaction;
+  /** The number of currently active instances of the application. */
+  num_active_instances: number;
+  /** Registered application instances. Only active instances are returned.
+Use the `{runtime}/rofl_apps/{id}/instances` endpoint to retrieve all instances.
+ */
+  active_instances: RoflInstance[];
+}
+
+/**
+ * A list of ROFL apps.
+
+ */
+export type RoflAppListAllOf = {
+  rofl_apps: RoflApp[];
+};
+
+export type RoflAppList = List & RoflAppListAllOf;
 
 export interface ActiveAccounts {
   /** The date for the end of the daily active accounts measurement window. */
@@ -654,40 +1088,24 @@ export interface TxVolumeList {
 }
 
 export interface AccountStats {
-  /** The total number of tokens sent, in base units. */
-  total_sent: TextBigInt;
-  /** The total number of tokens received, in base units. */
-  total_received: TextBigInt;
+  /**
+   * The total amount of native tokens sent, in base units.
+DEPRECATED: This field might be inaccurate. Nexus is currently not able to track
+certain actions which subtract/add tokens.
+
+   * @deprecated
+   */
+  total_sent?: TextBigInt;
+  /**
+   * The total amount of native tokens received, in base units.
+DEPRECATED: This field might be inaccurate. Nexus is currently not able to track
+certain actions which subtract/add tokens.
+
+   * @deprecated
+   */
+  total_received?: TextBigInt;
   /** The total number of transactions this account was involved with. */
   num_txns: number;
-}
-
-export interface EvmNft {
-  token: EvmToken;
-  /** The instance ID of this NFT within the collection represented by `token`. */
-  id: TextBigInt;
-  /** The Oasis address of this NFT instance's owner. */
-  owner?: Address;
-  /** The Ethereum address of this NFT instance's owner. */
-  owner_eth?: string;
-  /** The total number of transfers of this NFT instance.
- */
-  num_transfers?: number;
-  metadata_uri?: string;
-  metadata_accessed?: string;
-  /** A metadata document for this NFT instance.
-Currently only ERC-721 is supported, where the document is an Asset Metadata from the ERC721 Metadata JSON Schema.
- */
-  metadata?: unknown;
-  /** Identifies the asset which this NFT represents */
-  name?: string;
-  /** Describes the asset which this NFT represents */
-  description?: string;
-  /** A URI pointing to a resource with mime type image/* representing
-the asset which this NFT represents. (Additional
-non-descriptive text from ERC-721 omitted.)
- */
-  image?: string;
 }
 
 /**
@@ -699,6 +1117,63 @@ export type EvmNftListAllOf = {
 };
 
 export type EvmNftList = List & EvmNftListAllOf;
+
+export interface EvmRefToken {
+  /** The heuristically determined interface that the token contract implements.
+A less specialized variant of the token might be detected; for example, an
+ERC-1363 token might be labeled as ERC-20 here. If the type cannot be
+detected or is not supported, this field will be null/absent.
+ */
+  type: EvmTokenType;
+  /** Name of the token, as provided by token contract's `name()` method. */
+  name?: string;
+  /** Symbol of the token, as provided by token contract's `symbol()` method. */
+  symbol?: string;
+  /** The number of least significant digits in base units that should be displayed as
+decimals when displaying tokens. `tokens = base_units / (10**decimals)`.
+Affects display only. Often equals 18, to match ETH.
+ */
+  decimals?: number;
+}
+
+export interface EvmTokenSwap {
+  /** The Oasis address of the swap pair contract.
+ */
+  pair_address: string;
+  /** The Ethereum-compatible address of the swap pair contract.
+ */
+  pair_address_eth?: string;
+  /** The Oasis address of the swap factory contract.
+ */
+  factory_address?: string;
+  /** The Ethereum-compatible address of the swap factory contract.
+ */
+  factory_address_eth?: string;
+  /** The Oasis address of the first token in this swap.
+ */
+  token0_address?: string;
+  /** The Ethereum-compatible address of the first token in this swap
+ */
+  token0_address_eth?: string;
+  /** The Oasis address of the second token in this swap.
+ */
+  token1_address?: string;
+  /** The Ethereum-compatible address of the second token in this swap.
+ */
+  token1_address_eth?: string;
+  /** The round when this swap pair was created.
+ */
+  create_round?: number;
+  /** The swap's liquidity pool of the first token, in that token's base units.
+ */
+  reserve0?: TextBigInt;
+  /** The swap's liquidity pool of the second token, in that token's base units.
+ */
+  reserve1?: TextBigInt;
+  /** The round when this swap pair last updated its reserves.
+ */
+  last_sync_round?: number;
+}
 
 export interface EvmToken {
   /** The Oasis address of this token's contract. */
@@ -728,13 +1203,66 @@ detected or is not supported, this field will be null/absent.
   /** The number of addresses that have a nonzero balance of this token.
  */
   num_holders: number;
-  /** Whether the contract has been successfully verified by Sourcify.
+  /** Information about a swap contract between this token and a
+reference token. The relative price and relative total value of
+this token are estimated based on this swap contract.
+ */
+  ref_swap?: EvmTokenSwap;
+  /** Information about the reference token. The relative price and
+relative total value are expressed in this reference token's base
+unit.
+ */
+  ref_token?: EvmRefToken;
+  /** The relative price and relative total value are expressed in this
+reference token's base unit.
+ */
+  relative_token_address?: string;
+  /** The relative price of one base unit of this token is this many of
+the relative token's base unit.
+ */
+  relative_price?: number;
+  /** The relative price of this token multiplied by this token's total
+supply, in the relative token's base unit.
+ */
+  relative_total_value?: number;
+  /**
+   * Whether the contract has been successfully verified by Sourcify.
 Additional information on verified contracts is available via
 the `/{runtime}/accounts/{address}` endpoint.
 DEPRECATED: This field will be removed in the future in favor of verification_level
- */
+
+   * @deprecated
+   */
   is_verified: boolean;
   verification_level?: VerificationLevel;
+}
+
+export interface EvmNft {
+  token: EvmToken;
+  /** The instance ID of this NFT within the collection represented by `token`. */
+  id: TextBigInt;
+  /** The Oasis address of this NFT instance's owner. */
+  owner?: Address;
+  /** The Ethereum address of this NFT instance's owner. */
+  owner_eth?: string;
+  /** The total number of transfers of this NFT instance.
+ */
+  num_transfers?: number;
+  metadata_uri?: string;
+  metadata_accessed?: string;
+  /** A metadata document for this NFT instance.
+Currently only ERC-721 is supported, where the document is an Asset Metadata from the ERC721 Metadata JSON Schema.
+ */
+  metadata?: unknown;
+  /** Identifies the asset which this NFT represents */
+  name?: string;
+  /** Describes the asset which this NFT represents */
+  description?: string;
+  /** A URI pointing to a resource with mime type image/* representing
+the asset which this NFT represents. (Additional
+non-descriptive text from ERC-721 omitted.)
+ */
+  image?: string;
 }
 
 /**
@@ -792,6 +1320,17 @@ NOTE: This field is limited to 1000 entries. If you need more, please let us kno
   stats: AccountStats;
 }
 
+export interface RuntimeTransactionSigner {
+  /** The Oasis address of the transaction signer.
+ */
+  address: Address;
+  /** The Ethereum address of this transaction signer.
+ */
+  address_eth?: string;
+  /** The transaction signer nonce. */
+  nonce: number;
+}
+
 export interface RuntimeTransactionEncryptionEnvelope {
   /** The format of the encrypted evm transaction envelope. */
   format: CallFormat;
@@ -811,6 +1350,159 @@ export interface RuntimeTransactionEncryptionEnvelope {
  * The method call body. May be null if the transaction was malformed.
  */
 export type RuntimeTransactionBody = { [key: string]: any };
+
+/**
+ * A runtime transaction.
+
+ */
+export interface RuntimeTransaction {
+  /** The block round at which this transaction was executed. */
+  round: number;
+  /** The 0-based index of this transaction in the block. */
+  index: number;
+  /** The second-granular consensus time when this tx's block was proposed. */
+  timestamp: string;
+  /** The Oasis cryptographic hash of this transaction's encoding. */
+  hash: string;
+  /** The Ethereum cryptographic hash of this transaction's encoding.
+Absent for non-Ethereum-format transactions.
+ */
+  eth_hash?: string;
+  /** The signers of this transaction. */
+  signers: RuntimeTransactionSigner[];
+  /**
+   * The Oasis address of this transaction's 0th signer.
+Unlike Ethereum, Oasis natively supports multiple-signature transactions.
+However, the great majority of transactions only have a single signer in practice.
+DEPRECATED: This field will be removed in the future in favor of the signers field.
+
+   * @deprecated
+   */
+  sender_0: Address;
+  /**
+   * The Ethereum address of this transaction's 0th signer.
+DEPRECATED: This field will be removed in the future in favor of the signers field.
+
+   * @deprecated
+   */
+  sender_0_eth?: string;
+  /**
+   * The nonce used with this transaction's 0th signer, to prevent replay.
+DEPRECATED: This field will be removed in the future in favor of the signers field.
+
+   * @deprecated
+   */
+  nonce_0: number;
+  /** The fee that this transaction's sender committed to pay to execute
+it (total ParaTime base units, as a string).
+ */
+  fee: string;
+  /** The denomination of the fee.
+ */
+  fee_symbol: string;
+  /** The module of the fee proxy.
+ */
+  fee_proxy_module?: string;
+  /** the base64-encoded id of the fee proxy.
+ */
+  fee_proxy_id?: string;
+  /** The maximum gas that this transaction's sender committed to use to
+execute it.
+ */
+  gas_limit: number;
+  /** The total gas used by the transaction. */
+  gas_used: number;
+  /** The fee that was charged for the transaction execution (total, native denomination,
+ParaTime base units, as a string).
+For EVM transactions this is calculated as `gas_price * gas_used`, where `gas_price = fee / gas_limit`, for compatibility with Ethereum.
+For other transactions this equals to `fee`.
+ */
+  charged_fee: string;
+  /** The total byte size of the transaction. */
+  size: number;
+  /** The data relevant to the Oasis-style encrypted transaction.
+Note: The term "envelope" in this context refers to the [Oasis-style encryption envelopes](https://github.com/oasisprotocol/oasis-sdk/blob/c36a7ee194abf4ca28fdac0edbefe3843b39bf69/runtime-sdk/src/types/callformat.rs)
+which differ slightly from [digital envelopes](https://en.wikipedia.org/wiki/Hybrid_cryptosystem#Envelope_encryption).
+ */
+  oasis_encryption_envelope?: RuntimeTransactionEncryptionEnvelope;
+  /** The method that was called. Defined by the runtime. In theory, this could be any string as the runtimes evolve.
+In practice, Nexus currently expects only the following methods:
+  - "accounts.Transfer"
+  - "consensus.Deposit"
+  - "consensus.Withdraw"
+  - "consensus.Delegate"
+  - "consensus.Undelegate"
+  - "evm.Create"
+  - "evm.Call"
+  - "rofl.Create"
+  - "rofl.Update"
+  - "rofl.Remove"
+  - "rofl.Register"
+  - "roflmarket.ProviderCreate"
+  - "roflmarket.ProviderUpdate"
+  - "roflmarket.ProviderRemove"
+  - "roflmarket.InstanceCreate"
+  - "roflmarket.InstanceTopUp"
+  - "roflmarket.InstanceCancel"
+  - "roflmarket.InstanceExecuteCmds"
+May be null if the transaction was malformed or encrypted.
+ */
+  method?: string;
+  /** The method call body. May be null if the transaction was malformed. */
+  body?: RuntimeTransactionBody;
+  /** Whether this transaction likely represents a native token transfer.
+This is based on a heuristic, and can change at any time without warning and possibly without updating the documentation.
+The current heuristic sets this to `true` for:
+ - Transactions with method "accounts.Transfer". Those are always native token transfers.
+ - Transactions with method "evm.Call" that have no `data` field in their `body`. Those tend to be transfers, but the runtimes provides no reliable visibility into whether a transfer happened.
+Note: Other transactions with method "evm.Call", and possibly "evm.Create", may also be (or include) native token transfers. The heuristic will be `false` for those.
+ */
+  is_likely_native_token_transfer: boolean;
+  /** A reasonable "to" Oasis address associated with this transaction,
+if applicable. The meaning varies based on the transaction method. Some notable examples:
+  - For `method = "accounts.Transfer"`, this is the paratime account receiving the funds.
+  - For `method = "consensus.Deposit"`, this is the paratime account receiving the funds.
+  - For `method = "consensus.Withdraw"`, this is the consensus (!) account receiving the funds.
+  - For `method = "consensus.Delegate"`, this is the consensus (!) account receiving the funds.
+  - For `method = "consensus.Undelegate"`, this is the consensus (!) account to which funds were previously delegated. Note that this corresponds with the `.from` field in the transaction body.
+  - For `method = "evm.Create"`, this is the address of the newly created smart contract.
+  - For `method = "evm.Call"`, this is the address of the called smart contract
+ */
+  to?: Address;
+  /** A reasonable "to" Ethereum address associated with this transaction,
+ */
+  to_eth?: string;
+  /** A reasonable "amount" associated with this transaction, if
+applicable. The meaning varies based on the transaction method.
+Usually in native denomination, ParaTime units. As a string.
+ */
+  amount?: string;
+  /** The denomination of the "amount" associated with this transaction, if applicable.
+ */
+  amount_symbol?: string;
+  /** The data relevant to the EVM encrypted transaction. Only present for encrypted
+transactions in confidential EVM runtimes like Sapphire.
+Note: The term "envelope" in this context refers to the [Oasis-style encryption envelopes](https://github.com/oasisprotocol/oasis-sdk/blob/c36a7ee194abf4ca28fdac0edbefe3843b39bf69/runtime-sdk/src/types/callformat.rs)
+which differ slightly from [digital envelopes](https://en.wikipedia.org/wiki/Hybrid_cryptosystem#Envelope_encryption).
+ */
+  encryption_envelope?: RuntimeTransactionEncryptionEnvelope;
+  /** Whether this transaction successfully executed.
+Is absent in multi-step runtime transactions (`consensus.Deposit`, `consensus.Withdraw`,
+`consensus.Delegate`, and `consensus.Undelegate`) until the second step is completed.
+Can be absent (meaning "unknown") for confidential runtimes.
+ */
+  success?: boolean;
+  /** The name of the smart contract function called by the transaction.
+Only present for `evm.log` transaction calls to contracts that have been verified.
+ */
+  evm_fn_name?: string;
+  /** The decoded parameters with which the smart contract function was called.
+Only present for `evm.log` transaction calls to contracts that have been verified.
+ */
+  evm_fn_params?: EvmAbiParam[];
+  /** Error details of a failed transaction. */
+  error?: TxError;
+}
 
 /**
  * A list of runtime transactions.
@@ -919,115 +1611,6 @@ export interface EvmAbiParam {
   value: unknown;
 }
 
-/**
- * A runtime transaction.
-
- */
-export interface RuntimeTransaction {
-  /** The block round at which this transaction was executed. */
-  round: number;
-  /** The 0-based index of this transaction in the block. */
-  index: number;
-  /** The second-granular consensus time when this tx's block was proposed. */
-  timestamp: string;
-  /** The Oasis cryptographic hash of this transaction's encoding. */
-  hash: string;
-  /** The Ethereum cryptographic hash of this transaction's encoding.
-Absent for non-Ethereum-format transactions.
- */
-  eth_hash?: string;
-  /** The Oasis address of this transaction's 0th signer.
-Unlike Ethereum, Oasis natively supports multiple-signature transactions.
-However, the great majority of transactions only have a single signer in practice.
-Retrieving the other signers is currently not supported by this API.
- */
-  sender_0: Address;
-  /** The Ethereum address of this transaction's 0th signer.
- */
-  sender_0_eth?: string;
-  /** The nonce used with this transaction's 0th signer, to prevent replay. */
-  nonce_0: number;
-  /** The fee that this transaction's sender committed to pay to execute
-it (total, native denomination, ParaTime base units, as a string).
- */
-  fee: string;
-  /** The maximum gas that this transaction's sender committed to use to
-execute it.
- */
-  gas_limit: number;
-  /** The total gas used by the transaction. */
-  gas_used: number;
-  /** The fee that was charged for the transaction execution (total, native denomination,
-ParaTime base units, as a string).
-For EVM transactions this is calculated as `gas_price * gas_used`, where `gas_price = fee / gas_limit`, for compatibility with Ethereum.
-For other transactions this equals to `fee`.
- */
-  charged_fee: string;
-  /** The total byte size of the transaction. */
-  size: number;
-  /** The method that was called. Defined by the runtime. In theory, this could be any string as the runtimes evolve.
-In practice, Nexus currently expects only the following methods:
-  - "accounts.Transfer"
-  - "consensus.Deposit"
-  - "consensus.Withdraw"
-  - "consensus.Delegate"
-  - "consensus.Undelegate"
-  - "evm.Create"
-  - "evm.Call"
-May be null if the transaction was malformed or encrypted.
- */
-  method?: string;
-  /** The method call body. May be null if the transaction was malformed. */
-  body?: RuntimeTransactionBody;
-  /** Whether this transaction likely represents a native token transfer.
-This is based on a heuristic, and can change at any time without warning and possibly without updating the documentation.
-The current heuristic sets this to `true` for:
- - Transactions with method "accounts.Transfer". Those are always native token transfers.
- - Transactions with method "evm.Call" that have no `data` field in their `body`. Those tend to be transfers, but the runtimes provides no reliable visibility into whether a transfer happened.
-Note: Other transactions with method "evm.Call", and possibly "evm.Create", may also be (or include) native token transfers. The heuristic will be `false` for those.
- */
-  is_likely_native_token_transfer?: boolean;
-  /** A reasonable "to" Oasis address associated with this transaction,
-if applicable. The meaning varies based on the transaction method. Some notable examples:
-  - For `method = "accounts.Transfer"`, this is the paratime account receiving the funds.
-  - For `method = "consensus.Deposit"`, this is the paratime account receiving the funds.
-  - For `method = "consensus.Withdraw"`, this is the consensus (!) account receiving the funds.
-  - For `method = "consensus.Delegate"`, this is the consensus (!) account receiving the funds.
-  - For `method = "consensus.Undelegate"`, this is the consensus (!) account to which funds were previously delegated. Note that this corresponds with the `.from` field in the transaction body.
-  - For `method = "evm.Create"`, this is the address of the newly created smart contract.
-  - For `method = "evm.Call"`, this is the address of the called smart contract
- */
-  to?: Address;
-  /** A reasonable "to" Ethereum address associated with this transaction,
- */
-  to_eth?: string;
-  /** A reasonable "amount" associated with this transaction, if
-applicable. The meaning varies based on the transaction method.
-Usually in native denomination, ParaTime units. As a string.
- */
-  amount?: string;
-  /** The data relevant to the encrypted transaction. Only present for encrypted
-transactions in confidential EVM runtimes like Sapphire.
-Note: The term "envelope" in this context refers to the [Oasis-style encryption envelopes](https://github.com/oasisprotocol/oasis-sdk/blob/c36a7ee194abf4ca28fdac0edbefe3843b39bf69/runtime-sdk/src/types/callformat.rs)
-which differ slightly from [digital envelopes](hhttps://en.wikipedia.org/wiki/Hybrid_cryptosystem#Envelope_encryption).
- */
-  encryption_envelope?: RuntimeTransactionEncryptionEnvelope;
-  /** Whether this transaction successfully executed.
-Can be absent (meaning "unknown") for confidential runtimes.
- */
-  success?: boolean;
-  /** The name of the smart contract function called by the transaction.
-Only present for `evm.log` transaction calls to contracts that have been verified.
- */
-  evm_fn_name?: string;
-  /** The decoded parameters with which the smart contract function was called.
-Only present for `evm.log` transaction calls to contracts that have been verified.
- */
-  evm_fn_params?: EvmAbiParam[];
-  /** Error details of a failed transaction. */
-  error?: TxError;
-}
-
 export type RuntimeEventType = typeof RuntimeEventType[keyof typeof RuntimeEventType];
 
 
@@ -1043,6 +1626,19 @@ export const RuntimeEventType = {
   consensus_accountsundelegate_done: 'consensus_accounts.undelegate_done',
   coregas_used: 'core.gas_used',
   evmlog: 'evm.log',
+  roflapp_created: 'rofl.app_created',
+  roflapp_updated: 'rofl.app_updated',
+  roflapp_removed: 'rofl.app_removed',
+  roflinstance_registered: 'rofl.instance_registered',
+  roflmarketprovider_created: 'roflmarket.provider_created',
+  roflmarketprovider_updated: 'roflmarket.provider_updated',
+  roflmarketprovider_removed: 'roflmarket.provider_removed',
+  roflmarketinstance_created: 'roflmarket.instance_created',
+  roflmarketinstance_updated: 'roflmarket.instance_updated',
+  roflmarketinstance_accepted: 'roflmarket.instance_accepted',
+  roflmarketinstance_cancelled: 'roflmarket.instance_cancelled',
+  roflmarketinstance_removed: 'roflmarket.instance_removed',
+  roflmarketinstance_command_queued: 'roflmarket.instance_command_queued',
 } as const;
 
 /**
@@ -1051,7 +1647,7 @@ This spec does not encode the many possible types; instead, see [the Go API](htt
 This object will conform to one of the `*Event` types two levels down
 the hierarchy (e.g. `MintEvent` from `accounts > Event > MintEvent`),
 OR `evm > Event`. For object fields that specify an oasis-style address, Nexus
-will add a field specifying the corresponding Ethereum address, if known. Currently, 
+will add a field specifying the corresponding Ethereum address, if known. Currently,
 the only such possible fields are `from_eth`, `to_eth`, and `owner_eth`.
 
  */
@@ -1071,7 +1667,7 @@ Absent if the event did not originate from a transaction.
 Absent if the event did not originate from a transaction.
  */
   tx_hash?: string;
-  /** Ethereum trasnsaction hash of this event's originating transaction.
+  /** Ethereum transaction hash of this event's originating transaction.
 Absent if the event did not originate from an EVM transaction.
  */
   eth_tx_hash?: string;
@@ -1085,12 +1681,12 @@ This spec does not encode the many possible types; instead, see [the Go API](htt
 This object will conform to one of the `*Event` types two levels down
 the hierarchy (e.g. `MintEvent` from `accounts > Event > MintEvent`),
 OR `evm > Event`. For object fields that specify an oasis-style address, Nexus
-will add a field specifying the corresponding Ethereum address, if known. Currently, 
+will add a field specifying the corresponding Ethereum address, if known. Currently,
 the only such possible fields are `from_eth`, `to_eth`, and `owner_eth`.
  */
   body: RuntimeEventBody;
-  /** If the event type is `evm.log`, this field describes the human-readable type of 
-evm event, e.g. `Transfer`. 
+  /** If the event type is `evm.log`, this field describes the human-readable type of
+evm event, e.g. `Transfer`.
 Absent if the event type is not `evm.log`.
  */
   evm_log_name?: string;
@@ -1179,7 +1775,7 @@ export const ProposalState = {
 } as const;
 
 /**
- * The target propotocol versions for this upgrade proposal.
+ * The target protocol versions for this upgrade proposal.
  */
 export interface ProposalTarget {
   consensus_protocol?: string;
@@ -1199,6 +1795,10 @@ export interface Proposal {
   state: ProposalState;
   /** The deposit attached to this proposal. */
   deposit: TextBigInt;
+  /** The (optional) title of the proposal. */
+  title?: string;
+  /** The (optional) description of the proposal. */
+  description?: string;
   /** The name of the upgrade handler. */
   handler?: string;
   target?: ProposalTarget;
@@ -1212,10 +1812,8 @@ cancelling an existing proposal.
 by this 'parameters_change' proposal.
  */
   parameters_change_module?: string;
-  /** The base64 encoded raw cbor representing the updated parameters
-which are to be changed by this 'parameters_change' proposal.
- */
-  parameters_change?: string;
+  /** The parameters change proposal body. This spec does not encode the many possible types; instead, see [the Go API](https://pkg.go.dev/github.com/oasisprotocol/oasis-core/go) of oasis-core. This object will conform to one of the `ConsensusParameterChanges` types, depending on the `parameters_change_module`. */
+  parameters_change?: unknown;
   /** The epoch at which this proposal was created. */
   created_at: number;
   /** The epoch at which voting for this proposal will close. */
@@ -1261,7 +1859,9 @@ export type EpochList = List & EpochListAllOf;
 export interface Allowance {
   /** The allowed account. */
   address: string;
-  /** The amount allowed for the allowed account. */
+  /** The amount allowed for the allowed account.
+This field is omitted when listing multiple accounts.
+ */
   amount: TextBigInt;
 }
 
@@ -1276,20 +1876,23 @@ export interface Account {
   nonce: number;
   /** The available balance, in base units. */
   available: TextBigInt;
-  /** The active escrow balance, in base units. */
+  /** Amount delegated to this validator, in base units. */
   escrow: TextBigInt;
-  /** The debonding escrow balance, in base units. */
+  /** Amount debonding from this validator, in base units. */
   debonding: TextBigInt;
-  /** The delegations balance, in base units.
-For efficiency, this field is omitted when listing multiple-accounts.
+  /** The balance of this accounts' (outgoing) delegations, in base units. */
+  delegations_balance: TextBigInt;
+  /** The balance of this accounts' (outgoing) debonding delegations, in base units. */
+  debonding_delegations_balance: TextBigInt;
+  /** The second-granular consensus time of the block in which this account was first active.
+Dates before Cobalt (2021-04-28) are approximate.
  */
-  delegations_balance?: TextBigInt;
-  /** The debonding delegations balance, in base units.
-For efficiency, this field is omitted when listing multiple-accounts.
+  first_activity?: string;
+  /** The allowances made by this account.
+This field is omitted when listing multiple accounts.
  */
-  debonding_delegations_balance?: TextBigInt;
-  /** The allowances made by this account. */
   allowances: Allowance[];
+  stats: AccountStats;
 }
 
 /**
@@ -1367,7 +1970,7 @@ this links the Oasis address and the Ethereum address.
 Oasis addresses are derived from a piece of data, such as an ed25519
 public key or an Ethereum address. For example, [this](https://github.com/oasisprotocol/oasis-sdk/blob/b37e6da699df331f5a2ac62793f8be099c68469c/client-sdk/go/helpers/address.go#L90-L91)
 is how an Ethereum is converted to an Oasis address. The type of underlying data usually also
-determines how the signatuers for this address are verified.
+determines how the signatures for this address are verified.
 
 Consensus supports only "staking addresses" (`context="oasis-core/address: staking"`
 below; always ed25519-backed).
@@ -1437,19 +2040,85 @@ export type NodeListAllOf = {
 
 export type NodeList = List & NodeListAllOf;
 
+export interface ValidatorHistoryPoint {
+  /** The epoch number. */
+  epoch: number;
+  /** The amount of tokens that were delegated to this validator account,
+at the start of this epoch, and are NOT in the process of debonding.
+ */
+  active_balance?: TextBigInt;
+  /** The shares of tokens that were delegated to this validator account,
+at the start of this epoch, and are NOT in the process of debonding.
+ */
+  active_shares?: TextBigInt;
+  /** The amount of tokens that were delegated to this validator account
+at the start of this epoch, but are also in the process of debonding
+(i.e. they will be unstaked within ~2 weeks).
+ */
+  debonding_balance?: TextBigInt;
+  /** The shares of tokens that were delegated to this validator account
+at the start of this epoch, but are also in the process of debonding
+(i.e. they will be unstaked within ~2 weeks).
+ */
+  debonding_shares?: TextBigInt;
+  /** The number of accounts that have delegated token to this account. */
+  num_delegators?: number;
+}
+
+/**
+ * Historical escrow balance data for a single address.
+ */
+export type ValidatorHistoryAllOf = {
+  /** The staking address of the validator. */
+  address?: string;
+  history: ValidatorHistoryPoint[];
+};
+
+export type ValidatorHistory = List & ValidatorHistoryAllOf;
+
+export interface Escrow {
+  /** The amount of tokens that are delegated to this validator account, and are NOT in the process of debonding. */
+  active_balance?: TextBigInt;
+  /** The shares of tokens that are delegated to this validator account, and are NOT in the process of debonding. */
+  active_shares?: TextBigInt;
+  /** The amount of tokens that are delegated to this validator account, but are also in the process of debonding (i.e. they will be unstaked within ~2 weeks). */
+  debonding_balance?: TextBigInt;
+  /** The shares of tokens that are delegated to this validator account, but are also in the process of debonding (i.e. they will be unstaked within ~2 weeks). */
+  debonding_shares?: TextBigInt;
+  /** The amount of token this validator has delegated to itself, and are NOT in the process of debonding. */
+  self_delegation_balance?: TextBigInt;
+  /** The shares of tokens this validator has delegated to itself, and are NOT in the process of debonding. */
+  self_delegation_shares?: TextBigInt;
+  /** The active_balance of this validator account 24 hours ago. */
+  active_balance_24?: TextBigInt;
+  /** The number of accounts that have delegated token to this account. */
+  num_delegators?: number;
+}
+
+/**
+ * Information whether a block was signed by the validator.
+
+ */
+export interface ValidatorSignedBlock {
+  /** The block height. */
+  height: number;
+  /** Whether the validator signed the block. */
+  signed: boolean;
+}
+
 export interface ValidatorMedia {
   /** An URL associated with the entity. */
-  website_link?: string;
-  /** An email address for the validator. */
-  email_address?: string;
-  /** A Twitter handle. */
-  twitter_acc?: string;
-  /** An Telegram handle. */
-  tg_chat?: string;
-  /** A logo type. */
-  logotype?: string;
-  /** The human-readable name of this validator. */
+  url?: string;
+  /** An email address associated with the entity. */
+  email?: string;
+  /** Twitter handle. */
+  twitter?: string;
+  /** Keybase handle. */
+  keybase?: string;
+  /** The human-readable name of this entity. */
   name?: string;
+  /** URL to a logo image for the entity. */
+  logoUrl?: string;
 }
 
 export interface ValidatorCommissionBound {
@@ -1464,33 +2133,61 @@ export interface ValidatorCommissionBound {
 
  */
 export interface Validator {
-  /** The staking address identifying this Validator. */
+  /** The staking address identifying this validator. */
   entity_address: string;
-  /** The public key identifying this Validator. */
+  /** The public key identifying this validator. */
   entity_id: string;
-  /** The public key identifying this Validator's node. */
-  node_id: string;
-  /** The amount staked. */
-  escrow: TextBigInt;
-  /** Whether the entity is part of validator set (top <scheduler.params.max_validators> by stake). */
-  active: boolean;
+  /** The public key identifying this validator's node. */
+  node_id?: string;
+  /** The escrow account data for this validator. */
+  escrow: Escrow;
+  /** The voting power of this validator. */
+  voting_power: number;
+  /** The cumulative voting power of this validator and all other validators ranked higher than itself. */
+  voting_power_cumulative?: number;
   /** Whether the entity has a node that is registered for being a validator, node is up to date, and has successfully registered itself. It may or may not be part of validator set. */
-  status: boolean;
+  active: boolean;
+  /** The second-granular consensus time. */
+  start_date: string;
+  /** The rank of the validator, determined by voting power. */
+  rank: number;
+  /** Whether the entity is part of the validator set (top <scheduler.params.max_validators> by stake among active entities). */
+  in_validator_set: boolean;
   media?: ValidatorMedia;
   /** Commission rate. */
   current_rate: number;
   current_commission_bound: ValidatorCommissionBound;
+  /** An array containing details of the last 100 consensus blocks, indicating whether each block was signed by the validator. Only available when querying a single validator. */
+  signed_blocks?: ValidatorSignedBlock[];
+}
+
+export interface ValidatorAggStats {
+  /** The total voting power across all validators. */
+  total_voting_power: number;
+  /** The total number of delegators in the network. */
+  total_delegators: number;
+  /** The total amount of token staked to validators. */
+  total_staked_balance: TextBigInt;
 }
 
 /**
- * A list of validators registered at the consensus layer.
+ * A list of validators registered at the consensus layer, plus summary
+statistics across all consensus validators.
 
  */
 export type ValidatorListAllOf = {
   validators: Validator[];
+  /** Summary statistics across all consensus validators. */
+  stats: ValidatorAggStats;
 };
 
 export type ValidatorList = List & ValidatorListAllOf;
+
+export interface ValidatorsResponse {
+  validator_list: ValidatorList;
+  /** Summary statistics across all consensus validators. */
+  stats: ValidatorAggStats;
+}
 
 /**
  * An entity registered at the consensus layer.
@@ -1514,6 +2211,89 @@ export type EntityListAllOf = {
 };
 
 export type EntityList = List & EntityListAllOf;
+
+/**
+ * The "body" of a message is a structure within the
+`github.com/oasisprotocol/oasis-core/go/roothash/api/message`
+`Message` structure
+(https://pkg.go.dev/github.com/oasisprotocol/oasis-core/go/roothash/api/message#Message).
+For example, if the type is `staking.withdraw`, the body is the Go
+`Message` structure's `.Staking.Withdraw` field, which is a
+`github.com/oasisprotocol/oasis-core/go/staking/api` `Withdraw`
+structure
+(https://pkg.go.dev/github.com/oasisprotocol/oasis-core/go/staking/api#Withdraw),
+with `from` and `amount` fields in JSON.
+
+ */
+export type RoothashMessageBody = { [key: string]: any };
+
+export interface RoothashMessage {
+  /** The runtime that sent this message.
+ */
+  runtime: string;
+  /** The block round when the runtime sent this message.
+ */
+  round: number;
+  /** The 0-based index of this message in the block.
+ */
+  index: number;
+  /** The type of this message.
+ */
+  type?: RoothashMessageType;
+  /** The "body" of a message is a structure within the
+`github.com/oasisprotocol/oasis-core/go/roothash/api/message`
+`Message` structure
+(https://pkg.go.dev/github.com/oasisprotocol/oasis-core/go/roothash/api/message#Message).
+For example, if the type is `staking.withdraw`, the body is the Go
+`Message` structure's `.Staking.Withdraw` field, which is a
+`github.com/oasisprotocol/oasis-core/go/staking/api` `Withdraw`
+structure
+(https://pkg.go.dev/github.com/oasisprotocol/oasis-core/go/staking/api#Withdraw),
+with `from` and `amount` fields in JSON.
+ */
+  body?: RoothashMessageBody;
+  /** If executing this message resulted in an error, this is the
+error's module.
+ */
+  error_module?: string;
+  /** If executing this message resulted in an error, this is the
+error's code.
+ */
+  error_code?: number;
+  /** A result value that consensus provided after executing this
+message. These aren't centrally registered anywhere, so look at
+the consensus apps' `ExecuteMessage`
+(https://pkg.go.dev/github.com/oasisprotocol/oasis-core/go/consensus/cometbft/api#MessageSubscriber)
+implementations to see what they return. For example, a
+`staking.withdraw` type message gives a
+`github.com/oasisprotocol/oasis-core/go/staking/api`
+`WithdrawResult` structure as its result
+(`https://pkg.go.dev/github.com/oasisprotocol/oasis-core/go/staking/api#WithdrawResult`)
+with `owner`, `beneficiary`, `allowance`, and `amount_change`
+fields.
+ */
+  result?: unknown;
+}
+
+export type RoothashMessageListAllOf = {
+  roothash_messages: RoothashMessage[];
+};
+
+export type RoothashMessageList = List & RoothashMessageListAllOf;
+
+export type RoothashMessageType = typeof RoothashMessageType[keyof typeof RoothashMessageType];
+
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const RoothashMessageType = {
+  stakingtransfer: 'staking.transfer',
+  stakingwithdraw: 'staking.withdraw',
+  stakingadd_escrow: 'staking.add_escrow',
+  stakingreclaim_escrow: 'staking.reclaim_escrow',
+  registryupdate_runtime: 'registry.update_runtime',
+  governancecast_vote: 'governance.cast_vote',
+  governancesubmit_proposal: 'governance.submit_proposal',
+} as const;
 
 /**
  * The event contents. This spec does not encode the many possible types;
@@ -1591,6 +2371,9 @@ Present only for events of type `roothash.*` except for
 `roothash.execution_discrepancy` before Eden.
  */
   roothash_runtime_round?: number;
+  /** The second-granular consensus time of this event's block.
+ */
+  timestamp?: string;
   /** The type of the event. */
   type: ConsensusEventType;
   /** The event contents. This spec does not encode the many possible types;
@@ -1610,59 +2393,32 @@ export interface TxError {
 This field, like `code` and `module`, can represent an error that originated
 anywhere in the paratime, i.e. either inside or outside a smart contract.
 
-A common special case worth calling out: When the paratime is 
-EVM-compatible (e.g. Emerald or Sapphire) and the error originates 
-inside a smart contract (using `revert` in solidity), the following 
+A common special case worth calling out: When the paratime is
+EVM-compatible (e.g. Emerald or Sapphire) and the error originates
+inside a smart contract (using `revert` in solidity), the following
 will be true:
 - `module` will be "evm" and `code` will be 8; see [here](https://github.com/oasisprotocol/oasis-sdk/blob/runtime-sdk/v0.8.3/runtime-sdk/modules/evm/src/lib.rs#L128) for other possible errors in the `evm` module.
 - `message` will contain the best-effort human-readable revert reason.
+- `raw_message` will contain the raw revert reason. This is useful for cases where the `message` parsing fails
  */
   message?: string;
   /** The error parameters, as decoded using the contract abi. Present only when
-- the error originated from within a smart contract (e.g. via `revert` in Solidity), and 
+- the error originated from within a smart contract (e.g. via `revert` in Solidity), and
 - the contract is verified or the revert reason is a plain String.
-If this field is present, `message` will include the name of the error, e.g. 'InsufficentBalance'.
+If this field is present, `message` will include the name of the error, e.g. 'InsufficientBalance'.
 Note that users should be cautious when evaluating error data since the
 data origin is not tracked and error information can be faked.
  */
   revert_params?: EvmAbiParam[];
+  /** The unparsed transaction error message.
+ */
+  raw_message?: string;
 }
 
 /**
  * The method call body. This spec does not encode the many possible types; instead, see [the Go API](https://pkg.go.dev/github.com/oasisprotocol/oasis-core/go) of oasis-core. This object will conform to one of the types passed to variable instantiations using `NewMethodName` two levels down the hierarchy, e.g. `MethodTransfer` from `oasis-core/go/staking/api` seen [here](https://pkg.go.dev/github.com/oasisprotocol/oasis-core/go@v0.2300.10/staking/api#pkg-variables).
  */
 export type TransactionBody = { [key: string]: any };
-
-/**
- * A list of consensus transactions.
-
- */
-export type TransactionListAllOf = {
-  transactions: Transaction[];
-};
-
-export type ConsensusTxMethod = typeof ConsensusTxMethod[keyof typeof ConsensusTxMethod];
-
-
-// eslint-disable-next-line @typescript-eslint/no-redeclare
-export const ConsensusTxMethod = {
-  stakingTransfer: 'staking.Transfer',
-  stakingAddEscrow: 'staking.AddEscrow',
-  stakingReclaimEscrow: 'staking.ReclaimEscrow',
-  stakingAmendCommissionSchedule: 'staking.AmendCommissionSchedule',
-  stakingAllow: 'staking.Allow',
-  stakingWithdraw: 'staking.Withdraw',
-  roothashExecutorCommit: 'roothash.ExecutorCommit',
-  roothashExecutorProposerTimeout: 'roothash.ExecutorProposerTimeout',
-  registryRegisterEntity: 'registry.RegisterEntity',
-  registryRegisterNode: 'registry.RegisterNode',
-  registryRegisterRuntime: 'registry.RegisterRuntime',
-  governanceCastVote: 'governance.CastVote',
-  governanceSubmitProposal: 'governance.SubmitProposal',
-  beaconPVSSCommit: 'beacon.PVSSCommit',
-  beaconPVSSReveal: 'beacon.PVSSReveal',
-  beaconVRFProve: 'beacon.VRFProve',
-} as const;
 
 /**
  * A consensus transaction.
@@ -1687,6 +2443,9 @@ export interface Transaction {
 to pay to execute it.
  */
   fee: TextBigInt;
+  /** The maximum gas that a transaction can use.
+ */
+  gas_limit: TextBigInt;
   /** The method that was called. */
   method: ConsensusTxMethod;
   /** The method call body. This spec does not encode the many possible types; instead, see [the Go API](https://pkg.go.dev/github.com/oasisprotocol/oasis-core/go) of oasis-core. This object will conform to one of the types passed to variable instantiations using `NewMethodName` two levels down the hierarchy, e.g. `MethodTransfer` from `oasis-core/go/staking/api` seen [here](https://pkg.go.dev/github.com/oasisprotocol/oasis-core/go@v0.2300.10/staking/api#pkg-variables). */
@@ -1696,6 +2455,54 @@ to pay to execute it.
   /** Error details of a failed transaction. */
   error?: TxError;
 }
+
+/**
+ * A list of consensus transactions.
+
+ */
+export type TransactionListAllOf = {
+  transactions: Transaction[];
+};
+
+export type ConsensusTxMethod = typeof ConsensusTxMethod[keyof typeof ConsensusTxMethod];
+
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const ConsensusTxMethod = {
+  beaconPVSSCommit: 'beacon.PVSSCommit',
+  beaconPVSSReveal: 'beacon.PVSSReveal',
+  beaconVRFProve: 'beacon.VRFProve',
+  consensusMeta: 'consensus.Meta',
+  governanceCastVote: 'governance.CastVote',
+  governanceSubmitProposal: 'governance.SubmitProposal',
+  keymanagerPublishEphemeralSecret: 'keymanager.PublishEphemeralSecret',
+  keymanagerPublishMasterSecret: 'keymanager.PublishMasterSecret',
+  keymanagerUpdatePolicy: 'keymanager.UpdatePolicy',
+  registryDeregisterEntity: 'registry.DeregisterEntity',
+  registryProveFreshness: 'registry.ProveFreshness',
+  registryRegisterEntity: 'registry.RegisterEntity',
+  registryRegisterNode: 'registry.RegisterNode',
+  registryRegisterRuntime: 'registry.RegisterRuntime',
+  registryUnfreezeNode: 'registry.UnfreezeNode',
+  roothashEvidence: 'roothash.Evidence',
+  roothashExecutorCommit: 'roothash.ExecutorCommit',
+  roothashExecutorProposerTimeout: 'roothash.ExecutorProposerTimeout',
+  roothashSubmitMsg: 'roothash.SubmitMsg',
+  stakingAddEscrow: 'staking.AddEscrow',
+  stakingAllow: 'staking.Allow',
+  stakingAmendCommissionSchedule: 'staking.AmendCommissionSchedule',
+  stakingBurn: 'staking.Burn',
+  stakingReclaimEscrow: 'staking.ReclaimEscrow',
+  stakingTransfer: 'staking.Transfer',
+  stakingWithdraw: 'staking.Withdraw',
+  'keymanager/churpApply': 'keymanager/churp.Apply',
+  'keymanager/churpConfirm': 'keymanager/churp.Confirm',
+  'keymanager/churpCreate': 'keymanager/churp.Create',
+  'keymanager/churpUpdate': 'keymanager/churp.Update',
+  vaultAuthorizeAction: 'vault.AuthorizeAction',
+  vaultCancelAction: 'vault.CancelAction',
+  vaultCreate: 'vault.Create',
+} as const;
 
 /**
  * A debonding delegation.
@@ -1748,6 +2555,29 @@ export type DelegationListAllOf = {
 export type DelegationList = List & DelegationListAllOf;
 
 /**
+ * Light-weight entity information, containing only its ID, address and registry metadata.
+ */
+export interface EntityInfo {
+  /** The ID of the entity owning the node; this corresponds to the entity's public key in base64. */
+  entity_id?: string;
+  /** Address of the entity owning the node, in Bech32 format (`oasis1...`). */
+  entity_address?: string;
+  /** Metadata about an entity, if available. See [the metadata registry](https://github.com/oasisprotocol/metadata-registry) for details.
+
+When available, it is an object with some subset of the following fields:
+
+- `v`: The version of the metadata structure (always present).
+- `serial`: The serial number of the metadata statement (always present).
+- `name`: The name of the entity.
+- `url`: The URL associated with the entity.
+- `email`: The email address associated with the entity.
+- `keybase`: Tne entity's keybase.io handle.
+- `twitter`: The twitter handle associated with the entity.
+ */
+  entity_metadata?: unknown;
+}
+
+/**
  * A consensus block.
 
  */
@@ -1760,6 +2590,22 @@ export interface Block {
   timestamp: string;
   /** Number of transactions in the block. */
   num_transactions: number;
+  /** The gas limit for the block. A gas limit 0 means that the max block gas was unlimited.
+Blocks from Cobalt, Damask, and early Eden had no gas limit as their sizes were only
+restricted by byte size until an upgrade during Eden introduced a gas limit.
+ */
+  gas_limit: TextBigInt;
+  /** The size limit for the block in bytes.
+ */
+  size_limit?: TextBigInt;
+  /** The epoch number of the epoch in which the block was produced. */
+  epoch: number;
+  /** The Merkle root of the state tree after applying the block. */
+  state_root: string;
+  /** The entity that proposed this block. */
+  proposer: EntityInfo;
+  /** A list of the entities that signed the block. */
+  signers?: EntityInfo[];
 }
 
 export type BlockListAllOf = {
@@ -1805,6 +2651,8 @@ export type CallFormat = string;
  */
 export type Ed25519PubKey = string;
 
+export type EthOrOasisAddress = string;
+
 /**
  * An Oasis-style (bech32) address.
  */
@@ -1824,7 +2672,8 @@ export type Runtime = typeof Runtime[keyof typeof Runtime];
 export const Runtime = {
   emerald: 'emerald',
   sapphire: 'sapphire',
-  pontusx: 'pontusx',
+  pontusxtest: 'pontusxtest',
+  pontusxdev: 'pontusxdev',
   cipher: 'cipher',
 } as const;
 
@@ -1835,7 +2684,8 @@ export type Layer = typeof Layer[keyof typeof Layer];
 export const Layer = {
   emerald: 'emerald',
   sapphire: 'sapphire',
-  pontusx: 'pontusx',
+  pontusxtest: 'pontusxtest',
+  pontusxdev: 'pontusxdev',
   cipher: 'cipher',
   consensus: 'consensus',
 } as const;
@@ -1899,6 +2749,112 @@ export const useGetStatus = <TData = Awaited<ReturnType<typeof getStatus>>, TErr
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
   const queryOptions = getGetStatusQueryOptions(options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+/**
+ * @summary Returns the total supply of the consensus layer token in token units.
+ */
+export const getConsensusTotalSupplyRaw = (
+    
+ options?: SecondParameter<typeof getConsensusTotalSupplyRawMutator>,signal?: AbortSignal
+) => {
+      return getConsensusTotalSupplyRawMutator<string>(
+      {url: `/consensus/total_supply_raw`, method: 'get', signal
+    },
+      options);
+    }
+  
+
+export const getGetConsensusTotalSupplyRawQueryKey = () => [`/consensus/total_supply_raw`] as const;
+  
+
+    
+export const getGetConsensusTotalSupplyRawQueryOptions = <TData = Awaited<ReturnType<typeof getConsensusTotalSupplyRaw>>, TError = unknown>( options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusTotalSupplyRaw>>, TError, TData>, request?: SecondParameter<typeof getConsensusTotalSupplyRawMutator>}
+): UseQueryOptions<Awaited<ReturnType<typeof getConsensusTotalSupplyRaw>>, TError, TData> & { queryKey: QueryKey } => {
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetConsensusTotalSupplyRawQueryKey();
+
+  
+  
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusTotalSupplyRaw>>> = ({ signal }) => getConsensusTotalSupplyRaw(requestOptions, signal);
+    
+      
+      
+   return  { queryKey, queryFn, ...queryOptions}}
+
+export type GetConsensusTotalSupplyRawQueryResult = NonNullable<Awaited<ReturnType<typeof getConsensusTotalSupplyRaw>>>
+export type GetConsensusTotalSupplyRawQueryError = unknown
+
+/**
+ * @summary Returns the total supply of the consensus layer token in token units.
+ */
+export const useGetConsensusTotalSupplyRaw = <TData = Awaited<ReturnType<typeof getConsensusTotalSupplyRaw>>, TError = unknown>(
+  options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusTotalSupplyRaw>>, TError, TData>, request?: SecondParameter<typeof getConsensusTotalSupplyRawMutator>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getGetConsensusTotalSupplyRawQueryOptions(options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+/**
+ * @summary Returns the circulating supply of the consensus layer token in token units.
+ */
+export const getConsensusCirculatingSupplyRaw = (
+    
+ options?: SecondParameter<typeof getConsensusCirculatingSupplyRawMutator>,signal?: AbortSignal
+) => {
+      return getConsensusCirculatingSupplyRawMutator<string>(
+      {url: `/consensus/circulating_supply_raw`, method: 'get', signal
+    },
+      options);
+    }
+  
+
+export const getGetConsensusCirculatingSupplyRawQueryKey = () => [`/consensus/circulating_supply_raw`] as const;
+  
+
+    
+export const getGetConsensusCirculatingSupplyRawQueryOptions = <TData = Awaited<ReturnType<typeof getConsensusCirculatingSupplyRaw>>, TError = unknown>( options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusCirculatingSupplyRaw>>, TError, TData>, request?: SecondParameter<typeof getConsensusCirculatingSupplyRawMutator>}
+): UseQueryOptions<Awaited<ReturnType<typeof getConsensusCirculatingSupplyRaw>>, TError, TData> & { queryKey: QueryKey } => {
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetConsensusCirculatingSupplyRawQueryKey();
+
+  
+  
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusCirculatingSupplyRaw>>> = ({ signal }) => getConsensusCirculatingSupplyRaw(requestOptions, signal);
+    
+      
+      
+   return  { queryKey, queryFn, ...queryOptions}}
+
+export type GetConsensusCirculatingSupplyRawQueryResult = NonNullable<Awaited<ReturnType<typeof getConsensusCirculatingSupplyRaw>>>
+export type GetConsensusCirculatingSupplyRawQueryError = unknown
+
+/**
+ * @summary Returns the circulating supply of the consensus layer token in token units.
+ */
+export const useGetConsensusCirculatingSupplyRaw = <TData = Awaited<ReturnType<typeof getConsensusCirculatingSupplyRaw>>, TError = unknown>(
+  options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusCirculatingSupplyRaw>>, TError, TData>, request?: SecondParameter<typeof getConsensusCirculatingSupplyRawMutator>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getGetConsensusCirculatingSupplyRawQueryOptions(options)
 
   const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
 
@@ -2070,13 +3026,13 @@ export const useGetConsensusTransactions = <TData = Awaited<ReturnType<typeof ge
 
 
 /**
- * @summary Returns a consensus transaction.
+ * @summary Returns consensus transactions with the given transaction hash.
  */
 export const getConsensusTransactionsTxHash = (
     txHash: string,
  options?: SecondParameter<typeof getConsensusTransactionsTxHashMutator>,signal?: AbortSignal
 ) => {
-      return getConsensusTransactionsTxHashMutator<Transaction>(
+      return getConsensusTransactionsTxHashMutator<TransactionList>(
       {url: `/consensus/transactions/${txHash}`, method: 'get', signal
     },
       options);
@@ -2105,7 +3061,7 @@ export type GetConsensusTransactionsTxHashQueryResult = NonNullable<Awaited<Retu
 export type GetConsensusTransactionsTxHashQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
- * @summary Returns a consensus transaction.
+ * @summary Returns consensus transactions with the given transaction hash.
  */
 export const useGetConsensusTransactionsTxHash = <TData = Awaited<ReturnType<typeof getConsensusTransactionsTxHash>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
  txHash: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusTransactionsTxHash>>, TError, TData>, request?: SecondParameter<typeof getConsensusTransactionsTxHashMutator>}
@@ -2176,6 +3132,54 @@ export const useGetConsensusEvents = <TData = Awaited<ReturnType<typeof getConse
 }
 
 
+export const getConsensusRoothashMessages = (
+    params: GetConsensusRoothashMessagesParams,
+ options?: SecondParameter<typeof getConsensusRoothashMessagesMutator>,signal?: AbortSignal
+) => {
+      return getConsensusRoothashMessagesMutator<RoothashMessageList>(
+      {url: `/consensus/roothash_messages`, method: 'get',
+        params, signal
+    },
+      options);
+    }
+  
+
+export const getGetConsensusRoothashMessagesQueryKey = (params: GetConsensusRoothashMessagesParams,) => [`/consensus/roothash_messages`, ...(params ? [params]: [])] as const;
+  
+
+    
+export const getGetConsensusRoothashMessagesQueryOptions = <TData = Awaited<ReturnType<typeof getConsensusRoothashMessages>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(params: GetConsensusRoothashMessagesParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusRoothashMessages>>, TError, TData>, request?: SecondParameter<typeof getConsensusRoothashMessagesMutator>}
+): UseQueryOptions<Awaited<ReturnType<typeof getConsensusRoothashMessages>>, TError, TData> & { queryKey: QueryKey } => {
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetConsensusRoothashMessagesQueryKey(params);
+
+  
+  
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusRoothashMessages>>> = ({ signal }) => getConsensusRoothashMessages(params, requestOptions, signal);
+    
+      
+      
+   return  { queryKey, queryFn, ...queryOptions}}
+
+export type GetConsensusRoothashMessagesQueryResult = NonNullable<Awaited<ReturnType<typeof getConsensusRoothashMessages>>>
+export type GetConsensusRoothashMessagesQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
+
+export const useGetConsensusRoothashMessages = <TData = Awaited<ReturnType<typeof getConsensusRoothashMessages>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
+ params: GetConsensusRoothashMessagesParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusRoothashMessages>>, TError, TData>, request?: SecondParameter<typeof getConsensusRoothashMessagesMutator>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getGetConsensusRoothashMessagesQueryOptions(params,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
 /**
  * @summary Returns a list of entities registered at the consensus layer.
  */
@@ -2233,47 +3237,47 @@ export const useGetConsensusEntities = <TData = Awaited<ReturnType<typeof getCon
 /**
  * @summary Returns an entity registered at the consensus layer.
  */
-export const getConsensusEntitiesEntityId = (
-    entityId: Ed25519PubKey,
- options?: SecondParameter<typeof getConsensusEntitiesEntityIdMutator>,signal?: AbortSignal
+export const getConsensusEntitiesAddress = (
+    address: StakingAddress,
+ options?: SecondParameter<typeof getConsensusEntitiesAddressMutator>,signal?: AbortSignal
 ) => {
-      return getConsensusEntitiesEntityIdMutator<Entity>(
-      {url: `/consensus/entities/${entityId}`, method: 'get', signal
+      return getConsensusEntitiesAddressMutator<Entity>(
+      {url: `/consensus/entities/${address}`, method: 'get', signal
     },
       options);
     }
   
 
-export const getGetConsensusEntitiesEntityIdQueryKey = (entityId: Ed25519PubKey,) => [`/consensus/entities/${entityId}`] as const;
+export const getGetConsensusEntitiesAddressQueryKey = (address: StakingAddress,) => [`/consensus/entities/${address}`] as const;
   
 
     
-export const getGetConsensusEntitiesEntityIdQueryOptions = <TData = Awaited<ReturnType<typeof getConsensusEntitiesEntityId>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(entityId: Ed25519PubKey, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusEntitiesEntityId>>, TError, TData>, request?: SecondParameter<typeof getConsensusEntitiesEntityIdMutator>}
-): UseQueryOptions<Awaited<ReturnType<typeof getConsensusEntitiesEntityId>>, TError, TData> & { queryKey: QueryKey } => {
+export const getGetConsensusEntitiesAddressQueryOptions = <TData = Awaited<ReturnType<typeof getConsensusEntitiesAddress>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(address: StakingAddress, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusEntitiesAddress>>, TError, TData>, request?: SecondParameter<typeof getConsensusEntitiesAddressMutator>}
+): UseQueryOptions<Awaited<ReturnType<typeof getConsensusEntitiesAddress>>, TError, TData> & { queryKey: QueryKey } => {
 const {query: queryOptions, request: requestOptions} = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getGetConsensusEntitiesEntityIdQueryKey(entityId);
+  const queryKey =  queryOptions?.queryKey ?? getGetConsensusEntitiesAddressQueryKey(address);
 
   
   
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusEntitiesEntityId>>> = ({ signal }) => getConsensusEntitiesEntityId(entityId, requestOptions, signal);
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusEntitiesAddress>>> = ({ signal }) => getConsensusEntitiesAddress(address, requestOptions, signal);
     
       
       
-   return  { queryKey, queryFn, enabled: !!(entityId), ...queryOptions}}
+   return  { queryKey, queryFn, enabled: !!(address), ...queryOptions}}
 
-export type GetConsensusEntitiesEntityIdQueryResult = NonNullable<Awaited<ReturnType<typeof getConsensusEntitiesEntityId>>>
-export type GetConsensusEntitiesEntityIdQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
+export type GetConsensusEntitiesAddressQueryResult = NonNullable<Awaited<ReturnType<typeof getConsensusEntitiesAddress>>>
+export type GetConsensusEntitiesAddressQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
  * @summary Returns an entity registered at the consensus layer.
  */
-export const useGetConsensusEntitiesEntityId = <TData = Awaited<ReturnType<typeof getConsensusEntitiesEntityId>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
- entityId: Ed25519PubKey, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusEntitiesEntityId>>, TError, TData>, request?: SecondParameter<typeof getConsensusEntitiesEntityIdMutator>}
+export const useGetConsensusEntitiesAddress = <TData = Awaited<ReturnType<typeof getConsensusEntitiesAddress>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
+ address: StakingAddress, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusEntitiesAddress>>, TError, TData>, request?: SecondParameter<typeof getConsensusEntitiesAddressMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
-  const queryOptions = getGetConsensusEntitiesEntityIdQueryOptions(entityId,options)
+  const queryOptions = getGetConsensusEntitiesAddressQueryOptions(address,options)
 
   const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
 
@@ -2286,52 +3290,52 @@ export const useGetConsensusEntitiesEntityId = <TData = Awaited<ReturnType<typeo
 /**
  * @summary Returns a list of nodes registered at the consensus layer.
  */
-export const getConsensusEntitiesEntityIdNodes = (
-    entityId: Ed25519PubKey,
-    params?: GetConsensusEntitiesEntityIdNodesParams,
- options?: SecondParameter<typeof getConsensusEntitiesEntityIdNodesMutator>,signal?: AbortSignal
+export const getConsensusEntitiesAddressNodes = (
+    address: StakingAddress,
+    params?: GetConsensusEntitiesAddressNodesParams,
+ options?: SecondParameter<typeof getConsensusEntitiesAddressNodesMutator>,signal?: AbortSignal
 ) => {
-      return getConsensusEntitiesEntityIdNodesMutator<NodeList>(
-      {url: `/consensus/entities/${entityId}/nodes`, method: 'get',
+      return getConsensusEntitiesAddressNodesMutator<NodeList>(
+      {url: `/consensus/entities/${address}/nodes`, method: 'get',
         params, signal
     },
       options);
     }
   
 
-export const getGetConsensusEntitiesEntityIdNodesQueryKey = (entityId: Ed25519PubKey,
-    params?: GetConsensusEntitiesEntityIdNodesParams,) => [`/consensus/entities/${entityId}/nodes`, ...(params ? [params]: [])] as const;
+export const getGetConsensusEntitiesAddressNodesQueryKey = (address: StakingAddress,
+    params?: GetConsensusEntitiesAddressNodesParams,) => [`/consensus/entities/${address}/nodes`, ...(params ? [params]: [])] as const;
   
 
     
-export const getGetConsensusEntitiesEntityIdNodesQueryOptions = <TData = Awaited<ReturnType<typeof getConsensusEntitiesEntityIdNodes>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(entityId: Ed25519PubKey,
-    params?: GetConsensusEntitiesEntityIdNodesParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusEntitiesEntityIdNodes>>, TError, TData>, request?: SecondParameter<typeof getConsensusEntitiesEntityIdNodesMutator>}
-): UseQueryOptions<Awaited<ReturnType<typeof getConsensusEntitiesEntityIdNodes>>, TError, TData> & { queryKey: QueryKey } => {
+export const getGetConsensusEntitiesAddressNodesQueryOptions = <TData = Awaited<ReturnType<typeof getConsensusEntitiesAddressNodes>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(address: StakingAddress,
+    params?: GetConsensusEntitiesAddressNodesParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusEntitiesAddressNodes>>, TError, TData>, request?: SecondParameter<typeof getConsensusEntitiesAddressNodesMutator>}
+): UseQueryOptions<Awaited<ReturnType<typeof getConsensusEntitiesAddressNodes>>, TError, TData> & { queryKey: QueryKey } => {
 const {query: queryOptions, request: requestOptions} = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getGetConsensusEntitiesEntityIdNodesQueryKey(entityId,params);
+  const queryKey =  queryOptions?.queryKey ?? getGetConsensusEntitiesAddressNodesQueryKey(address,params);
 
   
   
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusEntitiesEntityIdNodes>>> = ({ signal }) => getConsensusEntitiesEntityIdNodes(entityId,params, requestOptions, signal);
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusEntitiesAddressNodes>>> = ({ signal }) => getConsensusEntitiesAddressNodes(address,params, requestOptions, signal);
     
       
       
-   return  { queryKey, queryFn, enabled: !!(entityId), ...queryOptions}}
+   return  { queryKey, queryFn, enabled: !!(address), ...queryOptions}}
 
-export type GetConsensusEntitiesEntityIdNodesQueryResult = NonNullable<Awaited<ReturnType<typeof getConsensusEntitiesEntityIdNodes>>>
-export type GetConsensusEntitiesEntityIdNodesQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
+export type GetConsensusEntitiesAddressNodesQueryResult = NonNullable<Awaited<ReturnType<typeof getConsensusEntitiesAddressNodes>>>
+export type GetConsensusEntitiesAddressNodesQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
  * @summary Returns a list of nodes registered at the consensus layer.
  */
-export const useGetConsensusEntitiesEntityIdNodes = <TData = Awaited<ReturnType<typeof getConsensusEntitiesEntityIdNodes>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
- entityId: Ed25519PubKey,
-    params?: GetConsensusEntitiesEntityIdNodesParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusEntitiesEntityIdNodes>>, TError, TData>, request?: SecondParameter<typeof getConsensusEntitiesEntityIdNodesMutator>}
+export const useGetConsensusEntitiesAddressNodes = <TData = Awaited<ReturnType<typeof getConsensusEntitiesAddressNodes>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
+ address: StakingAddress,
+    params?: GetConsensusEntitiesAddressNodesParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusEntitiesAddressNodes>>, TError, TData>, request?: SecondParameter<typeof getConsensusEntitiesAddressNodesMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
-  const queryOptions = getGetConsensusEntitiesEntityIdNodesQueryOptions(entityId,params,options)
+  const queryOptions = getGetConsensusEntitiesAddressNodesQueryOptions(address,params,options)
 
   const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
 
@@ -2344,51 +3348,51 @@ export const useGetConsensusEntitiesEntityIdNodes = <TData = Awaited<ReturnType<
 /**
  * @summary Returns a node registered at the consensus layer.
  */
-export const getConsensusEntitiesEntityIdNodesNodeId = (
-    entityId: Ed25519PubKey,
+export const getConsensusEntitiesAddressNodesNodeId = (
+    address: StakingAddress,
     nodeId: Ed25519PubKey,
- options?: SecondParameter<typeof getConsensusEntitiesEntityIdNodesNodeIdMutator>,signal?: AbortSignal
+ options?: SecondParameter<typeof getConsensusEntitiesAddressNodesNodeIdMutator>,signal?: AbortSignal
 ) => {
-      return getConsensusEntitiesEntityIdNodesNodeIdMutator<Node>(
-      {url: `/consensus/entities/${entityId}/nodes/${nodeId}`, method: 'get', signal
+      return getConsensusEntitiesAddressNodesNodeIdMutator<Node>(
+      {url: `/consensus/entities/${address}/nodes/${nodeId}`, method: 'get', signal
     },
       options);
     }
   
 
-export const getGetConsensusEntitiesEntityIdNodesNodeIdQueryKey = (entityId: Ed25519PubKey,
-    nodeId: Ed25519PubKey,) => [`/consensus/entities/${entityId}/nodes/${nodeId}`] as const;
+export const getGetConsensusEntitiesAddressNodesNodeIdQueryKey = (address: StakingAddress,
+    nodeId: Ed25519PubKey,) => [`/consensus/entities/${address}/nodes/${nodeId}`] as const;
   
 
     
-export const getGetConsensusEntitiesEntityIdNodesNodeIdQueryOptions = <TData = Awaited<ReturnType<typeof getConsensusEntitiesEntityIdNodesNodeId>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(entityId: Ed25519PubKey,
-    nodeId: Ed25519PubKey, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusEntitiesEntityIdNodesNodeId>>, TError, TData>, request?: SecondParameter<typeof getConsensusEntitiesEntityIdNodesNodeIdMutator>}
-): UseQueryOptions<Awaited<ReturnType<typeof getConsensusEntitiesEntityIdNodesNodeId>>, TError, TData> & { queryKey: QueryKey } => {
+export const getGetConsensusEntitiesAddressNodesNodeIdQueryOptions = <TData = Awaited<ReturnType<typeof getConsensusEntitiesAddressNodesNodeId>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(address: StakingAddress,
+    nodeId: Ed25519PubKey, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusEntitiesAddressNodesNodeId>>, TError, TData>, request?: SecondParameter<typeof getConsensusEntitiesAddressNodesNodeIdMutator>}
+): UseQueryOptions<Awaited<ReturnType<typeof getConsensusEntitiesAddressNodesNodeId>>, TError, TData> & { queryKey: QueryKey } => {
 const {query: queryOptions, request: requestOptions} = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getGetConsensusEntitiesEntityIdNodesNodeIdQueryKey(entityId,nodeId);
+  const queryKey =  queryOptions?.queryKey ?? getGetConsensusEntitiesAddressNodesNodeIdQueryKey(address,nodeId);
 
   
   
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusEntitiesEntityIdNodesNodeId>>> = ({ signal }) => getConsensusEntitiesEntityIdNodesNodeId(entityId,nodeId, requestOptions, signal);
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusEntitiesAddressNodesNodeId>>> = ({ signal }) => getConsensusEntitiesAddressNodesNodeId(address,nodeId, requestOptions, signal);
     
       
       
-   return  { queryKey, queryFn, enabled: !!(entityId && nodeId), ...queryOptions}}
+   return  { queryKey, queryFn, enabled: !!(address && nodeId), ...queryOptions}}
 
-export type GetConsensusEntitiesEntityIdNodesNodeIdQueryResult = NonNullable<Awaited<ReturnType<typeof getConsensusEntitiesEntityIdNodesNodeId>>>
-export type GetConsensusEntitiesEntityIdNodesNodeIdQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
+export type GetConsensusEntitiesAddressNodesNodeIdQueryResult = NonNullable<Awaited<ReturnType<typeof getConsensusEntitiesAddressNodesNodeId>>>
+export type GetConsensusEntitiesAddressNodesNodeIdQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
  * @summary Returns a node registered at the consensus layer.
  */
-export const useGetConsensusEntitiesEntityIdNodesNodeId = <TData = Awaited<ReturnType<typeof getConsensusEntitiesEntityIdNodesNodeId>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
- entityId: Ed25519PubKey,
-    nodeId: Ed25519PubKey, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusEntitiesEntityIdNodesNodeId>>, TError, TData>, request?: SecondParameter<typeof getConsensusEntitiesEntityIdNodesNodeIdMutator>}
+export const useGetConsensusEntitiesAddressNodesNodeId = <TData = Awaited<ReturnType<typeof getConsensusEntitiesAddressNodesNodeId>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
+ address: StakingAddress,
+    nodeId: Ed25519PubKey, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusEntitiesAddressNodesNodeId>>, TError, TData>, request?: SecondParameter<typeof getConsensusEntitiesAddressNodesNodeIdMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
-  const queryOptions = getGetConsensusEntitiesEntityIdNodesNodeIdQueryOptions(entityId,nodeId,options)
+  const queryOptions = getGetConsensusEntitiesAddressNodesNodeIdQueryOptions(address,nodeId,options)
 
   const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
 
@@ -2399,7 +3403,7 @@ export const useGetConsensusEntitiesEntityIdNodesNodeId = <TData = Awaited<Retur
 
 
 /**
- * @summary Returns a list of validators registered at the consensus layer.
+ * @summary Returns a list of validators registered at the consensus layer (the list includes all registered entities, even those without a currently active validator node).
  */
 export const getConsensusValidators = (
     params?: GetConsensusValidatorsParams,
@@ -2435,7 +3439,7 @@ export type GetConsensusValidatorsQueryResult = NonNullable<Awaited<ReturnType<t
 export type GetConsensusValidatorsQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
- * @summary Returns a list of validators registered at the consensus layer.
+ * @summary Returns a list of validators registered at the consensus layer (the list includes all registered entities, even those without a currently active validator node).
  */
 export const useGetConsensusValidators = <TData = Awaited<ReturnType<typeof getConsensusValidators>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
  params?: GetConsensusValidatorsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusValidators>>, TError, TData>, request?: SecondParameter<typeof getConsensusValidatorsMutator>}
@@ -2455,47 +3459,105 @@ export const useGetConsensusValidators = <TData = Awaited<ReturnType<typeof getC
 /**
  * @summary Returns a validator registered at the consensus layer.
  */
-export const getConsensusValidatorsEntityId = (
-    entityId: Ed25519PubKey,
- options?: SecondParameter<typeof getConsensusValidatorsEntityIdMutator>,signal?: AbortSignal
+export const getConsensusValidatorsAddress = (
+    address: StakingAddress,
+ options?: SecondParameter<typeof getConsensusValidatorsAddressMutator>,signal?: AbortSignal
 ) => {
-      return getConsensusValidatorsEntityIdMutator<Validator>(
-      {url: `/consensus/validators/${entityId}`, method: 'get', signal
+      return getConsensusValidatorsAddressMutator<ValidatorList>(
+      {url: `/consensus/validators/${address}`, method: 'get', signal
     },
       options);
     }
   
 
-export const getGetConsensusValidatorsEntityIdQueryKey = (entityId: Ed25519PubKey,) => [`/consensus/validators/${entityId}`] as const;
+export const getGetConsensusValidatorsAddressQueryKey = (address: StakingAddress,) => [`/consensus/validators/${address}`] as const;
   
 
     
-export const getGetConsensusValidatorsEntityIdQueryOptions = <TData = Awaited<ReturnType<typeof getConsensusValidatorsEntityId>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(entityId: Ed25519PubKey, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusValidatorsEntityId>>, TError, TData>, request?: SecondParameter<typeof getConsensusValidatorsEntityIdMutator>}
-): UseQueryOptions<Awaited<ReturnType<typeof getConsensusValidatorsEntityId>>, TError, TData> & { queryKey: QueryKey } => {
+export const getGetConsensusValidatorsAddressQueryOptions = <TData = Awaited<ReturnType<typeof getConsensusValidatorsAddress>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(address: StakingAddress, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusValidatorsAddress>>, TError, TData>, request?: SecondParameter<typeof getConsensusValidatorsAddressMutator>}
+): UseQueryOptions<Awaited<ReturnType<typeof getConsensusValidatorsAddress>>, TError, TData> & { queryKey: QueryKey } => {
 const {query: queryOptions, request: requestOptions} = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getGetConsensusValidatorsEntityIdQueryKey(entityId);
+  const queryKey =  queryOptions?.queryKey ?? getGetConsensusValidatorsAddressQueryKey(address);
 
   
   
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusValidatorsEntityId>>> = ({ signal }) => getConsensusValidatorsEntityId(entityId, requestOptions, signal);
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusValidatorsAddress>>> = ({ signal }) => getConsensusValidatorsAddress(address, requestOptions, signal);
     
       
       
-   return  { queryKey, queryFn, enabled: !!(entityId), ...queryOptions}}
+   return  { queryKey, queryFn, enabled: !!(address), ...queryOptions}}
 
-export type GetConsensusValidatorsEntityIdQueryResult = NonNullable<Awaited<ReturnType<typeof getConsensusValidatorsEntityId>>>
-export type GetConsensusValidatorsEntityIdQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
+export type GetConsensusValidatorsAddressQueryResult = NonNullable<Awaited<ReturnType<typeof getConsensusValidatorsAddress>>>
+export type GetConsensusValidatorsAddressQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
  * @summary Returns a validator registered at the consensus layer.
  */
-export const useGetConsensusValidatorsEntityId = <TData = Awaited<ReturnType<typeof getConsensusValidatorsEntityId>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
- entityId: Ed25519PubKey, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusValidatorsEntityId>>, TError, TData>, request?: SecondParameter<typeof getConsensusValidatorsEntityIdMutator>}
+export const useGetConsensusValidatorsAddress = <TData = Awaited<ReturnType<typeof getConsensusValidatorsAddress>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
+ address: StakingAddress, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusValidatorsAddress>>, TError, TData>, request?: SecondParameter<typeof getConsensusValidatorsAddressMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
-  const queryOptions = getGetConsensusValidatorsEntityIdQueryOptions(entityId,options)
+  const queryOptions = getGetConsensusValidatorsAddressQueryOptions(address,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+/**
+ * @summary Returns historical information for a single validator.
+ */
+export const getConsensusValidatorsAddressHistory = (
+    address: StakingAddress,
+    params?: GetConsensusValidatorsAddressHistoryParams,
+ options?: SecondParameter<typeof getConsensusValidatorsAddressHistoryMutator>,signal?: AbortSignal
+) => {
+      return getConsensusValidatorsAddressHistoryMutator<ValidatorHistory>(
+      {url: `/consensus/validators/${address}/history`, method: 'get',
+        params, signal
+    },
+      options);
+    }
+  
+
+export const getGetConsensusValidatorsAddressHistoryQueryKey = (address: StakingAddress,
+    params?: GetConsensusValidatorsAddressHistoryParams,) => [`/consensus/validators/${address}/history`, ...(params ? [params]: [])] as const;
+  
+
+    
+export const getGetConsensusValidatorsAddressHistoryQueryOptions = <TData = Awaited<ReturnType<typeof getConsensusValidatorsAddressHistory>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(address: StakingAddress,
+    params?: GetConsensusValidatorsAddressHistoryParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusValidatorsAddressHistory>>, TError, TData>, request?: SecondParameter<typeof getConsensusValidatorsAddressHistoryMutator>}
+): UseQueryOptions<Awaited<ReturnType<typeof getConsensusValidatorsAddressHistory>>, TError, TData> & { queryKey: QueryKey } => {
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetConsensusValidatorsAddressHistoryQueryKey(address,params);
+
+  
+  
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusValidatorsAddressHistory>>> = ({ signal }) => getConsensusValidatorsAddressHistory(address,params, requestOptions, signal);
+    
+      
+      
+   return  { queryKey, queryFn, enabled: !!(address), ...queryOptions}}
+
+export type GetConsensusValidatorsAddressHistoryQueryResult = NonNullable<Awaited<ReturnType<typeof getConsensusValidatorsAddressHistory>>>
+export type GetConsensusValidatorsAddressHistoryQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
+
+/**
+ * @summary Returns historical information for a single validator.
+ */
+export const useGetConsensusValidatorsAddressHistory = <TData = Awaited<ReturnType<typeof getConsensusValidatorsAddressHistory>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
+ address: StakingAddress,
+    params?: GetConsensusValidatorsAddressHistoryParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusValidatorsAddressHistory>>, TError, TData>, request?: SecondParameter<typeof getConsensusValidatorsAddressHistoryMutator>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getGetConsensusValidatorsAddressHistoryQueryOptions(address,params,options)
 
   const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
 
@@ -2507,6 +3569,10 @@ export const useGetConsensusValidatorsEntityId = <TData = Awaited<ReturnType<typ
 
 /**
  * @summary Returns a list of consensus layer accounts.
+Note that for performance reasons, the info returned by this endpoint
+may be slightly stale (<2 minutes). For the most up-to-date account state,
+query the single-account endpoint.
+
  */
 export const getConsensusAccounts = (
     params?: GetConsensusAccountsParams,
@@ -2543,6 +3609,10 @@ export type GetConsensusAccountsQueryError = HumanReadableErrorResponse | NotFou
 
 /**
  * @summary Returns a list of consensus layer accounts.
+Note that for performance reasons, the info returned by this endpoint
+may be slightly stale (<2 minutes). For the most up-to-date account state,
+query the single-account endpoint.
+
  */
 export const useGetConsensusAccounts = <TData = Awaited<ReturnType<typeof getConsensusAccounts>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
  params?: GetConsensusAccountsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusAccounts>>, TError, TData>, request?: SecondParameter<typeof getConsensusAccountsMutator>}
@@ -3410,7 +4480,7 @@ export const useGetRuntimeEvmTokens = <TData = Awaited<ReturnType<typeof getRunt
  */
 export const getRuntimeEvmTokensAddress = (
     runtime: Runtime,
-    address: StakingAddress,
+    address: EthOrOasisAddress,
  options?: SecondParameter<typeof getRuntimeEvmTokensAddressMutator>,signal?: AbortSignal
 ) => {
       return getRuntimeEvmTokensAddressMutator<EvmToken>(
@@ -3421,12 +4491,12 @@ export const getRuntimeEvmTokensAddress = (
   
 
 export const getGetRuntimeEvmTokensAddressQueryKey = (runtime: Runtime,
-    address: StakingAddress,) => [`/${runtime}/evm_tokens/${address}`] as const;
+    address: EthOrOasisAddress,) => [`/${runtime}/evm_tokens/${address}`] as const;
   
 
     
 export const getGetRuntimeEvmTokensAddressQueryOptions = <TData = Awaited<ReturnType<typeof getRuntimeEvmTokensAddress>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(runtime: Runtime,
-    address: StakingAddress, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeEvmTokensAddress>>, TError, TData>, request?: SecondParameter<typeof getRuntimeEvmTokensAddressMutator>}
+    address: EthOrOasisAddress, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeEvmTokensAddress>>, TError, TData>, request?: SecondParameter<typeof getRuntimeEvmTokensAddressMutator>}
 ): UseQueryOptions<Awaited<ReturnType<typeof getRuntimeEvmTokensAddress>>, TError, TData> & { queryKey: QueryKey } => {
 const {query: queryOptions, request: requestOptions} = options ?? {};
 
@@ -3448,7 +4518,7 @@ export type GetRuntimeEvmTokensAddressQueryError = HumanReadableErrorResponse | 
  */
 export const useGetRuntimeEvmTokensAddress = <TData = Awaited<ReturnType<typeof getRuntimeEvmTokensAddress>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
  runtime: Runtime,
-    address: StakingAddress, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeEvmTokensAddress>>, TError, TData>, request?: SecondParameter<typeof getRuntimeEvmTokensAddressMutator>}
+    address: EthOrOasisAddress, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeEvmTokensAddress>>, TError, TData>, request?: SecondParameter<typeof getRuntimeEvmTokensAddressMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
@@ -3469,7 +4539,7 @@ This endpoint does not verify that `address` is actually an EVM token; if it is 
  */
 export const getRuntimeEvmTokensAddressHolders = (
     runtime: Runtime,
-    address: StakingAddress,
+    address: EthOrOasisAddress,
     params?: GetRuntimeEvmTokensAddressHoldersParams,
  options?: SecondParameter<typeof getRuntimeEvmTokensAddressHoldersMutator>,signal?: AbortSignal
 ) => {
@@ -3482,13 +4552,13 @@ export const getRuntimeEvmTokensAddressHolders = (
   
 
 export const getGetRuntimeEvmTokensAddressHoldersQueryKey = (runtime: Runtime,
-    address: StakingAddress,
+    address: EthOrOasisAddress,
     params?: GetRuntimeEvmTokensAddressHoldersParams,) => [`/${runtime}/evm_tokens/${address}/holders`, ...(params ? [params]: [])] as const;
   
 
     
 export const getGetRuntimeEvmTokensAddressHoldersQueryOptions = <TData = Awaited<ReturnType<typeof getRuntimeEvmTokensAddressHolders>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(runtime: Runtime,
-    address: StakingAddress,
+    address: EthOrOasisAddress,
     params?: GetRuntimeEvmTokensAddressHoldersParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeEvmTokensAddressHolders>>, TError, TData>, request?: SecondParameter<typeof getRuntimeEvmTokensAddressHoldersMutator>}
 ): UseQueryOptions<Awaited<ReturnType<typeof getRuntimeEvmTokensAddressHolders>>, TError, TData> & { queryKey: QueryKey } => {
 const {query: queryOptions, request: requestOptions} = options ?? {};
@@ -3513,7 +4583,7 @@ This endpoint does not verify that `address` is actually an EVM token; if it is 
  */
 export const useGetRuntimeEvmTokensAddressHolders = <TData = Awaited<ReturnType<typeof getRuntimeEvmTokensAddressHolders>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
  runtime: Runtime,
-    address: StakingAddress,
+    address: EthOrOasisAddress,
     params?: GetRuntimeEvmTokensAddressHoldersParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeEvmTokensAddressHolders>>, TError, TData>, request?: SecondParameter<typeof getRuntimeEvmTokensAddressHoldersMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
@@ -3535,7 +4605,7 @@ This endpoint does not verify that `address` is actually an EVM token; if it is 
  */
 export const getRuntimeEvmTokensAddressNfts = (
     runtime: Runtime,
-    address: StakingAddress,
+    address: EthOrOasisAddress,
     params?: GetRuntimeEvmTokensAddressNftsParams,
  options?: SecondParameter<typeof getRuntimeEvmTokensAddressNftsMutator>,signal?: AbortSignal
 ) => {
@@ -3548,13 +4618,13 @@ export const getRuntimeEvmTokensAddressNfts = (
   
 
 export const getGetRuntimeEvmTokensAddressNftsQueryKey = (runtime: Runtime,
-    address: StakingAddress,
+    address: EthOrOasisAddress,
     params?: GetRuntimeEvmTokensAddressNftsParams,) => [`/${runtime}/evm_tokens/${address}/nfts`, ...(params ? [params]: [])] as const;
   
 
     
 export const getGetRuntimeEvmTokensAddressNftsQueryOptions = <TData = Awaited<ReturnType<typeof getRuntimeEvmTokensAddressNfts>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(runtime: Runtime,
-    address: StakingAddress,
+    address: EthOrOasisAddress,
     params?: GetRuntimeEvmTokensAddressNftsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeEvmTokensAddressNfts>>, TError, TData>, request?: SecondParameter<typeof getRuntimeEvmTokensAddressNftsMutator>}
 ): UseQueryOptions<Awaited<ReturnType<typeof getRuntimeEvmTokensAddressNfts>>, TError, TData> & { queryKey: QueryKey } => {
 const {query: queryOptions, request: requestOptions} = options ?? {};
@@ -3579,7 +4649,7 @@ This endpoint does not verify that `address` is actually an EVM token; if it is 
  */
 export const useGetRuntimeEvmTokensAddressNfts = <TData = Awaited<ReturnType<typeof getRuntimeEvmTokensAddressNfts>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
  runtime: Runtime,
-    address: StakingAddress,
+    address: EthOrOasisAddress,
     params?: GetRuntimeEvmTokensAddressNftsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeEvmTokensAddressNfts>>, TError, TData>, request?: SecondParameter<typeof getRuntimeEvmTokensAddressNftsMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
@@ -3600,7 +4670,7 @@ export const useGetRuntimeEvmTokensAddressNfts = <TData = Awaited<ReturnType<typ
  */
 export const getRuntimeEvmTokensAddressNftsId = (
     runtime: Runtime,
-    address: StakingAddress,
+    address: EthOrOasisAddress,
     id: TextBigInt,
  options?: SecondParameter<typeof getRuntimeEvmTokensAddressNftsIdMutator>,signal?: AbortSignal
 ) => {
@@ -3612,13 +4682,13 @@ export const getRuntimeEvmTokensAddressNftsId = (
   
 
 export const getGetRuntimeEvmTokensAddressNftsIdQueryKey = (runtime: Runtime,
-    address: StakingAddress,
+    address: EthOrOasisAddress,
     id: TextBigInt,) => [`/${runtime}/evm_tokens/${address}/nfts/${id}`] as const;
   
 
     
 export const getGetRuntimeEvmTokensAddressNftsIdQueryOptions = <TData = Awaited<ReturnType<typeof getRuntimeEvmTokensAddressNftsId>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(runtime: Runtime,
-    address: StakingAddress,
+    address: EthOrOasisAddress,
     id: TextBigInt, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeEvmTokensAddressNftsId>>, TError, TData>, request?: SecondParameter<typeof getRuntimeEvmTokensAddressNftsIdMutator>}
 ): UseQueryOptions<Awaited<ReturnType<typeof getRuntimeEvmTokensAddressNftsId>>, TError, TData> & { queryKey: QueryKey } => {
 const {query: queryOptions, request: requestOptions} = options ?? {};
@@ -3642,7 +4712,7 @@ export type GetRuntimeEvmTokensAddressNftsIdQueryError = HumanReadableErrorRespo
  */
 export const useGetRuntimeEvmTokensAddressNftsId = <TData = Awaited<ReturnType<typeof getRuntimeEvmTokensAddressNftsId>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
  runtime: Runtime,
-    address: StakingAddress,
+    address: EthOrOasisAddress,
     id: TextBigInt, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeEvmTokensAddressNftsId>>, TError, TData>, request?: SecondParameter<typeof getRuntimeEvmTokensAddressNftsIdMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
@@ -3662,7 +4732,7 @@ export const useGetRuntimeEvmTokensAddressNftsId = <TData = Awaited<ReturnType<t
  */
 export const getRuntimeAccountsAddress = (
     runtime: Runtime,
-    address: StakingAddress,
+    address: EthOrOasisAddress,
  options?: SecondParameter<typeof getRuntimeAccountsAddressMutator>,signal?: AbortSignal
 ) => {
       return getRuntimeAccountsAddressMutator<RuntimeAccount>(
@@ -3673,12 +4743,12 @@ export const getRuntimeAccountsAddress = (
   
 
 export const getGetRuntimeAccountsAddressQueryKey = (runtime: Runtime,
-    address: StakingAddress,) => [`/${runtime}/accounts/${address}`] as const;
+    address: EthOrOasisAddress,) => [`/${runtime}/accounts/${address}`] as const;
   
 
     
 export const getGetRuntimeAccountsAddressQueryOptions = <TData = Awaited<ReturnType<typeof getRuntimeAccountsAddress>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(runtime: Runtime,
-    address: StakingAddress, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeAccountsAddress>>, TError, TData>, request?: SecondParameter<typeof getRuntimeAccountsAddressMutator>}
+    address: EthOrOasisAddress, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeAccountsAddress>>, TError, TData>, request?: SecondParameter<typeof getRuntimeAccountsAddressMutator>}
 ): UseQueryOptions<Awaited<ReturnType<typeof getRuntimeAccountsAddress>>, TError, TData> & { queryKey: QueryKey } => {
 const {query: queryOptions, request: requestOptions} = options ?? {};
 
@@ -3700,7 +4770,7 @@ export type GetRuntimeAccountsAddressQueryError = HumanReadableErrorResponse | N
  */
 export const useGetRuntimeAccountsAddress = <TData = Awaited<ReturnType<typeof getRuntimeAccountsAddress>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
  runtime: Runtime,
-    address: StakingAddress, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeAccountsAddress>>, TError, TData>, request?: SecondParameter<typeof getRuntimeAccountsAddressMutator>}
+    address: EthOrOasisAddress, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeAccountsAddress>>, TError, TData>, request?: SecondParameter<typeof getRuntimeAccountsAddressMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
@@ -3720,7 +4790,7 @@ export const useGetRuntimeAccountsAddress = <TData = Awaited<ReturnType<typeof g
  */
 export const getRuntimeAccountsAddressNfts = (
     runtime: Runtime,
-    address: StakingAddress,
+    address: EthOrOasisAddress,
     params?: GetRuntimeAccountsAddressNftsParams,
  options?: SecondParameter<typeof getRuntimeAccountsAddressNftsMutator>,signal?: AbortSignal
 ) => {
@@ -3733,13 +4803,13 @@ export const getRuntimeAccountsAddressNfts = (
   
 
 export const getGetRuntimeAccountsAddressNftsQueryKey = (runtime: Runtime,
-    address: StakingAddress,
+    address: EthOrOasisAddress,
     params?: GetRuntimeAccountsAddressNftsParams,) => [`/${runtime}/accounts/${address}/nfts`, ...(params ? [params]: [])] as const;
   
 
     
 export const getGetRuntimeAccountsAddressNftsQueryOptions = <TData = Awaited<ReturnType<typeof getRuntimeAccountsAddressNfts>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(runtime: Runtime,
-    address: StakingAddress,
+    address: EthOrOasisAddress,
     params?: GetRuntimeAccountsAddressNftsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeAccountsAddressNfts>>, TError, TData>, request?: SecondParameter<typeof getRuntimeAccountsAddressNftsMutator>}
 ): UseQueryOptions<Awaited<ReturnType<typeof getRuntimeAccountsAddressNfts>>, TError, TData> & { queryKey: QueryKey } => {
 const {query: queryOptions, request: requestOptions} = options ?? {};
@@ -3763,7 +4833,7 @@ export type GetRuntimeAccountsAddressNftsQueryError = HumanReadableErrorResponse
  */
 export const useGetRuntimeAccountsAddressNfts = <TData = Awaited<ReturnType<typeof getRuntimeAccountsAddressNfts>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
  runtime: Runtime,
-    address: StakingAddress,
+    address: EthOrOasisAddress,
     params?: GetRuntimeAccountsAddressNftsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeAccountsAddressNfts>>, TError, TData>, request?: SecondParameter<typeof getRuntimeAccountsAddressNftsMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
@@ -3822,6 +4892,679 @@ export const useGetRuntimeStatus = <TData = Awaited<ReturnType<typeof getRuntime
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
   const queryOptions = getGetRuntimeStatusQueryOptions(runtime,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+/**
+ * @summary Returns a list of ROFL apps on the runtime.
+ */
+export const getRuntimeRoflApps = (
+    runtime: Runtime,
+    params?: GetRuntimeRoflAppsParams,
+ options?: SecondParameter<typeof getRuntimeRoflAppsMutator>,signal?: AbortSignal
+) => {
+      return getRuntimeRoflAppsMutator<RoflAppList>(
+      {url: `/${runtime}/rofl_apps`, method: 'get',
+        params, signal
+    },
+      options);
+    }
+  
+
+export const getGetRuntimeRoflAppsQueryKey = (runtime: Runtime,
+    params?: GetRuntimeRoflAppsParams,) => [`/${runtime}/rofl_apps`, ...(params ? [params]: [])] as const;
+  
+
+    
+export const getGetRuntimeRoflAppsQueryOptions = <TData = Awaited<ReturnType<typeof getRuntimeRoflApps>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(runtime: Runtime,
+    params?: GetRuntimeRoflAppsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeRoflApps>>, TError, TData>, request?: SecondParameter<typeof getRuntimeRoflAppsMutator>}
+): UseQueryOptions<Awaited<ReturnType<typeof getRuntimeRoflApps>>, TError, TData> & { queryKey: QueryKey } => {
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetRuntimeRoflAppsQueryKey(runtime,params);
+
+  
+  
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getRuntimeRoflApps>>> = ({ signal }) => getRuntimeRoflApps(runtime,params, requestOptions, signal);
+    
+      
+      
+   return  { queryKey, queryFn, enabled: !!(runtime), ...queryOptions}}
+
+export type GetRuntimeRoflAppsQueryResult = NonNullable<Awaited<ReturnType<typeof getRuntimeRoflApps>>>
+export type GetRuntimeRoflAppsQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
+
+/**
+ * @summary Returns a list of ROFL apps on the runtime.
+ */
+export const useGetRuntimeRoflApps = <TData = Awaited<ReturnType<typeof getRuntimeRoflApps>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
+ runtime: Runtime,
+    params?: GetRuntimeRoflAppsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeRoflApps>>, TError, TData>, request?: SecondParameter<typeof getRuntimeRoflAppsMutator>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getGetRuntimeRoflAppsQueryOptions(runtime,params,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+/**
+ * @summary Returns a specific ROFL app.
+ */
+export const getRuntimeRoflAppsId = (
+    runtime: Runtime,
+    id: string,
+ options?: SecondParameter<typeof getRuntimeRoflAppsIdMutator>,signal?: AbortSignal
+) => {
+      return getRuntimeRoflAppsIdMutator<RoflApp>(
+      {url: `/${runtime}/rofl_apps/${id}`, method: 'get', signal
+    },
+      options);
+    }
+  
+
+export const getGetRuntimeRoflAppsIdQueryKey = (runtime: Runtime,
+    id: string,) => [`/${runtime}/rofl_apps/${id}`] as const;
+  
+
+    
+export const getGetRuntimeRoflAppsIdQueryOptions = <TData = Awaited<ReturnType<typeof getRuntimeRoflAppsId>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(runtime: Runtime,
+    id: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeRoflAppsId>>, TError, TData>, request?: SecondParameter<typeof getRuntimeRoflAppsIdMutator>}
+): UseQueryOptions<Awaited<ReturnType<typeof getRuntimeRoflAppsId>>, TError, TData> & { queryKey: QueryKey } => {
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetRuntimeRoflAppsIdQueryKey(runtime,id);
+
+  
+  
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getRuntimeRoflAppsId>>> = ({ signal }) => getRuntimeRoflAppsId(runtime,id, requestOptions, signal);
+    
+      
+      
+   return  { queryKey, queryFn, enabled: !!(runtime && id), ...queryOptions}}
+
+export type GetRuntimeRoflAppsIdQueryResult = NonNullable<Awaited<ReturnType<typeof getRuntimeRoflAppsId>>>
+export type GetRuntimeRoflAppsIdQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
+
+/**
+ * @summary Returns a specific ROFL app.
+ */
+export const useGetRuntimeRoflAppsId = <TData = Awaited<ReturnType<typeof getRuntimeRoflAppsId>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
+ runtime: Runtime,
+    id: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeRoflAppsId>>, TError, TData>, request?: SecondParameter<typeof getRuntimeRoflAppsIdMutator>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getGetRuntimeRoflAppsIdQueryOptions(runtime,id,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+/**
+ * @summary Returns a list of "managing" transactions of the ROFL app.
+This does not return transaction submitted by ROFL app instances, for that see
+the `/rofl_apps/{id}/instance_transactions` endpoint.
+
+ */
+export const getRuntimeRoflAppsIdTransactions = (
+    runtime: Runtime,
+    id: string,
+    params?: GetRuntimeRoflAppsIdTransactionsParams,
+ options?: SecondParameter<typeof getRuntimeRoflAppsIdTransactionsMutator>,signal?: AbortSignal
+) => {
+      return getRuntimeRoflAppsIdTransactionsMutator<RuntimeTransactionList>(
+      {url: `/${runtime}/rofl_apps/${id}/transactions`, method: 'get',
+        params, signal
+    },
+      options);
+    }
+  
+
+export const getGetRuntimeRoflAppsIdTransactionsQueryKey = (runtime: Runtime,
+    id: string,
+    params?: GetRuntimeRoflAppsIdTransactionsParams,) => [`/${runtime}/rofl_apps/${id}/transactions`, ...(params ? [params]: [])] as const;
+  
+
+    
+export const getGetRuntimeRoflAppsIdTransactionsQueryOptions = <TData = Awaited<ReturnType<typeof getRuntimeRoflAppsIdTransactions>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(runtime: Runtime,
+    id: string,
+    params?: GetRuntimeRoflAppsIdTransactionsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeRoflAppsIdTransactions>>, TError, TData>, request?: SecondParameter<typeof getRuntimeRoflAppsIdTransactionsMutator>}
+): UseQueryOptions<Awaited<ReturnType<typeof getRuntimeRoflAppsIdTransactions>>, TError, TData> & { queryKey: QueryKey } => {
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetRuntimeRoflAppsIdTransactionsQueryKey(runtime,id,params);
+
+  
+  
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getRuntimeRoflAppsIdTransactions>>> = ({ signal }) => getRuntimeRoflAppsIdTransactions(runtime,id,params, requestOptions, signal);
+    
+      
+      
+   return  { queryKey, queryFn, enabled: !!(runtime && id), ...queryOptions}}
+
+export type GetRuntimeRoflAppsIdTransactionsQueryResult = NonNullable<Awaited<ReturnType<typeof getRuntimeRoflAppsIdTransactions>>>
+export type GetRuntimeRoflAppsIdTransactionsQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
+
+/**
+ * @summary Returns a list of "managing" transactions of the ROFL app.
+This does not return transaction submitted by ROFL app instances, for that see
+the `/rofl_apps/{id}/instance_transactions` endpoint.
+
+ */
+export const useGetRuntimeRoflAppsIdTransactions = <TData = Awaited<ReturnType<typeof getRuntimeRoflAppsIdTransactions>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
+ runtime: Runtime,
+    id: string,
+    params?: GetRuntimeRoflAppsIdTransactionsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeRoflAppsIdTransactions>>, TError, TData>, request?: SecondParameter<typeof getRuntimeRoflAppsIdTransactionsMutator>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getGetRuntimeRoflAppsIdTransactionsQueryOptions(runtime,id,params,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+/**
+ * @summary Returns a list of transactions submitted by instances of the ROFL app.
+ */
+export const getRuntimeRoflAppsIdInstanceTransactions = (
+    runtime: Runtime,
+    id: string,
+    params?: GetRuntimeRoflAppsIdInstanceTransactionsParams,
+ options?: SecondParameter<typeof getRuntimeRoflAppsIdInstanceTransactionsMutator>,signal?: AbortSignal
+) => {
+      return getRuntimeRoflAppsIdInstanceTransactionsMutator<RuntimeTransactionList>(
+      {url: `/${runtime}/rofl_apps/${id}/instance_transactions`, method: 'get',
+        params, signal
+    },
+      options);
+    }
+  
+
+export const getGetRuntimeRoflAppsIdInstanceTransactionsQueryKey = (runtime: Runtime,
+    id: string,
+    params?: GetRuntimeRoflAppsIdInstanceTransactionsParams,) => [`/${runtime}/rofl_apps/${id}/instance_transactions`, ...(params ? [params]: [])] as const;
+  
+
+    
+export const getGetRuntimeRoflAppsIdInstanceTransactionsQueryOptions = <TData = Awaited<ReturnType<typeof getRuntimeRoflAppsIdInstanceTransactions>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(runtime: Runtime,
+    id: string,
+    params?: GetRuntimeRoflAppsIdInstanceTransactionsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeRoflAppsIdInstanceTransactions>>, TError, TData>, request?: SecondParameter<typeof getRuntimeRoflAppsIdInstanceTransactionsMutator>}
+): UseQueryOptions<Awaited<ReturnType<typeof getRuntimeRoflAppsIdInstanceTransactions>>, TError, TData> & { queryKey: QueryKey } => {
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetRuntimeRoflAppsIdInstanceTransactionsQueryKey(runtime,id,params);
+
+  
+  
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getRuntimeRoflAppsIdInstanceTransactions>>> = ({ signal }) => getRuntimeRoflAppsIdInstanceTransactions(runtime,id,params, requestOptions, signal);
+    
+      
+      
+   return  { queryKey, queryFn, enabled: !!(runtime && id), ...queryOptions}}
+
+export type GetRuntimeRoflAppsIdInstanceTransactionsQueryResult = NonNullable<Awaited<ReturnType<typeof getRuntimeRoflAppsIdInstanceTransactions>>>
+export type GetRuntimeRoflAppsIdInstanceTransactionsQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
+
+/**
+ * @summary Returns a list of transactions submitted by instances of the ROFL app.
+ */
+export const useGetRuntimeRoflAppsIdInstanceTransactions = <TData = Awaited<ReturnType<typeof getRuntimeRoflAppsIdInstanceTransactions>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
+ runtime: Runtime,
+    id: string,
+    params?: GetRuntimeRoflAppsIdInstanceTransactionsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeRoflAppsIdInstanceTransactions>>, TError, TData>, request?: SecondParameter<typeof getRuntimeRoflAppsIdInstanceTransactionsMutator>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getGetRuntimeRoflAppsIdInstanceTransactionsQueryOptions(runtime,id,params,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+/**
+ * @summary Returns a list of instances of the given ROFL app.
+ */
+export const getRuntimeRoflAppsIdInstances = (
+    runtime: Runtime,
+    id: string,
+    params?: GetRuntimeRoflAppsIdInstancesParams,
+ options?: SecondParameter<typeof getRuntimeRoflAppsIdInstancesMutator>,signal?: AbortSignal
+) => {
+      return getRuntimeRoflAppsIdInstancesMutator<RoflAppInstanceList>(
+      {url: `/${runtime}/rofl_apps/${id}/instances`, method: 'get',
+        params, signal
+    },
+      options);
+    }
+  
+
+export const getGetRuntimeRoflAppsIdInstancesQueryKey = (runtime: Runtime,
+    id: string,
+    params?: GetRuntimeRoflAppsIdInstancesParams,) => [`/${runtime}/rofl_apps/${id}/instances`, ...(params ? [params]: [])] as const;
+  
+
+    
+export const getGetRuntimeRoflAppsIdInstancesQueryOptions = <TData = Awaited<ReturnType<typeof getRuntimeRoflAppsIdInstances>>, TError = unknown>(runtime: Runtime,
+    id: string,
+    params?: GetRuntimeRoflAppsIdInstancesParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeRoflAppsIdInstances>>, TError, TData>, request?: SecondParameter<typeof getRuntimeRoflAppsIdInstancesMutator>}
+): UseQueryOptions<Awaited<ReturnType<typeof getRuntimeRoflAppsIdInstances>>, TError, TData> & { queryKey: QueryKey } => {
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetRuntimeRoflAppsIdInstancesQueryKey(runtime,id,params);
+
+  
+  
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getRuntimeRoflAppsIdInstances>>> = ({ signal }) => getRuntimeRoflAppsIdInstances(runtime,id,params, requestOptions, signal);
+    
+      
+      
+   return  { queryKey, queryFn, enabled: !!(runtime && id), ...queryOptions}}
+
+export type GetRuntimeRoflAppsIdInstancesQueryResult = NonNullable<Awaited<ReturnType<typeof getRuntimeRoflAppsIdInstances>>>
+export type GetRuntimeRoflAppsIdInstancesQueryError = unknown
+
+/**
+ * @summary Returns a list of instances of the given ROFL app.
+ */
+export const useGetRuntimeRoflAppsIdInstances = <TData = Awaited<ReturnType<typeof getRuntimeRoflAppsIdInstances>>, TError = unknown>(
+ runtime: Runtime,
+    id: string,
+    params?: GetRuntimeRoflAppsIdInstancesParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeRoflAppsIdInstances>>, TError, TData>, request?: SecondParameter<typeof getRuntimeRoflAppsIdInstancesMutator>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getGetRuntimeRoflAppsIdInstancesQueryOptions(runtime,id,params,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+/**
+ * @summary Returns a specific ROFL instance.
+ */
+export const getRuntimeRoflAppsIdInstancesRak = (
+    runtime: Runtime,
+    id: string,
+    rak: string,
+ options?: SecondParameter<typeof getRuntimeRoflAppsIdInstancesRakMutator>,signal?: AbortSignal
+) => {
+      return getRuntimeRoflAppsIdInstancesRakMutator<RoflInstance>(
+      {url: `/${runtime}/rofl_apps/${id}/instances/${rak}`, method: 'get', signal
+    },
+      options);
+    }
+  
+
+export const getGetRuntimeRoflAppsIdInstancesRakQueryKey = (runtime: Runtime,
+    id: string,
+    rak: string,) => [`/${runtime}/rofl_apps/${id}/instances/${rak}`] as const;
+  
+
+    
+export const getGetRuntimeRoflAppsIdInstancesRakQueryOptions = <TData = Awaited<ReturnType<typeof getRuntimeRoflAppsIdInstancesRak>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(runtime: Runtime,
+    id: string,
+    rak: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeRoflAppsIdInstancesRak>>, TError, TData>, request?: SecondParameter<typeof getRuntimeRoflAppsIdInstancesRakMutator>}
+): UseQueryOptions<Awaited<ReturnType<typeof getRuntimeRoflAppsIdInstancesRak>>, TError, TData> & { queryKey: QueryKey } => {
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetRuntimeRoflAppsIdInstancesRakQueryKey(runtime,id,rak);
+
+  
+  
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getRuntimeRoflAppsIdInstancesRak>>> = ({ signal }) => getRuntimeRoflAppsIdInstancesRak(runtime,id,rak, requestOptions, signal);
+    
+      
+      
+   return  { queryKey, queryFn, enabled: !!(runtime && id && rak), ...queryOptions}}
+
+export type GetRuntimeRoflAppsIdInstancesRakQueryResult = NonNullable<Awaited<ReturnType<typeof getRuntimeRoflAppsIdInstancesRak>>>
+export type GetRuntimeRoflAppsIdInstancesRakQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
+
+/**
+ * @summary Returns a specific ROFL instance.
+ */
+export const useGetRuntimeRoflAppsIdInstancesRak = <TData = Awaited<ReturnType<typeof getRuntimeRoflAppsIdInstancesRak>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
+ runtime: Runtime,
+    id: string,
+    rak: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeRoflAppsIdInstancesRak>>, TError, TData>, request?: SecondParameter<typeof getRuntimeRoflAppsIdInstancesRakMutator>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getGetRuntimeRoflAppsIdInstancesRakQueryOptions(runtime,id,rak,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+/**
+ * @summary Returns a list of transactions submitted by the given ROFL instance.
+ */
+export const getRuntimeRoflAppsIdInstancesRakTransactions = (
+    runtime: Runtime,
+    id: string,
+    rak: string,
+    params?: GetRuntimeRoflAppsIdInstancesRakTransactionsParams,
+ options?: SecondParameter<typeof getRuntimeRoflAppsIdInstancesRakTransactionsMutator>,signal?: AbortSignal
+) => {
+      return getRuntimeRoflAppsIdInstancesRakTransactionsMutator<RuntimeTransactionList>(
+      {url: `/${runtime}/rofl_apps/${id}/instances/${rak}/transactions`, method: 'get',
+        params, signal
+    },
+      options);
+    }
+  
+
+export const getGetRuntimeRoflAppsIdInstancesRakTransactionsQueryKey = (runtime: Runtime,
+    id: string,
+    rak: string,
+    params?: GetRuntimeRoflAppsIdInstancesRakTransactionsParams,) => [`/${runtime}/rofl_apps/${id}/instances/${rak}/transactions`, ...(params ? [params]: [])] as const;
+  
+
+    
+export const getGetRuntimeRoflAppsIdInstancesRakTransactionsQueryOptions = <TData = Awaited<ReturnType<typeof getRuntimeRoflAppsIdInstancesRakTransactions>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(runtime: Runtime,
+    id: string,
+    rak: string,
+    params?: GetRuntimeRoflAppsIdInstancesRakTransactionsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeRoflAppsIdInstancesRakTransactions>>, TError, TData>, request?: SecondParameter<typeof getRuntimeRoflAppsIdInstancesRakTransactionsMutator>}
+): UseQueryOptions<Awaited<ReturnType<typeof getRuntimeRoflAppsIdInstancesRakTransactions>>, TError, TData> & { queryKey: QueryKey } => {
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetRuntimeRoflAppsIdInstancesRakTransactionsQueryKey(runtime,id,rak,params);
+
+  
+  
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getRuntimeRoflAppsIdInstancesRakTransactions>>> = ({ signal }) => getRuntimeRoflAppsIdInstancesRakTransactions(runtime,id,rak,params, requestOptions, signal);
+    
+      
+      
+   return  { queryKey, queryFn, enabled: !!(runtime && id && rak), ...queryOptions}}
+
+export type GetRuntimeRoflAppsIdInstancesRakTransactionsQueryResult = NonNullable<Awaited<ReturnType<typeof getRuntimeRoflAppsIdInstancesRakTransactions>>>
+export type GetRuntimeRoflAppsIdInstancesRakTransactionsQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
+
+/**
+ * @summary Returns a list of transactions submitted by the given ROFL instance.
+ */
+export const useGetRuntimeRoflAppsIdInstancesRakTransactions = <TData = Awaited<ReturnType<typeof getRuntimeRoflAppsIdInstancesRakTransactions>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
+ runtime: Runtime,
+    id: string,
+    rak: string,
+    params?: GetRuntimeRoflAppsIdInstancesRakTransactionsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeRoflAppsIdInstancesRakTransactions>>, TError, TData>, request?: SecondParameter<typeof getRuntimeRoflAppsIdInstancesRakTransactionsMutator>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getGetRuntimeRoflAppsIdInstancesRakTransactionsQueryOptions(runtime,id,rak,params,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+/**
+ * @summary Returns a list of ROFL market providers.
+ */
+export const getRuntimeRoflmarketProviders = (
+    runtime: Runtime,
+    params?: GetRuntimeRoflmarketProvidersParams,
+ options?: SecondParameter<typeof getRuntimeRoflmarketProvidersMutator>,signal?: AbortSignal
+) => {
+      return getRuntimeRoflmarketProvidersMutator<RoflMarketProviderList>(
+      {url: `/${runtime}/roflmarket_providers`, method: 'get',
+        params, signal
+    },
+      options);
+    }
+  
+
+export const getGetRuntimeRoflmarketProvidersQueryKey = (runtime: Runtime,
+    params?: GetRuntimeRoflmarketProvidersParams,) => [`/${runtime}/roflmarket_providers`, ...(params ? [params]: [])] as const;
+  
+
+    
+export const getGetRuntimeRoflmarketProvidersQueryOptions = <TData = Awaited<ReturnType<typeof getRuntimeRoflmarketProviders>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(runtime: Runtime,
+    params?: GetRuntimeRoflmarketProvidersParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeRoflmarketProviders>>, TError, TData>, request?: SecondParameter<typeof getRuntimeRoflmarketProvidersMutator>}
+): UseQueryOptions<Awaited<ReturnType<typeof getRuntimeRoflmarketProviders>>, TError, TData> & { queryKey: QueryKey } => {
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetRuntimeRoflmarketProvidersQueryKey(runtime,params);
+
+  
+  
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getRuntimeRoflmarketProviders>>> = ({ signal }) => getRuntimeRoflmarketProviders(runtime,params, requestOptions, signal);
+    
+      
+      
+   return  { queryKey, queryFn, enabled: !!(runtime), ...queryOptions}}
+
+export type GetRuntimeRoflmarketProvidersQueryResult = NonNullable<Awaited<ReturnType<typeof getRuntimeRoflmarketProviders>>>
+export type GetRuntimeRoflmarketProvidersQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
+
+/**
+ * @summary Returns a list of ROFL market providers.
+ */
+export const useGetRuntimeRoflmarketProviders = <TData = Awaited<ReturnType<typeof getRuntimeRoflmarketProviders>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
+ runtime: Runtime,
+    params?: GetRuntimeRoflmarketProvidersParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeRoflmarketProviders>>, TError, TData>, request?: SecondParameter<typeof getRuntimeRoflmarketProvidersMutator>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getGetRuntimeRoflmarketProvidersQueryOptions(runtime,params,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+/**
+ * @summary Returns a specific ROFL market provider.
+ */
+export const getRuntimeRoflmarketProvidersAddress = (
+    runtime: Runtime,
+    address: StakingAddress,
+ options?: SecondParameter<typeof getRuntimeRoflmarketProvidersAddressMutator>,signal?: AbortSignal
+) => {
+      return getRuntimeRoflmarketProvidersAddressMutator<RoflMarketProvider>(
+      {url: `/${runtime}/roflmarket_providers/${address}`, method: 'get', signal
+    },
+      options);
+    }
+  
+
+export const getGetRuntimeRoflmarketProvidersAddressQueryKey = (runtime: Runtime,
+    address: StakingAddress,) => [`/${runtime}/roflmarket_providers/${address}`] as const;
+  
+
+    
+export const getGetRuntimeRoflmarketProvidersAddressQueryOptions = <TData = Awaited<ReturnType<typeof getRuntimeRoflmarketProvidersAddress>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(runtime: Runtime,
+    address: StakingAddress, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeRoflmarketProvidersAddress>>, TError, TData>, request?: SecondParameter<typeof getRuntimeRoflmarketProvidersAddressMutator>}
+): UseQueryOptions<Awaited<ReturnType<typeof getRuntimeRoflmarketProvidersAddress>>, TError, TData> & { queryKey: QueryKey } => {
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetRuntimeRoflmarketProvidersAddressQueryKey(runtime,address);
+
+  
+  
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getRuntimeRoflmarketProvidersAddress>>> = ({ signal }) => getRuntimeRoflmarketProvidersAddress(runtime,address, requestOptions, signal);
+    
+      
+      
+   return  { queryKey, queryFn, enabled: !!(runtime && address), ...queryOptions}}
+
+export type GetRuntimeRoflmarketProvidersAddressQueryResult = NonNullable<Awaited<ReturnType<typeof getRuntimeRoflmarketProvidersAddress>>>
+export type GetRuntimeRoflmarketProvidersAddressQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
+
+/**
+ * @summary Returns a specific ROFL market provider.
+ */
+export const useGetRuntimeRoflmarketProvidersAddress = <TData = Awaited<ReturnType<typeof getRuntimeRoflmarketProvidersAddress>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
+ runtime: Runtime,
+    address: StakingAddress, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeRoflmarketProvidersAddress>>, TError, TData>, request?: SecondParameter<typeof getRuntimeRoflmarketProvidersAddressMutator>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getGetRuntimeRoflmarketProvidersAddressQueryOptions(runtime,address,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+/**
+ * @summary Returns a list of ROFL market offers for a specific provider.
+ */
+export const getRuntimeRoflmarketProvidersAddressOffers = (
+    runtime: Runtime,
+    address: StakingAddress,
+    params?: GetRuntimeRoflmarketProvidersAddressOffersParams,
+ options?: SecondParameter<typeof getRuntimeRoflmarketProvidersAddressOffersMutator>,signal?: AbortSignal
+) => {
+      return getRuntimeRoflmarketProvidersAddressOffersMutator<RoflMarketOfferList>(
+      {url: `/${runtime}/roflmarket_providers/${address}/offers`, method: 'get',
+        params, signal
+    },
+      options);
+    }
+  
+
+export const getGetRuntimeRoflmarketProvidersAddressOffersQueryKey = (runtime: Runtime,
+    address: StakingAddress,
+    params?: GetRuntimeRoflmarketProvidersAddressOffersParams,) => [`/${runtime}/roflmarket_providers/${address}/offers`, ...(params ? [params]: [])] as const;
+  
+
+    
+export const getGetRuntimeRoflmarketProvidersAddressOffersQueryOptions = <TData = Awaited<ReturnType<typeof getRuntimeRoflmarketProvidersAddressOffers>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(runtime: Runtime,
+    address: StakingAddress,
+    params?: GetRuntimeRoflmarketProvidersAddressOffersParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeRoflmarketProvidersAddressOffers>>, TError, TData>, request?: SecondParameter<typeof getRuntimeRoflmarketProvidersAddressOffersMutator>}
+): UseQueryOptions<Awaited<ReturnType<typeof getRuntimeRoflmarketProvidersAddressOffers>>, TError, TData> & { queryKey: QueryKey } => {
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetRuntimeRoflmarketProvidersAddressOffersQueryKey(runtime,address,params);
+
+  
+  
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getRuntimeRoflmarketProvidersAddressOffers>>> = ({ signal }) => getRuntimeRoflmarketProvidersAddressOffers(runtime,address,params, requestOptions, signal);
+    
+      
+      
+   return  { queryKey, queryFn, enabled: !!(runtime && address), ...queryOptions}}
+
+export type GetRuntimeRoflmarketProvidersAddressOffersQueryResult = NonNullable<Awaited<ReturnType<typeof getRuntimeRoflmarketProvidersAddressOffers>>>
+export type GetRuntimeRoflmarketProvidersAddressOffersQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
+
+/**
+ * @summary Returns a list of ROFL market offers for a specific provider.
+ */
+export const useGetRuntimeRoflmarketProvidersAddressOffers = <TData = Awaited<ReturnType<typeof getRuntimeRoflmarketProvidersAddressOffers>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
+ runtime: Runtime,
+    address: StakingAddress,
+    params?: GetRuntimeRoflmarketProvidersAddressOffersParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeRoflmarketProvidersAddressOffers>>, TError, TData>, request?: SecondParameter<typeof getRuntimeRoflmarketProvidersAddressOffersMutator>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getGetRuntimeRoflmarketProvidersAddressOffersQueryOptions(runtime,address,params,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+/**
+ * @summary Returns a list of ROFL market instances for a specific provider.
+ */
+export const getRuntimeRoflmarketProvidersAddressInstances = (
+    runtime: Runtime,
+    address: StakingAddress,
+    params?: GetRuntimeRoflmarketProvidersAddressInstancesParams,
+ options?: SecondParameter<typeof getRuntimeRoflmarketProvidersAddressInstancesMutator>,signal?: AbortSignal
+) => {
+      return getRuntimeRoflmarketProvidersAddressInstancesMutator<RoflMarketInstanceList>(
+      {url: `/${runtime}/roflmarket_providers/${address}/instances`, method: 'get',
+        params, signal
+    },
+      options);
+    }
+  
+
+export const getGetRuntimeRoflmarketProvidersAddressInstancesQueryKey = (runtime: Runtime,
+    address: StakingAddress,
+    params?: GetRuntimeRoflmarketProvidersAddressInstancesParams,) => [`/${runtime}/roflmarket_providers/${address}/instances`, ...(params ? [params]: [])] as const;
+  
+
+    
+export const getGetRuntimeRoflmarketProvidersAddressInstancesQueryOptions = <TData = Awaited<ReturnType<typeof getRuntimeRoflmarketProvidersAddressInstances>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(runtime: Runtime,
+    address: StakingAddress,
+    params?: GetRuntimeRoflmarketProvidersAddressInstancesParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeRoflmarketProvidersAddressInstances>>, TError, TData>, request?: SecondParameter<typeof getRuntimeRoflmarketProvidersAddressInstancesMutator>}
+): UseQueryOptions<Awaited<ReturnType<typeof getRuntimeRoflmarketProvidersAddressInstances>>, TError, TData> & { queryKey: QueryKey } => {
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetRuntimeRoflmarketProvidersAddressInstancesQueryKey(runtime,address,params);
+
+  
+  
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getRuntimeRoflmarketProvidersAddressInstances>>> = ({ signal }) => getRuntimeRoflmarketProvidersAddressInstances(runtime,address,params, requestOptions, signal);
+    
+      
+      
+   return  { queryKey, queryFn, enabled: !!(runtime && address), ...queryOptions}}
+
+export type GetRuntimeRoflmarketProvidersAddressInstancesQueryResult = NonNullable<Awaited<ReturnType<typeof getRuntimeRoflmarketProvidersAddressInstances>>>
+export type GetRuntimeRoflmarketProvidersAddressInstancesQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
+
+/**
+ * @summary Returns a list of ROFL market instances for a specific provider.
+ */
+export const useGetRuntimeRoflmarketProvidersAddressInstances = <TData = Awaited<ReturnType<typeof getRuntimeRoflmarketProvidersAddressInstances>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
+ runtime: Runtime,
+    address: StakingAddress,
+    params?: GetRuntimeRoflmarketProvidersAddressInstancesParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeRoflmarketProvidersAddressInstances>>, TError, TData>, request?: SecondParameter<typeof getRuntimeRoflmarketProvidersAddressInstancesMutator>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getGetRuntimeRoflmarketProvidersAddressInstancesQueryOptions(runtime,address,params,options)
 
   const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
 
