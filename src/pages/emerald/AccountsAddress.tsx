@@ -49,11 +49,11 @@ export function AccountsAddress({ paratime = 'emerald' as Runtime }) {
           'evm_balances.0.token_contract_addr_eth': ({ value }) => {
             return <Link to={`/${paratime}/accounts/${value}`}>{value}</Link>
           },
-          'stats.total_received': ({ value }) => {
-            return <span>{new BigNumber(value).shiftedBy(-18).toFixed()}</span>
+          'stats.total_received': () => {
+            return 'inaccurate'
           },
-          'stats.total_sent': ({ value }) => {
-            return <span>{new BigNumber(value).shiftedBy(-18).toFixed()}</span>
+          'stats.total_sent': () => {
+            return 'inaccurate'
           },
           'evm_contract.verification.compilation_metadata.output.abi':  ({ value }) => {
             return (

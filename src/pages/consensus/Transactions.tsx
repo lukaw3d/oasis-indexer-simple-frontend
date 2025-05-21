@@ -18,7 +18,6 @@ export function Transactions() {
         data: {
           ...originalResult.data.data,
           transactions: originalResult.data.data.transactions.filter(a => {
-            // @ts-expect-error Bad method types
             return a.nonce <= 1000 && a.method !== 'consensus.Meta'
           })
         }

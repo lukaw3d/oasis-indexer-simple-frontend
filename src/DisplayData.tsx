@@ -72,7 +72,7 @@ export const CustomDisplayProvider = <T extends object,>({value, children}: {val
   return <CustomDisplayContext.Provider value={value}>{children}</CustomDisplayContext.Provider>
 }
 
-export function DisplayData({ result }: { result: UseQueryResult<AxiosResponse<any> | undefined> }) {
+export function DisplayData({ result }: { result: Pick<UseQueryResult<AxiosResponse<any> | undefined>, 'data' | 'error' | 'isLoading'> }) {
   if (result.isLoading) return <div>Loading...</div>
   if (result.error) return <div>{result.error.toString()}</div>
   return (<div>

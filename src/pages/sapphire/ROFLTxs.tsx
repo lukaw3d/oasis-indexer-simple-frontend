@@ -23,9 +23,10 @@ export function ROFLTxs() {
     useGetRuntimeTransactions(paratime, { method: 'roflmarket.InstanceExecuteCmds', ...searchParams }),
   ]
   const result = {
-    error: results.some(r => r.error),
+    error: results.find(r => r.error),
     isLoading: results.some(r => r.isLoading),
     data: {
+      ...results[0].data!,
       data: {
         transactions: results
           .flatMap(r => r.data?.data?.transactions)
@@ -49,10 +50,10 @@ export function ROFLTxs() {
               fee_proxy_module,
               ...t
             } = {...o}
-            if (t.error) t.body = '...'
+            if (t.error) t.body = '...' as any
             return t
           })
-          .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
+          .sort((a, b) => new Date(b.timestamp!).getTime() - new Date(a.timestamp!).getTime())
       }
     }
   }
@@ -75,7 +76,7 @@ export function ROFLTxs() {
             return <span style={!value ? {color: 'red'} : {}}>{value.toString()}</span>
           },
           'transactions.0.method': ({ value }) => {
-            return <pre>{value.split('.').join('.\n')}</pre>
+            return <pre>{value?.split('.').join('.\n')}</pre>
           },
           'transactions.0.hash': ({ value }) => {
             return <Link to={`https://explorer.dev.oasis.io/search?q=${value}`}>{value?.slice(0, 5)}..</Link>

@@ -30,6 +30,7 @@ export function ROFLEvents() {
     error: results.some(r => r.error),
     isLoading: results.some(r => r.isLoading),
     data: {
+      ...results[0].data!,
       data: {
         transactions: results
           .flatMap(r => r.data?.data?.events)
@@ -40,7 +41,7 @@ export function ROFLEvents() {
             } = {...o}
             return t
           })
-          .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
+          .sort((a, b) => new Date(b.timestamp!).getTime() - new Date(a.timestamp!).getTime())
       }
     }
   }
