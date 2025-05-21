@@ -41,3 +41,7 @@ td div {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+a[href^="https://explorer"] {
+  color: #0092f6;
+}
