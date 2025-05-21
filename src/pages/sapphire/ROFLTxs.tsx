@@ -75,7 +75,7 @@ export function ROFLTxs() {
             return <span style={!value ? {color: 'red'} : {}}>{value.toString()}</span>
           },
           'transactions.0.method': ({ value }) => {
-            return <span>{value}</span>
+            return <pre>{value.split('.').join('.\n')}</pre>
           },
           'transactions.0.hash': ({ value }) => {
             return <Link to={`https://explorer.dev.oasis.io/search?q=${value}`}>{value?.slice(0, 5)}..</Link>
