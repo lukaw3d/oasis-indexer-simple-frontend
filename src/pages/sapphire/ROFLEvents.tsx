@@ -48,7 +48,7 @@ export function ROFLEvents() {
 
   return (
     <>
-      <h2>ROFL</h2>
+      <h2>ROFL events of every type</h2>
       <CustomDisplayProvider<typeof result.data.data> value={{
         fieldPriority: {
           'transactions.0.tx_hash': -5,
