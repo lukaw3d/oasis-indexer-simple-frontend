@@ -141,11 +141,25 @@ export function ROFLTxs() {
           },
           'transactions.0.body.offer': ({ value }) => {
             if (Array.isArray(value) && value.length === 8) return 'offer' + oasis.misc.toHex(new Uint8Array(value))
+            if (value.length === 16) return 'offer' + value
             return value
           },
           'transactions.0.body.offers.0.id': ({ value }) => {
             if (Array.isArray(value) && value.length === 8) return 'offer' + oasis.misc.toHex(new Uint8Array(value))
-            return 'offer'+value
+            if (value.length === 16) return 'offer' + value
+            return value
+          },
+          'transactions.0.body.remove.0': ({ value }) => {
+            if (value.length === 16) return 'offer' + value
+            return value
+          },
+          'transactions.0.body.add.0.id': ({ value }) => {
+            if (value.length === 16) return 'offer TBD, unused value: ' + value
+            return value
+          },
+          'transactions.0.body.update.0.id': ({ value }) => {
+            if (value.length === 16) return 'offer' + value
+            return value
           },
           // roflmarket.InstanceExecuteCmds
           'transactions.0.body.cmds.0': ({ value }) => {
