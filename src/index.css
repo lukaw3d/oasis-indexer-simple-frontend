@@ -20,7 +20,8 @@ body {
 }
 
 table { border-spacing: 3px 0px; }
-th, td { padding: 3px 1ex; }
+th { padding: 3px 1ex; }
+td { padding: 2ex 1ex; }
 
 thead {
   position: sticky;
