@@ -1,8 +1,10 @@
+import * as oasis from '@oasisprotocol/client'
 import { Link, useSearchParams } from 'react-router-dom'
 import { CustomDisplayProvider, DisplayData } from '../../DisplayData'
 import { useGetRuntimeTransactions, Runtime, RuntimeTransactionList } from '../../oasis-indexer/generated/api'
 import BigNumber from 'bignumber.js'
 import { useState } from 'react'
+import TryCborDecode from '../../utils/TryCborDecode'
 
 export function Transactions({ paratime = 'emerald' as Runtime }) {
   const [removeSpam, setRemoveSpam] = useState(false)
@@ -79,6 +81,14 @@ export function Transactions({ paratime = 'emerald' as Runtime }) {
           },
           'transactions.0.to_eth': ({ value }) => {
             return <Link to={`/${paratime}/accounts/${value}`}>{value}</Link>
+          },
+          'transactions.0.body.id': ({ value }) => {
+            if (Array.isArray(value) && value.length === 8) return '0x' + oasis.misc.toHex(new Uint8Array(value))
+            return value
+          },
+          // roflmarket.InstanceExecuteCmds
+          'transactions.0.body.cmds.0': ({ value }) => {
+            return <TryCborDecode base64Value={value}></TryCborDecode>
           },
         },
       }}>
