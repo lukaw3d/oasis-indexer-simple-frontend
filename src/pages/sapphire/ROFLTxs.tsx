@@ -60,7 +60,7 @@ export function ROFLTxs() {
 
   return (
     <>
-      <h2>ROFL</h2>
+      <h2>ROFL transactions of every type</h2>
       <CustomDisplayProvider<typeof result.data.data> value={{
         fieldPriority: {
           'transactions.0.hash': -5,
