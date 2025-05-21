@@ -5,7 +5,7 @@ import { CustomDisplayProvider, DisplayData } from '../../DisplayData'
 import { useGetRuntimeTransactions } from '../../oasis-indexer/generated/api'
 import TryCborDecode from '../../utils/TryCborDecode'
 
-export function ROFL() {
+export function ROFLTxs() {
   const paratime = 'sapphire'
   const searchParams = Object.fromEntries(useSearchParams()[0])
   const results = [

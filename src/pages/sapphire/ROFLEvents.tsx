@@ -2,54 +2,42 @@
 import * as oasis from '@oasisprotocol/client'
 import { Link, useSearchParams } from 'react-router-dom'
 import { CustomDisplayProvider, DisplayData } from '../../DisplayData'
-import { useGetRuntimeTransactions } from '../../oasis-indexer/generated/api'
+import { useGetRuntimeEvents } from '../../oasis-indexer/generated/api'
 import TryCborDecode from '../../utils/TryCborDecode'
 
-export function ROFL() {
+export function ROFLEvents() {
   const paratime = 'sapphire'
   const searchParams = Object.fromEntries(useSearchParams()[0])
   const results = [
-    useGetRuntimeTransactions(paratime, { method: 'rofl.Create', ...searchParams }),
-    useGetRuntimeTransactions(paratime, { method: 'rofl.Register', ...searchParams }),
-    useGetRuntimeTransactions(paratime, { method: 'rofl.Remove', ...searchParams }),
-    useGetRuntimeTransactions(paratime, { method: 'rofl.Update', ...searchParams }),
-    useGetRuntimeTransactions(paratime, { method: 'roflmarket.ProviderCreate', ...searchParams }),
-    useGetRuntimeTransactions(paratime, { method: 'roflmarket.ProviderUpdate', ...searchParams }),
-    useGetRuntimeTransactions(paratime, { method: 'roflmarket.ProviderRemove', ...searchParams }),
-    useGetRuntimeTransactions(paratime, { method: 'roflmarket.ProviderUpdateOffers', ...searchParams }),
-    useGetRuntimeTransactions(paratime, { method: 'roflmarket.InstanceCreate', ...searchParams }),
-    useGetRuntimeTransactions(paratime, { method: 'roflmarket.InstanceTopUp', ...searchParams }),
-    useGetRuntimeTransactions(paratime, { method: 'roflmarket.InstanceCancel', ...searchParams }),
-    useGetRuntimeTransactions(paratime, { method: 'roflmarket.InstanceExecuteCmds', ...searchParams }),
+    useGetRuntimeEvents(paratime, { type: 'rofl.app_created', ...searchParams }),
+    useGetRuntimeEvents(paratime, { type: 'rofl.app_updated', ...searchParams }),
+    useGetRuntimeEvents(paratime, { type: 'rofl.app_removed', ...searchParams }),
+    useGetRuntimeEvents(paratime, { type: 'rofl.instance_registered', ...searchParams }),
+    useGetRuntimeEvents(paratime, { type: 'roflmarket.provider_created', ...searchParams }),
+    useGetRuntimeEvents(paratime, { type: 'roflmarket.provider_updated', ...searchParams }),
+    useGetRuntimeEvents(paratime, { type: 'roflmarket.provider_removed', ...searchParams }),
+    useGetRuntimeEvents(paratime, { type: 'roflmarket.instance_created', ...searchParams }),
+    useGetRuntimeEvents(paratime, { type: 'roflmarket.instance_updated', ...searchParams }),
+    useGetRuntimeEvents(paratime, { type: 'roflmarket.instance_accepted', ...searchParams }),
+    useGetRuntimeEvents(paratime, { type: 'roflmarket.instance_cancelled', ...searchParams }),
+    useGetRuntimeEvents(paratime, { type: 'roflmarket.instance_removed', ...searchParams }),
+    useGetRuntimeEvents(paratime, { type: 'roflmarket.instance_command_queued', ...searchParams }),
   ]
+
+  console.log(results)
+
   const result = {
     error: results.some(r => r.error),
     isLoading: results.some(r => r.isLoading),
     data: {
       data: {
         transactions: results
-          .flatMap(r => r.data?.data?.transactions)
+          .flatMap(r => r.data?.data?.events)
           .map(o => {
             const {
-              eth_hash,
-              amount,
-              round,
-              charged_fee,
-              fee,
-              fee_symbol,
-              gas_limit,
-              gas_used,
-              index,
-              nonce_0,
-              sender_0,
-              sender_0_eth,
-              is_likely_native_token_transfer,
-              size,
-              fee_proxy_id,
-              fee_proxy_module,
+              tx_index,
               ...t
             } = {...o}
-            if (t.error) t.body = '...'
             return t
           })
           .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
@@ -62,33 +50,17 @@ export function ROFL() {
       <h2>ROFL</h2>
       <CustomDisplayProvider<typeof result.data.data> value={{
         fieldPriority: {
-          'transactions.0.hash': -5,
+          'transactions.0.tx_hash': -5,
           'transactions.0.timestamp': -4,
-          'transactions.0.success': -3,
-          'transactions.0.method': -2,
+          'transactions.0.type': -2,
           'transactions.0.body': 100,
-          'transactions.0.error': 101,
         },
         fieldDisplay: {
-          'transactions.0.success': ({ value }) => {
-            if (value == null) return <span style={{color: 'red'}}>unknown</span>
-            return <span style={!value ? {color: 'red'} : {}}>{value.toString()}</span>
-          },
-          'transactions.0.method': ({ value }) => {
+          'transactions.0.type': ({ value }) => {
             return <span>{value}</span>
           },
-          'transactions.0.hash': ({ value }) => {
+          'transactions.0.tx_hash': ({ value }) => {
             return <Link to={`https://explorer.dev.oasis.io/search?q=${value}`}>{value?.slice(0, 5)}..</Link>
-          },
-          'transactions.0.signers': ({ value }) => {
-            if (!value) return null
-            console.log(value, value.map((v) => v.address_eth || v.address).join(','))
-            return <span>{value.map((v) => {
-              return <span key={v.address}>
-                <Link to={`https://explorer.dev.oasis.io/search?q=${v.address_eth || v.address}`}>{v.address_eth || v.address}</Link>
-                <br />
-              </span>
-            })}</span>
           },
           'transactions.0.body.ect': () => {
             return '...'
@@ -123,6 +95,12 @@ export function ROFL() {
           'transactions.0.body.id': ({ value }) => {
             if (Array.isArray(value) && value.length === 8) return 'offer' + oasis.misc.toHex(new Uint8Array(value))
             if (value.startsWith('rofl1')) {
+              return <Link to={`https://explorer.dev.oasis.io/search?q=${value}`}>{value}</Link>
+            }
+            return value
+          },
+          'transactions.0.body.address': ({ value }) => {
+            if (value.startsWith('oasis1')) {
               return <Link to={`https://explorer.dev.oasis.io/search?q=${value}`}>{value}</Link>
             }
             return value
