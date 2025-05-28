@@ -31,6 +31,32 @@ export function Events({ paratime = 'emerald' as Runtime }) {
   return (
     <>
       <h2>Events</h2>
+      <ul style={{maxHeight: 400, maxWidth: 400, overflow: 'auto'}}>
+        {/* https://github.com/oasisprotocol/nexus/blob/5db62e2/api/spec/v1.yaml#L3040-L3062 */}
+        <li><Link to={`/${paratime}/events?size=100&page=1&type=accounts.transfer`}>accounts.transfer</Link></li>
+        <li><Link to={`/${paratime}/events?size=100&page=1&type=accounts.burn`}>accounts.burn</Link></li>
+        <li><Link to={`/${paratime}/events?size=100&page=1&type=accounts.mint`}>accounts.mint</Link></li>
+        <li><Link to={`/${paratime}/events?size=100&page=1&type=consensus_accounts.deposit`}>consensus_accounts.deposit</Link></li>
+        <li><Link to={`/${paratime}/events?size=100&page=1&type=consensus_accounts.withdraw`}>consensus_accounts.withdraw</Link></li>
+        <li><Link to={`/${paratime}/events?size=100&page=1&type=consensus_accounts.delegate`}>consensus_accounts.delegate</Link></li>
+        <li><Link to={`/${paratime}/events?size=100&page=1&type=consensus_accounts.undelegate_start`}>consensus_accounts.undelegate_start</Link></li>
+        <li><Link to={`/${paratime}/events?size=100&page=1&type=consensus_accounts.undelegate_done`}>consensus_accounts.undelegate_done</Link></li>
+        <li><Link to={`/${paratime}/events?size=100&page=1&type=core.gas_used`}>core.gas_used</Link></li>
+        <li><Link to={`/${paratime}/events?size=100&page=1&type=evm.log`}>evm.log</Link></li>
+        <li><Link to={`/${paratime}/events?size=100&page=1&type=rofl.app_created`}>rofl.app_created</Link></li>
+        <li><Link to={`/${paratime}/events?size=100&page=1&type=rofl.app_updated`}>rofl.app_updated</Link></li>
+        <li><Link to={`/${paratime}/events?size=100&page=1&type=rofl.app_removed`}>rofl.app_removed</Link></li>
+        <li><Link to={`/${paratime}/events?size=100&page=1&type=rofl.instance_registered`}>rofl.instance_registered</Link></li>
+        <li><Link to={`/${paratime}/events?size=100&page=1&type=roflmarket.provider_created`}>roflmarket.provider_created</Link></li>
+        <li><Link to={`/${paratime}/events?size=100&page=1&type=roflmarket.provider_updated`}>roflmarket.provider_updated</Link></li>
+        <li><Link to={`/${paratime}/events?size=100&page=1&type=roflmarket.provider_removed`}>roflmarket.provider_removed</Link></li>
+        <li><Link to={`/${paratime}/events?size=100&page=1&type=roflmarket.instance_created`}>roflmarket.instance_created</Link></li>
+        <li><Link to={`/${paratime}/events?size=100&page=1&type=roflmarket.instance_updated`}>roflmarket.instance_updated</Link></li>
+        <li><Link to={`/${paratime}/events?size=100&page=1&type=roflmarket.instance_accepted`}>roflmarket.instance_accepted</Link></li>
+        <li><Link to={`/${paratime}/events?size=100&page=1&type=roflmarket.instance_cancelled`}>roflmarket.instance_cancelled</Link></li>
+        <li><Link to={`/${paratime}/events?size=100&page=1&type=roflmarket.instance_removed`}>roflmarket.instance_removed</Link></li>
+        <li><Link to={`/${paratime}/events?size=100&page=1&type=roflmarket.instance_command_queued`}>roflmarket.instance_command_queued</Link></li>
+      </ul>
       <label><input type="checkbox" checked={removeGas} onChange={(e) => setRemoveGas(e.target.checked)} /> remove used gas and fees events</label>
       <CustomDisplayProvider<RuntimeEventList> value={{
         fieldPriority: {

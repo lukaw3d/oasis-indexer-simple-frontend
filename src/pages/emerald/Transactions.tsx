@@ -28,6 +28,28 @@ export function Transactions({ paratime = 'emerald' as Runtime }) {
   return (
     <>
       <h2>Transactions</h2>
+      <ul style={{maxHeight: 400, maxWidth: 400, overflow: 'auto'}}>
+        {/* https://github.com/oasisprotocol/nexus/blob/5db62e2/api/spec/v1.yaml#L3296-L3313 */}
+        <li><Link to={`/${paratime}/transactions?size=100&page=1&method=accounts.Transfer`}>accounts.Transfer</Link></li>
+        <li><Link to={`/${paratime}/transactions?size=100&page=1&method=evm.Call`}>evm.Call</Link></li>
+        <li><Link to={`/${paratime}/transactions?size=100&page=1&method=evm.Create`}>evm.Create</Link></li>
+        <li><Link to={`/${paratime}/transactions?size=100&page=1&method=consensus.Deposit`}>consensus.Deposit</Link></li>
+        <li><Link to={`/${paratime}/transactions?size=100&page=1&method=consensus.Withdraw`}>consensus.Withdraw</Link></li>
+        <li><Link to={`/${paratime}/transactions?size=100&page=1&method=consensus.Delegate`}>consensus.Delegate</Link></li>
+        <li><Link to={`/${paratime}/transactions?size=100&page=1&method=consensus.Undelegate`}>consensus.Undelegate</Link></li>
+        <li><Link to={`/${paratime}/transactions?size=100&page=1&method=rofl.Create`}>rofl.Create</Link></li>
+        <li><Link to={`/${paratime}/transactions?size=100&page=1&method=rofl.Register`}>rofl.Register</Link></li>
+        <li><Link to={`/${paratime}/transactions?size=100&page=1&method=rofl.Remove`}>rofl.Remove</Link></li>
+        <li><Link to={`/${paratime}/transactions?size=100&page=1&method=rofl.Update`}>rofl.Update</Link></li>
+        <li><Link to={`/${paratime}/transactions?size=100&page=1&method=roflmarket.ProviderCreate`}>roflmarket.ProviderCreate</Link></li>
+        <li><Link to={`/${paratime}/transactions?size=100&page=1&method=roflmarket.ProviderUpdate`}>roflmarket.ProviderUpdate</Link></li>
+        <li><Link to={`/${paratime}/transactions?size=100&page=1&method=roflmarket.ProviderRemove`}>roflmarket.ProviderRemove</Link></li>
+        <li><Link to={`/${paratime}/transactions?size=100&page=1&method=roflmarket.InstanceCreate`}>roflmarket.InstanceCreate</Link></li>
+        <li><Link to={`/${paratime}/transactions?size=100&page=1&method=roflmarket.InstanceTopUp`}>roflmarket.InstanceTopUp</Link></li>
+        <li><Link to={`/${paratime}/transactions?size=100&page=1&method=roflmarket.InstanceCancel`}>roflmarket.InstanceCancel</Link></li>
+        <li><Link to={`/${paratime}/transactions?size=100&page=1&method=roflmarket.InstanceExecuteCmds`}>roflmarket.InstanceExecuteCmds</Link></li>
+        <li><Link to={`/${paratime}/transactions?size=100&page=1&method=`}>Unknown</Link></li>
+      </ul>
       <label><input type="checkbox" checked={removeSpam} onChange={(e) => setRemoveSpam(e.target.checked)} /> remove spam (nonce&gt;1000)</label>
       <CustomDisplayProvider<RuntimeTransactionList> value={{
         fieldPriority: {
