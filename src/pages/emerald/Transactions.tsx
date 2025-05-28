@@ -47,10 +47,11 @@ export function Transactions({ paratime = 'emerald' as Runtime }) {
             return <span style={!value ? {color: 'red'} : {}}>{value.toString()}</span>
           },
           'transactions.0.method': ({ value, parentValue }) => {
+            const link = <Link to={`/${paratime}/transactions?limit=100&offset=0&method=${value}`}>{value}</Link>
             if (parentValue.is_likely_native_token_transfer) {
-              return <span>{value} (transfer?)</span>
+              return <span>{link} (transfer?)</span>
             }
-            return <span>{value}</span>
+            return <span>{link}</span>
           },
           'transactions.0.amount': ({ value }) => {
             if (value == null) return null
