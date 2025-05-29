@@ -147,6 +147,7 @@ export function RecursiveValue({ value, path, parentValue }: {
           ))}
           </tbody>
         </table>
+        {parentValue.total_count && (value.length === parentValue.total_count + (parentValue.is_total_count_clipped ? 9999999 : 0)) ? '' : 'There might be more data'}
       </div>
     )
   }
