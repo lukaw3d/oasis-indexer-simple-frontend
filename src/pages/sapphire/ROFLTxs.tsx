@@ -74,6 +74,9 @@ export function ROFLTxs() {
             if (value == null) return <span style={{color: 'red'}}>unknown</span>
             return <span style={!value ? {color: 'red'} : {}}>{value.toString()}</span>
           },
+          'transactions.0.error.message': ({ value }) => {
+            return <span style={{color: 'red'}}>{(value ?? 'no message').toString()}</span>
+          },
           'transactions.0.method': ({ value }) => {
             return <pre>{value?.split('.').join('.\n')}</pre>
           },
