@@ -39,7 +39,7 @@ export function ROFLTxs() {
 
   return (
     <>
-      <h2>ROFL transactions of every type</h2>
+      <h2>ROFL transactions of every type (sorted by timestamp but there are holes in the timeline)</h2>
       <CustomDisplayProvider<typeof result.data.data> value={{
         fieldPriority: {
           'transactions.0.hash': -5,
