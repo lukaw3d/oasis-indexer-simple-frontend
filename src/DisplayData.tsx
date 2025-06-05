@@ -27,7 +27,7 @@ type FieldDisplay<T extends object> = {
 }
 
 type FieldPriority<T extends object> = {
-  [K in Paths<T>]?: number
+  [K in Paths<T>]?: number | 'hide'
 }
 
 export function typeTest() {
@@ -122,6 +122,7 @@ export function RecursiveValue({ value, path, parentValue }: {
 
   if (Array.isArray(value) && value.length > 2 && value.every(a => isPlainObject(a))) {
     const fields = [...new Set(value.flatMap(a => Object.keys(a)))]
+      .filter(a => customDisplay.fieldPriority[path ? path + '.0.' + a : a] !== 'hide')
       .sort((a, b) =>
         (customDisplay.fieldPriority[path ? path + '.0.' + a : a] ?? 0) -
         (customDisplay.fieldPriority[path ? path + '.0.' + b : b] ?? 0)
@@ -176,6 +177,7 @@ export function RecursiveValue({ value, path, parentValue }: {
     <div>
       {
         Object.keys(value)
+          .filter(a => customDisplay.fieldPriority[path ? path + '.' + a : a] !== 'hide')
           .sort((a, b) =>
             (customDisplay.fieldPriority[path ? path + '.' + a : a] ?? 0) -
             (customDisplay.fieldPriority[path ? path + '.' + b : b] ?? 0)

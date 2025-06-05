@@ -30,30 +30,7 @@ export function ROFLTxs() {
       data: {
         transactions: results
           .flatMap(r => r.data?.data?.transactions)
-          .map(o => {
-            const {
-              eth_hash,
-              amount,
-              round,
-              charged_fee,
-              fee,
-              fee_symbol,
-              gas_limit,
-              gas_used,
-              index,
-              nonce_0,
-              sender_0,
-              sender_0_eth,
-              is_likely_native_token_transfer,
-              size,
-              fee_proxy_id,
-              fee_proxy_module,
-              ...t
-            } = {...o}
-            if (t.error) t.body = '...' as any
-            return t
-          })
-          .sort((a, b) => new Date(b.timestamp!).getTime() - new Date(a.timestamp!).getTime())
+          .sort((a, b) => new Date(b!.timestamp!).getTime() - new Date(a!.timestamp!).getTime())
       }
     }
   }
@@ -69,6 +46,28 @@ export function ROFLTxs() {
           'transactions.0.method': -2,
           'transactions.0.body': 100,
           'transactions.0.error': 101,
+
+          'transactions.0.body.ect': 1000,
+          'transactions.0.body.extra_keys': 1000,
+          'transactions.0.body.secrets': 1000,
+          'transactions.0.body.policy.enclaves': 1000,
+
+          'transactions.0.eth_hash': 'hide',
+          'transactions.0.amount': 'hide',
+          'transactions.0.round': 'hide',
+          'transactions.0.charged_fee': 'hide',
+          'transactions.0.fee': 'hide',
+          'transactions.0.fee_symbol': 'hide',
+          'transactions.0.gas_limit': 'hide',
+          'transactions.0.gas_used': 'hide',
+          'transactions.0.index': 'hide',
+          'transactions.0.nonce_0': 'hide',
+          'transactions.0.sender_0': 'hide',
+          'transactions.0.sender_0_eth': 'hide',
+          'transactions.0.is_likely_native_token_transfer': 'hide',
+          'transactions.0.size': 'hide',
+          'transactions.0.fee_proxy_id': 'hide',
+          'transactions.0.fee_proxy_module': 'hide',
         },
         fieldDisplay: {
           'transactions.0.success': ({ value }) => {
