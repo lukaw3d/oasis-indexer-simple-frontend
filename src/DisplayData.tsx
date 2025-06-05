@@ -124,8 +124,8 @@ export function RecursiveValue({ value, path, parentValue }: {
     const fields = [...new Set(value.flatMap(a => Object.keys(a)))]
       .filter(a => customDisplay.fieldPriority[path ? path + '.0.' + a : a] !== 'hide')
       .sort((a, b) =>
-        (customDisplay.fieldPriority[path ? path + '.0.' + a : a] ?? 0) -
-        (customDisplay.fieldPriority[path ? path + '.0.' + b : b] ?? 0)
+        (customDisplay.fieldPriority[path ? path + '.0.' + a : a] as number ?? 0) -
+        (customDisplay.fieldPriority[path ? path + '.0.' + b : b] as number ?? 0)
       )
 
     return  (
@@ -179,8 +179,8 @@ export function RecursiveValue({ value, path, parentValue }: {
         Object.keys(value)
           .filter(a => customDisplay.fieldPriority[path ? path + '.' + a : a] !== 'hide')
           .sort((a, b) =>
-            (customDisplay.fieldPriority[path ? path + '.' + a : a] ?? 0) -
-            (customDisplay.fieldPriority[path ? path + '.' + b : b] ?? 0)
+            (customDisplay.fieldPriority[path ? path + '.' + a : a] as number ?? 0) -
+            (customDisplay.fieldPriority[path ? path + '.' + b : b] as number ?? 0)
           )
           .map((field, index) => (
             <Recursive

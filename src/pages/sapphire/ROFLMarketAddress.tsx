@@ -58,7 +58,7 @@ export function ROFLMarketAddress() {
           'offers.0.resources.tee': ({ value }) => {
             // https://github.com/oasisprotocol/oasis-sdk/blob/2d67fa02e292182314267db9ce6223056aee5ffa/client-sdk/go/modules/roflmarket/types.go#L177-L180
             const map = { 1: 'SGX ⚠️', 2: 'TDX' }
-            return <span>{value.toString()} (means: {map[value]})</span>
+            return <span>{value.toString()} (means: {map[value as 1]})</span>
           },
           'offers.0.resources.memory': ({ value }) => {
             return <span>{value.toString()} MB</span>
@@ -102,7 +102,7 @@ export function ROFLMarketAddress() {
           'instances.0.resources.tee': ({ value }) => {
             // https://github.com/oasisprotocol/oasis-sdk/blob/2d67fa02e292182314267db9ce6223056aee5ffa/client-sdk/go/modules/roflmarket/types.go#L177-L180
             const map = { 1: 'SGX ⚠️', 2: 'TDX' }
-            return <span>{value.toString()} (means: {map[value]})</span>
+            return <span>{value.toString()} (means: {map[value as 1]})</span>
           },
           'instances.0.resources.memory': ({ value }) => {
             return <span>{value.toString()} MB</span>
@@ -123,7 +123,7 @@ export function ROFLMarketAddress() {
           'instances.0.status': ({ value }) => {
             // https://github.com/oasisprotocol/oasis-sdk/blob/2d67fa02e292182314267db9ce6223056aee5ffa/client-sdk/go/modules/roflmarket/types.go#L237-L243
             const map = { 0: ['created', 'red'], 1: ['accepted', 'lightgreen'], 2: ['cancelled', 'red'] }
-            return <span style={{color: map[value][1]}}>{value.toString()} ({map[value][0]})</span>
+            return <span style={{color: map[value as 1][1]}}>{value.toString()} ({map[value as 1][0]})</span>
           },
           'instances.0.metadata.net.oasis.error': ({ value }) => {
             return <span style={value ? {color: 'red'} : {}}>{value.toString()}</span>

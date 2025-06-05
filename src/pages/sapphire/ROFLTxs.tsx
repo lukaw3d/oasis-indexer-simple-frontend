@@ -182,7 +182,7 @@ export function ROFLTxs() {
           'transactions.0.body.add.0.resources.tee': ({ value }) => {
             // https://github.com/oasisprotocol/oasis-sdk/blob/2d67fa02e292182314267db9ce6223056aee5ffa/client-sdk/go/modules/roflmarket/types.go#L177-L180
             const map = { 1: 'SGX ⚠️', 2: 'TDX' }
-            return <span>{value.toString()} (means: {map[value]})</span>
+            return <span>{value.toString()} (means: {map[value as 1]})</span>
           },
           'transactions.0.body.update.0.id': ({ value }) => {
             if (value.length === 16) return '0x' + value
@@ -197,7 +197,7 @@ export function ROFLTxs() {
           'transactions.0.body.update.0.resources.tee': ({ value }) => {
             // https://github.com/oasisprotocol/oasis-sdk/blob/2d67fa02e292182314267db9ce6223056aee5ffa/client-sdk/go/modules/roflmarket/types.go#L177-L180
             const map = { 1: 'SGX ⚠️', 2: 'TDX' }
-            return <span>{value.toString()} (means: {map[value]})</span>
+            return <span>{value.toString()} (means: {map[value as 1]})</span>
           },
           'transactions.0.body.cmds.0': ({ value }) => {
             // roflmarket.InstanceExecuteCmds
