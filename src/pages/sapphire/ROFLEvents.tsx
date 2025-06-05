@@ -55,6 +55,8 @@ export function ROFLEvents() {
           'transactions.0.timestamp': -4,
           'transactions.0.type': -2,
           'transactions.0.body': 100,
+          'transactions.0.body.ect': 1000,
+          'transactions.0.body.extra_keys': 1000,
         },
         fieldDisplay: {
           'transactions.0.type': ({ value }) => {
@@ -63,11 +65,11 @@ export function ROFLEvents() {
           'transactions.0.tx_hash': ({ value }) => {
             return <Link to={`https://explorer.dev.oasis.io/search?q=${value}`}>{value?.slice(0, 5)}..</Link>
           },
-          'transactions.0.body.ect': () => {
-            return '...'
+          'transactions.0.body.ect': ({ value }) => {
+            return JSON.stringify(value, null, 2)
           },
-          'transactions.0.body.extra_keys': () => {
-            return '...'
+          'transactions.0.body.extra_keys': ({ value }) => {
+            return JSON.stringify(value, null, 2)
           },
           'transactions.0.body.admin': ({ value }) => {
             if (value.startsWith('oasis1')) {

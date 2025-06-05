@@ -82,7 +82,6 @@ export function ROFLTxs() {
           },
           'transactions.0.signers': ({ value }) => {
             if (!value) return null
-            console.log(value, value.map((v) => v.address_eth || v.address).join(','))
             return <span>{value.map((v) => {
               return <span key={v.address}>
                 <Link to={`https://explorer.dev.oasis.io/search?q=${v.address_eth || v.address}`}>{v.address_eth || v.address}</Link>
@@ -90,11 +89,17 @@ export function ROFLTxs() {
               </span>
             })}</span>
           },
-          'transactions.0.body.ect': () => {
-            return '...'
+          'transactions.0.body.ect': ({ value }) => {
+            return JSON.stringify(value, null, 2)
           },
-          'transactions.0.body.extra_keys': () => {
-            return '...'
+          'transactions.0.body.extra_keys': ({ value }) => {
+            return JSON.stringify(value, null, 2)
+          },
+          'transactions.0.body.secrets': ({ value }) => {
+            return JSON.stringify(value, null, 2)
+          },
+          'transactions.0.body.policy.enclaves': ({ value }) => {
+            return JSON.stringify(value, null, 2)
           },
           'transactions.0.body.admin': ({ value }) => {
             if (value.startsWith('oasis1')) {
