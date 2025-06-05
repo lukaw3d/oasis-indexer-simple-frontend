@@ -94,7 +94,7 @@ export function ROFLEvents() {
             return value
           },
           'transactions.0.body.id': ({ value }) => {
-            if (Array.isArray(value) && value.length === 8) return 'offer' + oasis.misc.toHex(new Uint8Array(value))
+            if (Array.isArray(value) && value.length === 8) return '0x' + oasis.misc.toHex(new Uint8Array(value))
             if (value.startsWith('rofl1')) {
               return <Link to={`https://explorer.dev.oasis.io/search?q=${value}`}>{value}</Link>
             }
@@ -119,12 +119,12 @@ export function ROFLEvents() {
             return value
           },
           'transactions.0.body.offer': ({ value }) => {
-            if (Array.isArray(value) && value.length === 8) return 'offer' + oasis.misc.toHex(new Uint8Array(value))
+            if (Array.isArray(value) && value.length === 8) return '0x' + oasis.misc.toHex(new Uint8Array(value))
             return value
           },
           'transactions.0.body.offers.0.id': ({ value }) => {
-            if (Array.isArray(value) && value.length === 8) return 'offer' + oasis.misc.toHex(new Uint8Array(value))
-            return 'offer'+value
+            if (Array.isArray(value) && value.length === 8) return '0x' + oasis.misc.toHex(new Uint8Array(value))
+            return value
           },
           // roflmarket.InstanceExecuteCmds
           'transactions.0.body.cmds.0': ({ value }) => {

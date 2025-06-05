@@ -122,7 +122,7 @@ export function ROFLTxs() {
             return value
           },
           'transactions.0.body.id': ({ value }) => {
-            if (Array.isArray(value) && value.length === 8) return 'offer' + oasis.misc.toHex(new Uint8Array(value))
+            if (Array.isArray(value) && value.length === 8) return '0x' + oasis.misc.toHex(new Uint8Array(value))
             if (value.startsWith('rofl1')) {
               return <Link to={`https://explorer.dev.oasis.io/search?q=${value}`}>{value}</Link>
             }
@@ -141,17 +141,17 @@ export function ROFLTxs() {
             return value
           },
           'transactions.0.body.offer': ({ value }) => {
-            if (Array.isArray(value) && value.length === 8) return 'offer' + oasis.misc.toHex(new Uint8Array(value))
-            if (value.length === 16) return 'offer' + value
+            if (Array.isArray(value) && value.length === 8) return '0x' + oasis.misc.toHex(new Uint8Array(value))
+            if (value.length === 16) return '0x' + value
             return value
           },
           'transactions.0.body.offers.0.id': ({ value }) => {
-            if (Array.isArray(value) && value.length === 8) return 'offer' + oasis.misc.toHex(new Uint8Array(value))
-            if (value.length === 16) return 'offer' + value
+            if (Array.isArray(value) && value.length === 8) return '0x' + oasis.misc.toHex(new Uint8Array(value))
+            if (value.length === 16) return '0x' + value
             return value
           },
           'transactions.0.body.remove.0': ({ value }) => {
-            if (value.length === 16) return 'offer' + value
+            if (value.length === 16) return '0x' + value
             return value
           },
           'transactions.0.body.add.0.id': ({ value }) => {
@@ -159,7 +159,7 @@ export function ROFLTxs() {
             return value
           },
           'transactions.0.body.update.0.id': ({ value }) => {
-            if (value.length === 16) return 'offer' + value
+            if (value.length === 16) return '0x' + value
             return value
           },
           // roflmarket.InstanceExecuteCmds
