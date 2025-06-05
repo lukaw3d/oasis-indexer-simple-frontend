@@ -2,12 +2,14 @@
 import * as oasis from '@oasisprotocol/client'
 import { Link, useSearchParams } from 'react-router-dom'
 import { CustomDisplayProvider, DisplayData } from '../../DisplayData'
-import { useGetRuntimeTransactions } from '../../oasis-indexer/generated/api'
+import { useGetRuntimeTransactions, useGetConsensusEpochs } from '../../oasis-indexer/generated/api'
 import TryCborDecode from '../../utils/TryCborDecode'
 
 export function ROFLTxs() {
   const paratime = 'sapphire'
   const searchParams = Object.fromEntries(useSearchParams()[0])
+  const currentEpochQuery = useGetConsensusEpochs({limit: 1})
+  const currentEpoch = currentEpochQuery.data?.data?.epochs?.[0]?.id
   const results = [
     useGetRuntimeTransactions(paratime, { method: 'rofl.Create', ...searchParams }),
     useGetRuntimeTransactions(paratime, { method: 'rofl.Register', ...searchParams }),
@@ -144,6 +146,12 @@ export function ROFLTxs() {
           'transactions.0.body.payment_address.native': ({ value }) => {
             if (value.startsWith('oasis1')) {
               return <Link to={`https://explorer.dev.oasis.io/search?q=${value}`}>{value}</Link>
+            }
+            return value
+          },
+          'transactions.0.body.expiration': ({ value }) => {
+            if (currentEpoch && typeof value === 'number' && value < currentEpoch) {
+              return <span style={{color: 'red'}}>{value} (epoch now: {currentEpoch})</span>
             }
             return value
           },
