@@ -33,14 +33,7 @@ export function ROFLEvents() {
       data: {
         transactions: results
           .flatMap(r => r.data?.data?.events)
-          .map(o => {
-            const {
-              tx_index,
-              ...t
-            } = {...o}
-            return t
-          })
-          .sort((a, b) => new Date(b.timestamp!).getTime() - new Date(a.timestamp!).getTime())
+          .sort((a, b) => new Date(b!.timestamp!).getTime() - new Date(a!.timestamp!).getTime())
       }
     }
   }
@@ -58,6 +51,7 @@ export function ROFLEvents() {
           'transactions.0.body': 100,
           'transactions.0.body.ect': 1000,
           'transactions.0.body.extra_keys': 1000,
+          'transactions.0.tx_index': 'hide',
         },
         fieldDisplay: {
           'transactions.0.type': ({ value }) => {
