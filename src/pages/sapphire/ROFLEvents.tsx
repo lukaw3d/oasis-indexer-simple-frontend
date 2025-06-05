@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import * as oasis from '@oasisprotocol/client'
 import { Link, useSearchParams } from 'react-router-dom'
-import { CustomDisplayProvider, DisplayData } from '../../DisplayData'
+import { CustomDisplayProvider, DisplayData, RecursiveValue } from '../../DisplayData'
 import { useGetRuntimeEvents } from '../../oasis-indexer/generated/api'
 import TryCborDecode from '../../utils/TryCborDecode'
 
@@ -23,8 +23,7 @@ export function ROFLEvents() {
     useGetRuntimeEvents(paratime, { type: 'roflmarket.instance_removed', ...searchParams }),
     useGetRuntimeEvents(paratime, { type: 'roflmarket.instance_command_queued', ...searchParams }),
   ]
-
-  console.log(results)
+  const countByType = Object.fromEntries(results.map(a => [(a.queryKey[1] as any).type, a.data?.data.events.length + '/' + searchParams.limit]))
 
   const result = {
     error: results.some(r => r.error),
@@ -49,6 +48,8 @@ export function ROFLEvents() {
   return (
     <>
       <h2>ROFL events of every type (sorted by timestamp but there are holes in the timeline)</h2>
+      <RecursiveValue value={countByType} path='' parentValue={{}}></RecursiveValue>
+      <br />
       <CustomDisplayProvider<typeof result.data.data> value={{
         fieldPriority: {
           'transactions.0.tx_hash': -5,

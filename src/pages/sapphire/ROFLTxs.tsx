@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import * as oasis from '@oasisprotocol/client'
 import { Link, useSearchParams } from 'react-router-dom'
-import { CustomDisplayProvider, DisplayData } from '../../DisplayData'
+import { CustomDisplayProvider, DisplayData, RecursiveValue } from '../../DisplayData'
 import { useGetRuntimeTransactions, useGetConsensusEpochs } from '../../oasis-indexer/generated/api'
 import TryCborDecode from '../../utils/TryCborDecode'
 
@@ -24,6 +24,8 @@ export function ROFLTxs() {
     useGetRuntimeTransactions(paratime, { method: 'roflmarket.InstanceCancel', ...searchParams }),
     useGetRuntimeTransactions(paratime, { method: 'roflmarket.InstanceExecuteCmds', ...searchParams }),
   ]
+  const countByType = Object.fromEntries(results.map(a => [(a.queryKey[1] as any).method, a.data?.data.transactions.length + '/' + searchParams.limit]))
+
   const result = {
     error: results.find(r => r.error),
     isLoading: results.some(r => r.isLoading),
@@ -40,6 +42,8 @@ export function ROFLTxs() {
   return (
     <>
       <h2>ROFL transactions of every type (sorted by timestamp but there are holes in the timeline)</h2>
+      <RecursiveValue value={countByType} path='' parentValue={{}}></RecursiveValue>
+      <br />
       <CustomDisplayProvider<typeof result.data.data> value={{
         fieldPriority: {
           'transactions.0.hash': -5,
