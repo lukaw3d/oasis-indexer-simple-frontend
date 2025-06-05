@@ -42,6 +42,15 @@ td div {
   white-space: nowrap;
 }
 
+a[href^="https://explorer"]:before {
+  content: '↗';
+  margin-right: -4px;
+  position: relative;
+  top: -5px;
+}
 a[href^="https://explorer"] {
   color: #0092f6;
+}
+a[href^="https://explorer"]:visited {
+  color: #487ae1;
 }
