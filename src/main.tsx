@@ -24,6 +24,7 @@ export const router = createHashRouter(routes)
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
+      <a href="#" style={{ float: 'left' }}>/</a>
       <RouterProvider router={router} />
     </QueryClientProvider>
   </React.StrictMode>,

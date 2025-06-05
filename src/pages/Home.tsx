@@ -3,7 +3,8 @@ import { StatusDisplay } from '../utils/StatusDisplay'
 
 export function Home() {
   return (
-    <>
+    <div>
+      <h2>Use backend:</h2>
       <a href="https://lukaw3d.github.io/oasis-indexer-simple-frontend/staging-testnet/">staging-testnet</a><br/>
       <a href="https://lukaw3d.github.io/oasis-indexer-simple-frontend/staging-mainnet/">staging-mainnet</a><br/>
       <a href="https://lukaw3d.github.io/oasis-indexer-simple-frontend/production-testnet/">production-testnet</a><br/>
@@ -11,7 +12,7 @@ export function Home() {
       <a href="https://lukaw3d.github.io/oasis-indexer-simple-frontend/blue-testnet/">blue-testnet</a><br/>
       <a href="https://lukaw3d.github.io/oasis-indexer-simple-frontend/blue-mainnet/">blue-mainnet</a><br/>
       <a href="https://lukaw3d.github.io/oasis-indexer-simple-frontend/default-testnet/">default-testnet</a><br/>
-      <a href="https://lukaw3d.github.io/oasis-indexer-simple-frontend/default-mainnet/">default-mainnet</a><br/>
+      <a href="https://lukaw3d.github.io/oasis-indexer-simple-frontend/default-mainnet/">default-mainnet (nexus.oasis.io)</a><br/>
 
       <h2>Consensus</h2>
       <Link to="/consensus/blocks?limit=100&offset=0">Blocks</Link>, <Link to="/consensus/blocks?limit=5000&to=10000000">Blocks&lt;10000000</Link><br />
@@ -61,6 +62,6 @@ export function Home() {
       <h2>Misc</h2>
       <Link to="/converter">Converter</Link><br />
       <Link to="https://github.com/lukaw3d/oasis-indexer-simple-frontend">Source code</Link><br />
-    </>
+    </div>
   )
 }
