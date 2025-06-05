@@ -7,6 +7,7 @@ import { AccountsAddress } from '../emerald/AccountsAddress.tsx'
 import { Tokens } from '../emerald/Tokens.tsx'
 import { StatsTxVolume } from '../emerald/StatsTxVolume.tsx'
 import { StatsActiveAccounts } from '../emerald/StatsActiveAccounts.tsx'
+import { ROFLMarket } from './ROFLMarket.tsx'
 import { ROFLTxs } from './ROFLTxs.tsx'
 import { ROFLEvents } from './ROFLEvents.tsx'
 
@@ -19,6 +20,7 @@ export const routes: RouteObject[] = [
   { path: 'tokens', element: <Tokens paratime='sapphire' /> },
   { path: 'stats-tx-volume', element: <StatsTxVolume layer='sapphire' /> },
   { path: 'stats-active-accounts', element: <StatsActiveAccounts layer='sapphire' /> },
+  { path: 'rofl-market', element: <ROFLMarket /> },
   { path: 'rofl-txs', element: <ROFLTxs /> },
   { path: 'rofl-events', element: <ROFLEvents /> },
 ]
