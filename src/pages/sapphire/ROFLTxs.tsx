@@ -173,12 +173,34 @@ export function ROFLTxs() {
             if (value.length === 16) return 'offer TBD, unused value: ' + value
             return value
           },
+          'transactions.0.body.add.0.resources.memory': ({ value }) => {
+            return <span>{value.toString()} MB</span>
+          },
+          'transactions.0.body.add.0.resources.storage': ({ value }) => {
+            return <span>{value.toString()} MB 👈</span>
+          },
+          'transactions.0.body.add.0.resources.tee': ({ value }) => {
+            // https://github.com/oasisprotocol/oasis-sdk/blob/2d67fa02e292182314267db9ce6223056aee5ffa/client-sdk/go/modules/roflmarket/types.go#L177-L180
+            const map = { 1: 'SGX ⚠️', 2: 'TDX' }
+            return <span>{value.toString()} (means: {map[value]})</span>
+          },
           'transactions.0.body.update.0.id': ({ value }) => {
             if (value.length === 16) return '0x' + value
             return value
           },
-          // roflmarket.InstanceExecuteCmds
+          'transactions.0.body.update.0.resources.memory': ({ value }) => {
+            return <span>{value.toString()} MB</span>
+          },
+          'transactions.0.body.update.0.resources.storage': ({ value }) => {
+            return <span>{value.toString()} MB 👈</span>
+          },
+          'transactions.0.body.update.0.resources.tee': ({ value }) => {
+            // https://github.com/oasisprotocol/oasis-sdk/blob/2d67fa02e292182314267db9ce6223056aee5ffa/client-sdk/go/modules/roflmarket/types.go#L177-L180
+            const map = { 1: 'SGX ⚠️', 2: 'TDX' }
+            return <span>{value.toString()} (means: {map[value]})</span>
+          },
           'transactions.0.body.cmds.0': ({ value }) => {
+            // roflmarket.InstanceExecuteCmds
             return <TryCborDecode base64Value={value}></TryCborDecode>
           },
         },
