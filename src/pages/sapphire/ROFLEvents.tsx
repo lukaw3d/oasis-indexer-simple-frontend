@@ -102,6 +102,12 @@ export function ROFLEvents() {
             }
             return value
           },
+          'transactions.0.body.app_id': ({ value }) => {
+            if (value.startsWith('rofl1')) {
+              return <Link to={`https://explorer.dev.oasis.io/search?q=${value}`}>{value}</Link>
+            }
+            return value
+          },
           'transactions.0.body.address': ({ value }) => {
             if (value.startsWith('oasis1')) {
               return <Link to={`https://explorer.dev.oasis.io/search?q=${value}`}>{value}</Link>
