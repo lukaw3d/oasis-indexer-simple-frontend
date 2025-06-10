@@ -2,6 +2,8 @@ import { Link, useSearchParams } from 'react-router-dom'
 import { CustomDisplayProvider, DisplayData } from '../../DisplayData'
 import { useGetRuntimeEvents, RuntimeEventList, Runtime } from '../../oasis-indexer/generated/api'
 import { useState } from 'react'
+import TryCborDecode from '../../utils/TryCborDecode'
+import * as oasis from '@oasisprotocol/client'
 
 const FEE_ACCUMULATOR_ADDRESS = 'oasis1qp3r8hgsnphajmfzfuaa8fhjag7e0yt35cjxq0u4'
 
@@ -81,6 +83,80 @@ export function Events({ paratime = 'emerald' as Runtime }) {
           },
           'events.0.eth_tx_hash': ({ value }) => {
             return <Link to={`/${paratime}/transactions/${value}`}>{value}</Link>
+          },
+
+          'events.0.body.ect': ({ value }) => {
+            return JSON.stringify(value, null, 2)
+          },
+          'events.0.body.extra_keys': ({ value }) => {
+            return JSON.stringify(value, null, 2)
+          },
+          'events.0.body.admin': ({ value }) => {
+            if (value.startsWith('oasis1')) {
+              return <Link to={`https://explorer.dev.oasis.io/search?q=${value}`}>{value}</Link>
+            }
+            return value
+          },
+          'events.0.body.app': ({ value }) => {
+            if (value.startsWith('rofl1')) {
+              return <Link to={`https://explorer.dev.oasis.io/search?q=${value}`}>{value}</Link>
+            }
+            return value
+          },
+          'events.0.body.deployment.app_id': ({ value }) => {
+            if (value.startsWith('rofl1')) {
+              return <Link to={`https://explorer.dev.oasis.io/search?q=${value}`}>{value}</Link>
+            }
+            return value
+          },
+          'events.0.body.scheduler_app': ({ value }) => {
+            if (value.startsWith('rofl1')) {
+              return <Link to={`https://explorer.dev.oasis.io/search?q=${value}`}>{value}</Link>
+            }
+            return value
+          },
+          'events.0.body.id': ({ value }) => {
+            if (Array.isArray(value) && value.length === 8) return '0x' + oasis.misc.toHex(new Uint8Array(value))
+            if (value.startsWith('rofl1')) {
+              return <Link to={`https://explorer.dev.oasis.io/search?q=${value}`}>{value}</Link>
+            }
+            return value
+          },
+          'events.0.body.app_id': ({ value }) => {
+            if (value.startsWith('rofl1')) {
+              return <Link to={`https://explorer.dev.oasis.io/search?q=${value}`}>{value}</Link>
+            }
+            return value
+          },
+          'events.0.body.address': ({ value }) => {
+            if (value.startsWith('oasis1')) {
+              return <Link to={`https://explorer.dev.oasis.io/search?q=${value}`}>{value}</Link>
+            }
+            return value
+          },
+          'events.0.body.provider': ({ value }) => {
+            if (value.startsWith('oasis1')) {
+              return <Link to={`https://explorer.dev.oasis.io/search?q=${value}`}>{value}</Link>
+            }
+            return value
+          },
+          'events.0.body.payment_address.native': ({ value }) => {
+            if (value.startsWith('oasis1')) {
+              return <Link to={`https://explorer.dev.oasis.io/search?q=${value}`}>{value}</Link>
+            }
+            return value
+          },
+          'events.0.body.offer': ({ value }) => {
+            if (Array.isArray(value) && value.length === 8) return '0x' + oasis.misc.toHex(new Uint8Array(value))
+            return value
+          },
+          'events.0.body.offers.0.id': ({ value }) => {
+            if (Array.isArray(value) && value.length === 8) return '0x' + oasis.misc.toHex(new Uint8Array(value))
+            return value
+          },
+          // roflmarket.InstanceExecuteCmds
+          'events.0.body.cmds.0': ({ value }) => {
+            return <TryCborDecode base64Value={value}></TryCborDecode>
           },
         },
       }}>
