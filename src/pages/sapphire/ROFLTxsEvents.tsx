@@ -1,11 +1,10 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import * as oasis from '@oasisprotocol/client'
 import { Link, useSearchParams } from 'react-router-dom'
 import { CustomDisplayProvider, DisplayData, RecursiveValue } from '../../DisplayData'
-import { useGetRuntimeTransactions, useGetConsensusEpochs } from '../../oasis-indexer/generated/api'
+import { useGetRuntimeTransactions, useGetRuntimeEvents, useGetConsensusEpochs } from '../../oasis-indexer/generated/api'
 import TryCborDecode from '../../utils/TryCborDecode'
 
-export function ROFLTxs() {
+export function ROFLTxsEvents() {
   const paratime = 'sapphire'
   const searchParams = Object.fromEntries(useSearchParams()[0])
   const currentEpochQuery = useGetConsensusEpochs({limit: 1})
@@ -24,16 +23,49 @@ export function ROFLTxs() {
     useGetRuntimeTransactions(paratime, { method: 'roflmarket.InstanceCancel', ...searchParams }),
     useGetRuntimeTransactions(paratime, { method: 'roflmarket.InstanceExecuteCmds', ...searchParams }),
   ]
-  const countByType = Object.fromEntries(results.map(a => [(a.queryKey[1] as any).method, a.data?.data.transactions.length + '/' + searchParams.limit]))
+  const events = [
+    useGetRuntimeEvents(paratime, { type: 'rofl.app_created', ...searchParams }),
+    useGetRuntimeEvents(paratime, { type: 'rofl.app_updated', ...searchParams }),
+    useGetRuntimeEvents(paratime, { type: 'rofl.app_removed', ...searchParams }),
+    useGetRuntimeEvents(paratime, { type: 'rofl.instance_registered', ...searchParams }),
+    useGetRuntimeEvents(paratime, { type: 'roflmarket.provider_created', ...searchParams }),
+    useGetRuntimeEvents(paratime, { type: 'roflmarket.provider_updated', ...searchParams }),
+    useGetRuntimeEvents(paratime, { type: 'roflmarket.provider_removed', ...searchParams }),
+    useGetRuntimeEvents(paratime, { type: 'roflmarket.instance_created', ...searchParams }),
+    useGetRuntimeEvents(paratime, { type: 'roflmarket.instance_updated', ...searchParams }),
+    useGetRuntimeEvents(paratime, { type: 'roflmarket.instance_accepted', ...searchParams }),
+    useGetRuntimeEvents(paratime, { type: 'roflmarket.instance_cancelled', ...searchParams }),
+    useGetRuntimeEvents(paratime, { type: 'roflmarket.instance_removed', ...searchParams }),
+    useGetRuntimeEvents(paratime, { type: 'roflmarket.instance_command_queued', ...searchParams }),
+  ]
+  const error = [...results, ...events].find(r => r.error)
+  const isLoading = [...results, ...events].some(r => r.isLoading)
+  if (isLoading) return <div>Loading...</div>
+  if (error) return <div>{error.toString()}</div>
+
+  const countTxsByType = Object.fromEntries(results.map(a => [(a.queryKey[1] as any).method, a.data?.data.transactions.length + '/' + searchParams.limit]))
+  const countEventsByType = Object.fromEntries(events.map(a => [(a.queryKey[1] as any).type, a.data?.data.events.length + '/' + searchParams.limit]))
+  const eventsByTx = Object.groupBy(events.flatMap(r => r.data?.data?.events), (e) => e?.tx_hash!)
+
+  const txs = results.flatMap(r => r.data?.data?.transactions).map((t) => {
+    const events = eventsByTx[t!.hash]
+    delete eventsByTx[t!.hash!]
+    return { ...t, events }
+  })
+  const remainingEventsAsTxs = Object.values(eventsByTx).map(events => ({
+    events: events,
+    timestamp: events![0]!.timestamp,
+    hash: events![0]!.tx_hash,
+    success: true,
+  })) as typeof txs
 
   const result = {
-    error: results.find(r => r.error),
-    isLoading: results.some(r => r.isLoading),
+    error: error,
+    isLoading: isLoading,
     data: {
       ...results[0].data!,
       data: {
-        transactions: results
-          .flatMap(r => r.data?.data?.transactions)
+        transactions: [...txs, ...remainingEventsAsTxs]
           .sort((a, b) => new Date(b!.timestamp!).getTime() - new Date(a!.timestamp!).getTime())
       }
     }
@@ -41,8 +73,11 @@ export function ROFLTxs() {
 
   return (
     <>
-      <h2>ROFL transactions of every type (sorted by timestamp but there are holes in the timeline)</h2>
-      <RecursiveValue value={countByType} path='' parentValue={{}}></RecursiveValue>
+      <h2>ROFL transactions+events of every type (sorted by timestamp but there are holes in the timeline)</h2>
+      <div style={{display: 'flex'}}>
+        <RecursiveValue value={{transactions: countTxsByType}} path='' parentValue={{}}></RecursiveValue>
+        <RecursiveValue value={{events: countEventsByType}} path='' parentValue={{}}></RecursiveValue>
+      </div>
       <br />
       <CustomDisplayProvider<typeof result.data.data> value={{
         fieldPriority: {
@@ -51,7 +86,8 @@ export function ROFLTxs() {
           'transactions.0.success': -3,
           'transactions.0.method': -2,
           'transactions.0.body': 100,
-          'transactions.0.error': 101,
+          'transactions.0.events': 101,
+          'transactions.0.error': 102,
 
           'transactions.0.body.ect': 1000,
           'transactions.0.body.extra_keys': 1000,
@@ -74,6 +110,15 @@ export function ROFLTxs() {
           'transactions.0.size': 'hide',
           'transactions.0.fee_proxy_id': 'hide',
           'transactions.0.fee_proxy_module': 'hide',
+
+          'transactions.0.events.0.type': -2,
+          'transactions.0.events.0.body': 100,
+          'transactions.0.events.0.body.ect': 1000,
+          'transactions.0.events.0.body.extra_keys': 1000,
+          'transactions.0.events.0.timestamp': 'hide',
+          'transactions.0.events.0.round': 'hide',
+          'transactions.0.events.0.tx_hash': 'hide',
+          'transactions.0.events.0.tx_index': 'hide',
         },
         fieldDisplay: {
           'transactions.0.success': ({ value }) => {
@@ -87,13 +132,13 @@ export function ROFLTxs() {
             return <pre>{value?.split('.').join('.\n')}</pre>
           },
           'transactions.0.hash': ({ value }) => {
-            return <Link to={`https://explorer.dev.oasis.io/search?q=${value}`}>{value?.slice(0, 5)}..</Link>
+            return <Link to={`https://explorer.dev.oasis.io/search?q=${value}`} className="tiny">{value}..</Link>
           },
           'transactions.0.signers': ({ value }) => {
             if (!value) return null
             return <span>{value.map((v) => {
               return <span key={v.address}>
-                <Link to={`https://explorer.dev.oasis.io/search?q=${v.address_eth || v.address}`}>{v.address_eth || v.address}</Link>
+                <Link to={`https://explorer.dev.oasis.io/search?q=${v.address_eth || v.address}`} className="tiny">{v.address_eth || v.address}</Link>
                 <br />
               </span>
             })}</span>
@@ -205,6 +250,88 @@ export function ROFLTxs() {
           },
           'transactions.0.body.cmds.0': ({ value }) => {
             // roflmarket.InstanceExecuteCmds
+            return <TryCborDecode base64Value={value}></TryCborDecode>
+          },
+
+
+          // Events
+          'transactions.0.events.0.type': ({ value }) => {
+            return <span>{value}</span>
+          },
+          'transactions.0.events.0.tx_hash': ({ value }) => {
+            return <Link to={`https://explorer.dev.oasis.io/search?q=${value}`} className="tiny">{value}..</Link>
+          },
+          'transactions.0.events.0.body.ect': ({ value }) => {
+            return JSON.stringify(value, null, 2)
+          },
+          'transactions.0.events.0.body.extra_keys': ({ value }) => {
+            return JSON.stringify(value, null, 2)
+          },
+          'transactions.0.events.0.body.admin': ({ value }) => {
+            if (value.startsWith('oasis1')) {
+              return <Link to={`https://explorer.dev.oasis.io/search?q=${value}`}>{value}</Link>
+            }
+            return value
+          },
+          'transactions.0.events.0.body.app': ({ value }) => {
+            if (value.startsWith('rofl1')) {
+              return <Link to={`https://explorer.dev.oasis.io/search?q=${value}`}>{value}</Link>
+            }
+            return value
+          },
+          'transactions.0.events.0.body.deployment.app_id': ({ value }) => {
+            if (value.startsWith('rofl1')) {
+              return <Link to={`https://explorer.dev.oasis.io/search?q=${value}`}>{value}</Link>
+            }
+            return value
+          },
+          'transactions.0.events.0.body.scheduler_app': ({ value }) => {
+            if (value.startsWith('rofl1')) {
+              return <Link to={`https://explorer.dev.oasis.io/search?q=${value}`}>{value}</Link>
+            }
+            return value
+          },
+          'transactions.0.events.0.body.id': ({ value }) => {
+            if (Array.isArray(value) && value.length === 8) return '0x' + oasis.misc.toHex(new Uint8Array(value))
+            if (value.startsWith('rofl1')) {
+              return <Link to={`https://explorer.dev.oasis.io/search?q=${value}`}>{value}</Link>
+            }
+            return value
+          },
+          'transactions.0.events.0.body.app_id': ({ value }) => {
+            if (value.startsWith('rofl1')) {
+              return <Link to={`https://explorer.dev.oasis.io/search?q=${value}`}>{value}</Link>
+            }
+            return value
+          },
+          'transactions.0.events.0.body.address': ({ value }) => {
+            if (value.startsWith('oasis1')) {
+              return <Link to={`https://explorer.dev.oasis.io/search?q=${value}`}>{value}</Link>
+            }
+            return value
+          },
+          'transactions.0.events.0.body.provider': ({ value }) => {
+            if (value.startsWith('oasis1')) {
+              return <Link to={`https://explorer.dev.oasis.io/search?q=${value}`}>{value}</Link>
+            }
+            return value
+          },
+          'transactions.0.events.0.body.payment_address.native': ({ value }) => {
+            if (value.startsWith('oasis1')) {
+              return <Link to={`https://explorer.dev.oasis.io/search?q=${value}`}>{value}</Link>
+            }
+            return value
+          },
+          'transactions.0.events.0.body.offer': ({ value }) => {
+            if (Array.isArray(value) && value.length === 8) return '0x' + oasis.misc.toHex(new Uint8Array(value))
+            return value
+          },
+          'transactions.0.events.0.body.offers.0.id': ({ value }) => {
+            if (Array.isArray(value) && value.length === 8) return '0x' + oasis.misc.toHex(new Uint8Array(value))
+            return value
+          },
+          // roflmarket.InstanceExecuteCmds
+          'transactions.0.events.0.body.cmds.0': ({ value }) => {
             return <TryCborDecode base64Value={value}></TryCborDecode>
           },
         },

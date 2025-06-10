@@ -50,8 +50,7 @@ export function Home() {
       <Link to="/sapphire/stats-tx-volume?limit=100&offset=0">StatsTxVolume</Link><br />
       <Link to="/sapphire/stats-active-accounts?limit=100&offset=0">StatsActiveAccounts</Link><br />
       <Link to="/sapphire/rofl-market?limit=100&offset=0">ROFL market providers</Link><br />
-      <Link to="/sapphire/rofl-txs?limit=100&offset=0">ROFL apps+market Transactions mix</Link><br />
-      <Link to="/sapphire/rofl-events?limit=100&offset=0">ROFL apps+market Events mix</Link><br />
+      <Link to="/sapphire/rofl-txs-events?limit=100&offset=0">ROFL apps+market Transactions+Events mix</Link><br />
       Status:
       <StatusDisplay layer='sapphire'/>
 

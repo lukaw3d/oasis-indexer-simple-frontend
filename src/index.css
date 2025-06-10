@@ -52,5 +52,12 @@ a[href^="https://explorer"] {
   color: #0092f6;
 }
 a[href^="https://explorer"]:visited {
-  color: #487ae1;
+  color: #0092f6b0;
+}
+
+.tiny {
+  display: inline-block;
+  max-width: 12ex;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

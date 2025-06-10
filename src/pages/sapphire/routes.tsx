@@ -9,8 +9,7 @@ import { StatsTxVolume } from '../emerald/StatsTxVolume.tsx'
 import { StatsActiveAccounts } from '../emerald/StatsActiveAccounts.tsx'
 import { ROFLMarket } from './ROFLMarket.tsx'
 import { ROFLMarketAddress } from './ROFLMarketAddress.tsx'
-import { ROFLTxs } from './ROFLTxs.tsx'
-import { ROFLEvents } from './ROFLEvents.tsx'
+import { ROFLTxsEvents } from './ROFLTxsEvents.tsx'
 
 export const routes: RouteObject[] = [
   { path: 'blocks', element: <Blocks paratime='sapphire' /> },
@@ -23,6 +22,5 @@ export const routes: RouteObject[] = [
   { path: 'stats-active-accounts', element: <StatsActiveAccounts layer='sapphire' /> },
   { path: 'rofl-market', element: <ROFLMarket /> },
   { path: 'rofl-market/:address', element: <ROFLMarketAddress /> },
-  { path: 'rofl-txs', element: <ROFLTxs /> },
-  { path: 'rofl-events', element: <ROFLEvents /> },
+  { path: 'rofl-txs-events', element: <ROFLTxsEvents /> },
 ]
