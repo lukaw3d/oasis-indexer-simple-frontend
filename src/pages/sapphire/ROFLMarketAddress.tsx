@@ -3,7 +3,6 @@ import { CustomDisplayProvider, DisplayData } from '../../DisplayData'
 import { RoflMarketProvider, RoflMarketInstanceList, RoflMarketOfferList, useGetRuntimeRoflmarketProvidersAddress, useGetRuntimeRoflmarketProvidersAddressOffers, useGetRuntimeRoflmarketProvidersAddressInstances } from '../../oasis-indexer/generated/api'
 import BigNumber from 'bignumber.js'
 import TryCborDecode from '../../utils/TryCborDecode'
-import { tryHexHexDecode } from '../../utils/tryHexHexDecode'
 
 export function ROFLMarketAddress() {
   const paratime = 'sapphire'
@@ -22,8 +21,8 @@ export function ROFLMarketAddress() {
           'instances_next_id': 'hide',
         },
         fieldDisplay: {
-          'offers_next_id': ({ value }) => tryHexHexDecode(value),
-          'instances_next_id': ({ value }) => tryHexHexDecode(value),
+          'offers_next_id': ({ value }) => '0x'+value,
+          'instances_next_id': ({ value }) => '0x'+value,
           'address': ({ value }) => {
             return <Link to={`https://explorer.dev.oasis.io/search?q=${value}`}>{value}</Link>
           },
@@ -51,7 +50,7 @@ export function ROFLMarketAddress() {
           'offers.0.provider': 'hide',
         },
         fieldDisplay: {
-          'offers.0.id': ({ value }) => tryHexHexDecode(value),
+          'offers.0.id': ({ value }) => '0x'+value,
           'offers.0.removed': ({ value }) => {
             return <span style={value ? {color: 'red'} : {}}>{value.toString()}</span>
           },
@@ -87,9 +86,9 @@ export function ROFLMarketAddress() {
           'instances.0.payment': 'hide',
         },
         fieldDisplay: {
-          'instances.0.id': ({ value }) => tryHexHexDecode(value),
-          'instances.0.cmd_next_id': ({ value }) => tryHexHexDecode(value),
-          'instances.0.offer_id': ({ value }) => tryHexHexDecode(value),
+          'instances.0.id': ({ value }) => '0x'+value,
+          'instances.0.cmd_next_id': ({ value }) => '0x'+value,
+          'instances.0.offer_id': ({ value }) => '0x'+value,
           'instances.0.admin': ({ value }) => {
             return <Link to={`https://explorer.dev.oasis.io/search?q=${value}`}>{value}</Link>
           },

@@ -2,7 +2,6 @@ import { Link, useSearchParams } from 'react-router-dom'
 import { CustomDisplayProvider, DisplayData } from '../../DisplayData'
 import { RoflMarketProviderList, useGetRuntimeRoflmarketProviders } from '../../oasis-indexer/generated/api'
 import BigNumber from 'bignumber.js'
-import { tryHexHexDecode } from '../../utils/tryHexHexDecode'
 
 export function ROFLMarket() {
   const paratime = 'sapphire'
@@ -36,8 +35,8 @@ export function ROFLMarket() {
           'providers.0.removed': ({ value }) => {
             return <span style={value ? {color: 'red'} : {}}>{value.toString()}</span>
           },
-          'providers.0.offers_next_id': ({ value }) => tryHexHexDecode(value),
-          'providers.0.instances_next_id': ({ value }) => tryHexHexDecode(value),
+          'providers.0.offers_next_id': ({ value }) => '0x'+value,
+          'providers.0.instances_next_id': ({ value }) => '0x'+value,
         },
       }}>
         <DisplayData result={useGetRuntimeRoflmarketProviders(paratime, { ...searchParams })}></DisplayData>
