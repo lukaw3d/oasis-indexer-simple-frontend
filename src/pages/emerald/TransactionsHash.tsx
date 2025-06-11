@@ -69,10 +69,19 @@ export function TransactionsHash({ paratime = 'emerald' as Runtime }) {
             return <Link to={`/${paratime}/transactions/${value}`}>0x{value}</Link>
           },
           'transactions.0.sender_0': ({ value }) => {
-            return <Link to={`/${paratime}/accounts/${value}`}>{value}</Link>
+            return <Link to={`/${paratime}/accounts/${value}`} className="tiny">{value}</Link>
           },
           'transactions.0.sender_0_eth': ({ value }) => {
-            return <Link to={`/${paratime}/accounts/${value}`}>{value}</Link>
+            return <Link to={`/${paratime}/accounts/${value}`} className="tiny">{value}</Link>
+          },
+          'transactions.0.signers': ({ value }) => {
+            if (!value) return null
+            return <span>{value.map((v) => {
+              return <span key={v.address}>
+                <Link to={`/${paratime}/accounts/${v.address_eth || v.address}`}>{v.address_eth || v.address}</Link>
+                <br />
+              </span>
+            })}</span>
           },
           'transactions.0.to': ({ value }) => {
             return <Link to={`/${paratime}/accounts/${value}`}>{value}</Link>

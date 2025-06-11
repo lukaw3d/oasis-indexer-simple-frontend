@@ -77,7 +77,7 @@ export function Transactions({ paratime = 'emerald' as Runtime }) {
           },
           'transactions.0.amount': ({ value }) => {
             if (value == null) return null
-            return <span>{new BigNumber(value).shiftedBy(-18).toFixed()}</span>
+            return <span className="tiny">{new BigNumber(value).shiftedBy(-18).toFixed()}</span>
           },
           'transactions.0.charged_fee': ({ value }) => {
             if (value == null) return null
@@ -87,17 +87,26 @@ export function Transactions({ paratime = 'emerald' as Runtime }) {
             return <span>{new BigNumber(value).shiftedBy(-18).toFixed()}</span>
           },
           'transactions.0.hash': ({ value }) => {
-            return <Link to={`/${paratime}/transactions/${value}`}>{value}</Link>
+            return <Link to={`/${paratime}/transactions/${value}`} className="tiny">{value}</Link>
           },
           'transactions.0.eth_hash': ({ value }) => {
             if (value == null) return null
-            return <Link to={`/${paratime}/transactions/${value}`}>0x{value}</Link>
+            return <Link to={`/${paratime}/transactions/${value}`} className="tiny">0x{value}</Link>
           },
           'transactions.0.sender_0': ({ value }) => {
-            return <Link to={`/${paratime}/accounts/${value}`}>{value}</Link>
+            return <Link to={`/${paratime}/accounts/${value}`} className="tiny">{value}</Link>
           },
           'transactions.0.sender_0_eth': ({ value }) => {
-            return <Link to={`/${paratime}/accounts/${value}`}>{value}</Link>
+            return <Link to={`/${paratime}/accounts/${value}`} className="tiny">{value}</Link>
+          },
+          'transactions.0.signers': ({ value }) => {
+            if (!value) return null
+            return <span>{value.map((v) => {
+              return <span key={v.address}>
+                <Link to={`/${paratime}/accounts/${v.address_eth || v.address}`}>{v.address_eth || v.address}</Link>
+                <br />
+              </span>
+            })}</span>
           },
           'transactions.0.to': ({ value }) => {
             return <Link to={`/${paratime}/accounts/${value}`}>{value}</Link>

@@ -60,4 +60,5 @@ a[href^="https://explorer"]:visited {
   max-width: 12ex;
   overflow: hidden;
   text-overflow: ellipsis;
+  vertical-align: bottom;
 }

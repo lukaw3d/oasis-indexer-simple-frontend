@@ -79,10 +79,10 @@ export function Events({ paratime = 'emerald' as Runtime }) {
             </span>
           },
           'events.0.tx_hash': ({ value }) => {
-            return <Link to={`/${paratime}/transactions/${value}`}>{value}</Link>
+            return <Link to={`/${paratime}/transactions/${value}`} className="tiny">{value}</Link>
           },
           'events.0.eth_tx_hash': ({ value }) => {
-            return <Link to={`/${paratime}/transactions/${value}`}>{value}</Link>
+            return <Link to={`/${paratime}/transactions/${value}`} className="tiny">{value}</Link>
           },
 
           'events.0.body.ect': ({ value }) => {
