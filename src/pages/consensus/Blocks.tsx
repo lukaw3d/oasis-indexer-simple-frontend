@@ -29,6 +29,9 @@ export function Blocks() {
               <Link to={`/consensus/transactions?offset=0&limit=100&after=${value}&before=${new Date(new Date(value).getTime() + 1).toISOString()}`}>txs</Link>
             </span>
           },
+          'blocks.0.signers': ({ value }) => {
+            return JSON.stringify(value)
+          },
         },
       }}>
         <DisplayData result={useGetConsensusBlocks({ ...searchParams })}></DisplayData>
