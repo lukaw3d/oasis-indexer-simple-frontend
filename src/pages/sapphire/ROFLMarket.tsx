@@ -3,6 +3,7 @@ import { CustomDisplayProvider, DisplayData } from '../../DisplayData'
 import { RoflMarketProviderList, useGetRuntimeRoflmarketProviders } from '../../oasis-indexer/generated/api'
 import BigNumber from 'bignumber.js'
 import * as oasis from '@oasisprotocol/client'
+import RuntimeAccountBalance from '../../utils/RuntimeAccountBalance'
 
 export function ROFLMarket() {
   const paratime = 'sapphire'
@@ -39,6 +40,8 @@ export function ROFLMarket() {
               {value}
               <br />
               <Link to={`https://explorer.dev.oasis.io/search?q=${nodeIdAsAddress}`}>{nodeIdAsAddress}</Link>
+              <br />
+              <RuntimeAccountBalance address={nodeIdAsAddress} paratime={paratime} />
               <br />
             </span>
           },

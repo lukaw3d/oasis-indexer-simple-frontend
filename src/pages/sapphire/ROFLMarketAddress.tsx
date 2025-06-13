@@ -4,6 +4,7 @@ import { RoflMarketProvider, RoflMarketInstanceList, RoflMarketOfferList, useGet
 import BigNumber from 'bignumber.js'
 import TryCborDecode from '../../utils/TryCborDecode'
 import * as oasis from '@oasisprotocol/client'
+import RuntimeAccountBalance from '../../utils/RuntimeAccountBalance'
 
 export function ROFLMarketAddress() {
   const paratime = 'sapphire'
@@ -46,6 +47,8 @@ export function ROFLMarketAddress() {
               {value}
               {' '}
               <Link to={`https://explorer.dev.oasis.io/search?q=${nodeIdAsAddress}`}>{nodeIdAsAddress}</Link>
+              {' '}
+              <RuntimeAccountBalance address={nodeIdAsAddress} paratime={paratime} />
               {' '}
             </span>
           },
