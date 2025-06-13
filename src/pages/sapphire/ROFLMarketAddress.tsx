@@ -3,6 +3,7 @@ import { CustomDisplayProvider, DisplayData } from '../../DisplayData'
 import { RoflMarketProvider, RoflMarketInstanceList, RoflMarketOfferList, useGetRuntimeRoflmarketProvidersAddress, useGetRuntimeRoflmarketProvidersAddressOffers, useGetRuntimeRoflmarketProvidersAddressInstances } from '../../oasis-indexer/generated/api'
 import BigNumber from 'bignumber.js'
 import TryCborDecode from '../../utils/TryCborDecode'
+import * as oasis from '@oasisprotocol/client'
 
 export function ROFLMarketAddress() {
   const paratime = 'sapphire'
@@ -38,6 +39,15 @@ export function ROFLMarketAddress() {
           },
           'removed': ({ value }) => {
             return <span style={value ? {color: 'red'} : {}}>{value.toString()}</span>
+          },
+          'nodes.0': ({ value }) => {
+            const nodeIdAsAddress = oasis.staking.addressToBech32(oasis.staking.addressFromPublicKey(oasis.misc.fromBase64(value)))
+            return <span>
+              {value}
+              {' '}
+              <Link to={`https://explorer.dev.oasis.io/search?q=${nodeIdAsAddress}`}>{nodeIdAsAddress}</Link>
+              {' '}
+            </span>
           },
         },
       }}>

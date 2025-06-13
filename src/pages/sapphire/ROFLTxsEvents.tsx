@@ -198,6 +198,15 @@ export function ROFLTxsEvents() {
             }
             return value
           },
+          'transactions.0.body.nodes.0': ({ value }) => {
+            const nodeIdAsAddress = oasis.staking.addressToBech32(oasis.staking.addressFromPublicKey(oasis.misc.fromBase64(value)))
+            return <span key={value}>
+              {value}
+              <br />
+              <Link to={`https://explorer.dev.oasis.io/search?q=${nodeIdAsAddress}`}>{nodeIdAsAddress}</Link>
+              <br />
+            </span>
+          },
           'transactions.0.body.expiration': ({ value }) => {
             if (currentEpoch && typeof value === 'number' && value < currentEpoch) {
               return <span style={{color: 'red'}}>{value} (epoch now: {currentEpoch})</span>

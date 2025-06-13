@@ -2,6 +2,7 @@ import { Link, useSearchParams } from 'react-router-dom'
 import { CustomDisplayProvider, DisplayData } from '../../DisplayData'
 import { RoflMarketProviderList, useGetRuntimeRoflmarketProviders } from '../../oasis-indexer/generated/api'
 import BigNumber from 'bignumber.js'
+import * as oasis from '@oasisprotocol/client'
 
 export function ROFLMarket() {
   const paratime = 'sapphire'
@@ -31,6 +32,15 @@ export function ROFLMarket() {
           },
           'providers.0.payment_address.native': ({ value }) => {
             return <Link to={`https://explorer.dev.oasis.io/search?q=${value}`}>{value}</Link>
+          },
+          'providers.0.nodes.0': ({ value }) => {
+            const nodeIdAsAddress = oasis.staking.addressToBech32(oasis.staking.addressFromPublicKey(oasis.misc.fromBase64(value)))
+            return <span key={value}>
+              {value}
+              <br />
+              <Link to={`https://explorer.dev.oasis.io/search?q=${nodeIdAsAddress}`}>{nodeIdAsAddress}</Link>
+              <br />
+            </span>
           },
           'providers.0.removed': ({ value }) => {
             return <span style={value ? {color: 'red'} : {}}>{value.toString()}</span>
