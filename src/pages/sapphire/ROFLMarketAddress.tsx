@@ -1,6 +1,6 @@
 import { Link, useParams, useSearchParams } from 'react-router-dom'
 import { CustomDisplayProvider, DisplayData } from '../../DisplayData'
-import { RoflMarketProvider, RoflMarketInstanceList, RoflMarketOfferList, useGetRuntimeRoflmarketProvidersAddress, useGetRuntimeRoflmarketProvidersAddressOffers, useGetRuntimeRoflmarketProvidersAddressInstances } from '../../oasis-indexer/generated/api'
+import { RoflMarketProvider, RoflMarketInstanceList, RoflMarketOfferList, useGetRuntimeRoflmarketProvidersAddress, useGetRuntimeRoflmarketProvidersAddressOffers, useGetRuntimeRoflmarketInstances } from '../../oasis-indexer/generated/api'
 import BigNumber from 'bignumber.js'
 import TryCborDecode from '../../utils/TryCborDecode'
 import * as oasis from '@oasisprotocol/client'
@@ -142,7 +142,7 @@ export function ROFLMarketAddress() {
           },
         },
       }}>
-        <DisplayData result={useGetRuntimeRoflmarketProvidersAddressInstances(paratime, address, { ...searchParams })}></DisplayData>
+        <DisplayData result={useGetRuntimeRoflmarketInstances(paratime, { provider: address, ...searchParams })}></DisplayData>
       </CustomDisplayProvider>
     </>
   )
