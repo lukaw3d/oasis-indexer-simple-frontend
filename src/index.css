@@ -29,6 +29,9 @@ thead {
   background-color: #88888888;
 }
 
+tr:hover {
+  background-color: black;
+}
 td {
   max-width: 40ex;
   overflow: hidden;
