@@ -140,6 +140,14 @@ export function ROFLMarketAddress() {
           'instances.0.metadata.net.oasis.error': ({ value }) => {
             return <span style={value ? {color: 'red'} : {}}>{value.toString()}</span>
           },
+          'instances.0.metadata.net.oasis.scheduler.rak': ({ value }) => {
+            const schedulerAsAddress = oasis.staking.addressToBech32(oasis.staking.addressFromPublicKey(oasis.misc.fromBase64(value)))
+            return <span>
+              {value}
+              <br />
+              <Link to={`https://explorer.dev.oasis.io/search?q=${schedulerAsAddress}`}>{schedulerAsAddress}</Link>
+            </span>
+          },
         },
       }}>
         <DisplayData result={useGetRuntimeRoflmarketInstances(paratime, { provider: address, ...searchParams })}></DisplayData>

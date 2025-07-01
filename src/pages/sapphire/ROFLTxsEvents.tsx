@@ -343,6 +343,14 @@ export function ROFLTxsEvents() {
           'transactions.0.events.0.body.cmds.0': ({ value }) => {
             return <TryCborDecode base64Value={value}></TryCborDecode>
           },
+          'transactions.0.events.0.body.rak.PublicKey': ({ value }) => {
+            const schedulerAsAddress = oasis.staking.addressToBech32(oasis.staking.addressFromPublicKey(oasis.misc.fromBase64(value)))
+            return <span>
+              {value}
+              <br />
+              <Link to={`https://explorer.dev.oasis.io/search?q=${schedulerAsAddress}`}>{schedulerAsAddress}</Link>
+            </span>
+          },
         },
       }}>
         <DisplayData result={result}></DisplayData>
