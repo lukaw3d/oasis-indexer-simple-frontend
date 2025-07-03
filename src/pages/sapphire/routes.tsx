@@ -10,6 +10,7 @@ import { StatsActiveAccounts } from '../emerald/StatsActiveAccounts.tsx'
 import { ROFLMarket } from './ROFLMarket.tsx'
 import { ROFLMarketAddress } from './ROFLMarketAddress.tsx'
 import { ROFLTxsEvents } from './ROFLTxsEvents.tsx'
+import { ROFLApps } from './ROFLApps.tsx'
 
 export const routes: RouteObject[] = [
   { path: 'blocks', element: <Blocks paratime='sapphire' /> },
@@ -23,4 +24,5 @@ export const routes: RouteObject[] = [
   { path: 'rofl-market', element: <ROFLMarket /> },
   { path: 'rofl-market/:address', element: <ROFLMarketAddress /> },
   { path: 'rofl-txs-events', element: <ROFLTxsEvents /> },
+  { path: 'rofl-apps', element: <ROFLApps /> },
 ]

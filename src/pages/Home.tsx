@@ -40,6 +40,7 @@ export function Home() {
       <Link to="/sapphire/stats-active-accounts?limit=100&offset=0">StatsActiveAccounts</Link><br />
       <Link to="/sapphire/rofl-market?limit=100&offset=0">ROFL market providers</Link><br />
       <Link to="/sapphire/rofl-txs-events?limit=100&offset=0">ROFL apps+market Transactions+Events mix</Link><br />
+      <Link to="/sapphire/rofl-apps">ROFL apps</Link><br />
       Status:
       <StatusDisplay layer='sapphire'/>
 
