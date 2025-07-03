@@ -55,7 +55,7 @@ a[href^="https://explorer"] {
   color: #0092f6;
 }
 a[href^="https://explorer"]:visited {
-  color: #0092f6b0;
+  color: #409bd9;
 }
 
 .tiny {
