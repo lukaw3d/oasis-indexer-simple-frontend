@@ -5,6 +5,7 @@ import BigNumber from 'bignumber.js'
 import TryCborDecode from '../../utils/TryCborDecode'
 import * as oasis from '@oasisprotocol/client'
 import RuntimeAccountBalance from '../../utils/RuntimeAccountBalance'
+import RuntimeSchedulerReplicas from '../../utils/RuntimeSchedulerReplicas'
 
 export function ROFLMarketAddress() {
   const paratime = 'sapphire'
@@ -33,7 +34,7 @@ export function ROFLMarketAddress() {
             return <span>{new BigNumber(value).shiftedBy(-18).toFixed()}</span>
           },
           'scheduler': ({ value }) => {
-            return <Link to={`https://explorer.dev.oasis.io/search?q=${value}`}>{value}</Link>
+            return <RuntimeSchedulerReplicas address={value} paratime={paratime} />
           },
           'payment_address.native': ({ value }) => {
             return <Link to={`https://explorer.dev.oasis.io/search?q=${value}`}>{value}</Link>
