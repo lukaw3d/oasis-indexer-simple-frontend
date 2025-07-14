@@ -78,7 +78,7 @@ export function ROFLMarketAddress() {
             return <span>{value.toString()} MB</span>
           },
           'offers.0.resources.storage': ({ value }) => {
-            return <span>{value.toString()} MB 👈</span>
+            return <span>{value.toString()} MB</span>
           },
           'offers.0.payment.native.denomination': ({ value }) => {
             if (value === '') return <span>"" (ROSE)</span>
@@ -135,7 +135,7 @@ export function ROFLMarketAddress() {
             return <span>{value.toString()} MB</span>
           },
           'instances.0.resources.storage': ({ value }) => {
-            return <span>{value.toString()} MB 👈</span>
+            return <span>{value.toString()} MB</span>
           },
           'instances.0.cmds.0.cmd': ({ value }) => {
             return <TryCborDecode base64Value={value}></TryCborDecode>
