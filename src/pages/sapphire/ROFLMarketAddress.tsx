@@ -4,6 +4,7 @@ import { RoflMarketProvider, RoflMarketInstanceList, RoflMarketOfferList, useGet
 import BigNumber from 'bignumber.js'
 import TryCborDecode from '../../utils/TryCborDecode'
 import * as oasis from '@oasisprotocol/client'
+import * as oasisRT from '@oasisprotocol/client-rt'
 import RuntimeAccountBalance from '../../utils/RuntimeAccountBalance'
 import RuntimeSchedulerReplicas from '../../utils/RuntimeSchedulerReplicas'
 
@@ -78,6 +79,19 @@ export function ROFLMarketAddress() {
           },
           'offers.0.resources.storage': ({ value }) => {
             return <span>{value.toString()} MB 👈</span>
+          },
+          'offers.0.payment.native.denomination': ({ value }) => {
+            if (value === '') return <span>"" (ROSE)</span>
+            return <span>value</span>
+          },
+          [`offers.0.payment.native.terms.${oasisRT.types.RoflmarketTerm.HOUR}`]: ({ value }) => {
+            return <span>{new BigNumber(value).shiftedBy(-18).toFixed()} / hour</span>
+          },
+          [`offers.0.payment.native.terms.${oasisRT.types.RoflmarketTerm.MONTH}`]: ({ value }) => {
+            return <span>{new BigNumber(value).shiftedBy(-18).toFixed()} / month</span>
+          },
+          [`offers.0.payment.native.terms.${oasisRT.types.RoflmarketTerm.YEAR}`]: ({ value }) => {
+            return <span>{new BigNumber(value).shiftedBy(-18).toFixed()} / year</span>
           },
         },
       }}>

@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@oasisprotocol/client": "^1.2.0",
-    "@oasisprotocol/client-rt": "^1.2.0",
+    "@oasisprotocol/client-rt": "https://github.com/oasisprotocol/oasis-sdk/raw/732ef972559ec246b38e1dc595cb2f11cd87b357/client-sdk/ts-web/rt/oasisprotocol-client-rt-1.2.1-0.tgz",
     "@tanstack/react-query": "^4.29.13",
     "axios": "^1.4.0",
     "bignumber.js": "^9.1.1",
