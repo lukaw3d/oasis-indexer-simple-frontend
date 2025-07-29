@@ -13,11 +13,13 @@
     "@oasisprotocol/client": "^1.2.0",
     "@oasisprotocol/client-rt": "https://github.com/oasisprotocol/oasis-sdk/raw/732ef972559ec246b38e1dc595cb2f11cd87b357/client-sdk/ts-web/rt/oasisprotocol-client-rt-1.2.1-0.tgz",
     "@tanstack/react-query": "^4.29.13",
+    "@types/js-yaml": "^4.0.9",
     "axios": "^1.4.0",
     "bignumber.js": "^9.1.1",
     "buffer": "^6.0.3",
     "ethers": "^6.6.4",
     "is-plain-obj": "^4.1.0",
+    "js-yaml": "^4.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.13.0"

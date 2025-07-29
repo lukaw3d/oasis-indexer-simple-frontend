@@ -478,17 +478,6 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@oasisprotocol/client-rt@^1.2.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@oasisprotocol/client-rt/-/client-rt-1.2.0.tgz#07ce9ed31be0f8ed0c9f6462fff0354f4126e48b"
-  integrity sha512-6M9tWGQUSmSG0v/H0ZzCLi3NkDKkZZfWLUaRcy8/gTL8KsPPDysetdHden9Dk8W34/GwWCPiJLlfee/l6lLZYQ==
-  dependencies:
-    "@noble/curves" "^1.6.0"
-    "@noble/hashes" "^1.5.0"
-    "@oasisprotocol/client" "^1.2.0"
-    "@oasisprotocol/deoxysii" "^0.0.6"
-    tweetnacl "^1.0.3"
-
 "@oasisprotocol/client-rt@https://github.com/oasisprotocol/oasis-sdk/raw/732ef972559ec246b38e1dc595cb2f11cd87b357/client-sdk/ts-web/rt/oasisprotocol-client-rt-1.2.1-0.tgz":
   version "1.2.1-0"
   resolved "https://github.com/oasisprotocol/oasis-sdk/raw/732ef972559ec246b38e1dc595cb2f11cd87b357/client-sdk/ts-web/rt/oasisprotocol-client-rt-1.2.1-0.tgz#4160c1fd02109b41ec646da496080843c7127725"
@@ -610,6 +599,11 @@
   dependencies:
     "@tanstack/query-core" "4.29.11"
     use-sync-external-store "^1.2.0"
+
+"@types/js-yaml@^4.0.9":
+  version "4.0.9"
+  resolved "https://registry.yarnpkg.com/@types/js-yaml/-/js-yaml-4.0.9.tgz#cd82382c4f902fed9691a2ed79ec68c5898af4c2"
+  integrity sha512-k4MGaQl5TGo/iipqb2UDG2UwjXziSWkh0uysQelTlJpX1qGlpUZYm8PnO4DxG1qBomtJUdYJ6qR6xdIah10JLg==
 
 "@types/json-schema@^7.0.9":
   version "7.0.12"

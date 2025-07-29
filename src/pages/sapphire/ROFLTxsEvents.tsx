@@ -3,6 +3,8 @@ import { Link, useSearchParams } from 'react-router-dom'
 import { CustomDisplayProvider, DisplayData, RecursiveValue } from '../../DisplayData'
 import { useGetRuntimeTransactions, useGetRuntimeEvents, useGetConsensusEpochs } from '../../oasis-indexer/generated/api'
 import TryCborDecode from '../../utils/TryCborDecode'
+import { parseSubcall } from '../../utils/parseSubcall'
+import { base64ToHex } from '../../utils/base64toHex'
 
 export function ROFLTxsEvents() {
   const paratime = 'sapphire'
@@ -23,6 +25,7 @@ export function ROFLTxsEvents() {
     useGetRuntimeTransactions(paratime, { method: 'roflmarket.InstanceCancel', ...searchParams }),
     useGetRuntimeTransactions(paratime, { method: 'roflmarket.InstanceExecuteCmds', ...searchParams }),
     useGetRuntimeTransactions(paratime, { method: 'roflmarket.InstanceChangeAdmin', ...searchParams }),
+    useGetRuntimeTransactions(paratime, { rel: '0x0100000000000000000000000000000000000103', ...searchParams, limit: 1000 }),
   ]
   const events = [
     useGetRuntimeEvents(paratime, { type: 'rofl.app_created', ...searchParams }),
@@ -48,10 +51,25 @@ export function ROFLTxsEvents() {
   const countEventsByType = Object.fromEntries(events.map(a => [(a.queryKey[1] as any).type, a.data?.data.events.length + '/' + searchParams.limit]))
   const eventsByTx = Object.groupBy(events.flatMap(r => r.data?.data?.events), (e) => e?.tx_hash!)
 
-  const txs = results.flatMap(r => r.data?.data?.transactions).map((t) => {
-    const events = eventsByTx[t!.hash]
-    delete eventsByTx[t!.hash!]
-    return { ...t, events }
+  const txs = results.flatMap(r => r.data?.data?.transactions).map((tx) => {
+    if (!tx) return null
+    if (
+      tx.to_eth === '0x0100000000000000000000000000000000000103' &&
+      tx.body?.data &&
+      !tx.encryption_envelope &&
+      !tx.oasis_encryption_envelope
+    ) {
+      const parsedSubcall = parseSubcall(base64ToHex(tx.body.data))
+      // tx.evm_fn_name = parsedSubcall?.methodName ?? tx.evm_fn_name
+      // tx.evm_fn_params = parsedSubcall?.paramsAsAbi ?? tx.evm_fn_params
+
+      tx.method = (parsedSubcall?.methodName ?? tx.method) + '\n(subcall)'
+      tx.body = parsedSubcall?.params
+    }
+
+    const events = eventsByTx[tx!.hash]
+    delete eventsByTx[tx!.hash!]
+    return { ...tx, events }
   })
   const remainingEventsAsTxs = Object.values(eventsByTx).map(events => ({
     events: events,
@@ -107,6 +125,8 @@ export function ROFLTxsEvents() {
           'transactions.0.nonce_0': 'hide',
           'transactions.0.sender_0': 'hide',
           'transactions.0.sender_0_eth': 'hide',
+          'transactions.0.to': 'hide',
+          'transactions.0.to_eth': 'hide',
           'transactions.0.is_likely_native_token_transfer': 'hide',
           'transactions.0.size': 'hide',
           'transactions.0.fee_proxy_id': 'hide',
