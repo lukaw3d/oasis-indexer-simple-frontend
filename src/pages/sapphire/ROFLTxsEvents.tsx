@@ -131,6 +131,7 @@ export function ROFLTxsEvents() {
           'transactions.0.size': 'hide',
           'transactions.0.fee_proxy_id': 'hide',
           'transactions.0.fee_proxy_module': 'hide',
+          'transactions.0.encryption_envelope': 'hide',
 
           'transactions.0.events.0.type': -2,
           'transactions.0.events.0.body': 100,
