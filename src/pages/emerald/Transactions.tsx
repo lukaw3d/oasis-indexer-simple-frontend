@@ -48,6 +48,7 @@ export function Transactions({ paratime = 'emerald' as Runtime }) {
         <li><Link to={`/${paratime}/transactions?limit=100&offset=0&method=roflmarket.InstanceTopUp`}>roflmarket.InstanceTopUp</Link></li>
         <li><Link to={`/${paratime}/transactions?limit=100&offset=0&method=roflmarket.InstanceCancel`}>roflmarket.InstanceCancel</Link></li>
         <li><Link to={`/${paratime}/transactions?limit=100&offset=0&method=roflmarket.InstanceExecuteCmds`}>roflmarket.InstanceExecuteCmds</Link></li>
+        <li><Link to={`/${paratime}/transactions?limit=100&offset=0&method=roflmarket.InstanceChangeAdmin`}>roflmarket.InstanceChangeAdmin</Link></li>
         <li><Link to={`/${paratime}/transactions?limit=100&offset=0&method=`}>Unknown</Link></li>
       </ul>
       <label><input type="checkbox" checked={removeSpam} onChange={(e) => setRemoveSpam(e.target.checked)} /> remove spam (nonce&gt;1000)</label>

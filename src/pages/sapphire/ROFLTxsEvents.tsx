@@ -22,6 +22,7 @@ export function ROFLTxsEvents() {
     useGetRuntimeTransactions(paratime, { method: 'roflmarket.InstanceTopUp', ...searchParams }),
     useGetRuntimeTransactions(paratime, { method: 'roflmarket.InstanceCancel', ...searchParams }),
     useGetRuntimeTransactions(paratime, { method: 'roflmarket.InstanceExecuteCmds', ...searchParams }),
+    useGetRuntimeTransactions(paratime, { method: 'roflmarket.InstanceChangeAdmin', ...searchParams }),
   ]
   const events = [
     useGetRuntimeEvents(paratime, { type: 'rofl.app_created', ...searchParams }),
