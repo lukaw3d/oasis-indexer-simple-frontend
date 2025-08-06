@@ -60,6 +60,7 @@ export function Transactions({ paratime = 'emerald' as Runtime }) {
           'transactions.0.method': -2,
           'transactions.0.amount': -1,
           'transactions.0.body': 100,
+          'transactions.0.raw_result': 100,
         },
         fieldDisplay: {
           'transactions.0.round': ({ value }) => {
