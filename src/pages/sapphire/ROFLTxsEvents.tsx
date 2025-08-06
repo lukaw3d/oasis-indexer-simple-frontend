@@ -107,6 +107,7 @@ export function ROFLTxsEvents() {
           'transactions.0.body': 100,
           'transactions.0.events': 101,
           'transactions.0.error': 102,
+          'transactions.0.raw_result': 103,
 
           'transactions.0.body.ect': 1000,
           'transactions.0.body.extra_keys': 1000,
