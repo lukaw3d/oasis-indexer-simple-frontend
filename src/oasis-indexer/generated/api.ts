@@ -1238,12 +1238,24 @@ detected or is not supported, this field will be null/absent.
   type: EvmTokenType;
   /** The total number of base units available. */
   total_supply?: TextBigInt;
+  /** The estimated price of one base unit of this token, expressed in the native denomination of the runtime.
+
+This value is sourced from the Neby GraphQL API and reflects the token's `derivedETH` price as computed by the subgraph indexing the Neby DEX.
+It is available only for tokens listed and tradable on the Neby exchange.
+
+May be zero if the subgraph could not determine a valid price route to the native token unit.
+ */
+  neby_derived_price?: TextBigDecimal;
   /** The total number of transfers of this token.
+
+May be omitted if the number of transfers cannot be known (e.g. private ERC20 tokens such as BitUSD).
  */
   num_transfers?: number;
   /** The number of addresses that have a nonzero balance of this token.
+
+May be omited if the number of holders cannot be known (e.g. private ERC20 tokens such as BitUSD).
  */
-  num_holders: number;
+  num_holders?: number;
   /** Information about a swap contract between this token and a
 reference token. The relative price and relative total value of
 this token are estimated based on this swap contract.
@@ -1461,6 +1473,10 @@ For other transactions this equals to `fee`.
   charged_fee: string;
   /** The total byte size of the transaction. */
   size: number;
+  /** The raw result of the transaction execution, as returned by the runtime.
+This is a base64-encoded byte array. The meaning of this field depends on the transaction type.
+ */
+  raw_result: string;
   /** The data relevant to the Oasis-style encrypted transaction.
 Note: The term "envelope" in this context refers to the [Oasis-style encryption envelopes](https://github.com/oasisprotocol/oasis-sdk/blob/c36a7ee194abf4ca28fdac0edbefe3843b39bf69/runtime-sdk/src/types/callformat.rs)
 which differ slightly from [digital envelopes](https://en.wikipedia.org/wiki/Hybrid_cryptosystem#Envelope_encryption).
@@ -2470,48 +2486,14 @@ data origin is not tracked and error information can be faked.
 export type TransactionBody = { [key: string]: any };
 
 /**
- * A consensus transaction.
-
- */
-export interface Transaction {
-  /** The block height at which this transaction was executed. */
-  block: number;
-  /** 0-based index of this transaction in its block */
-  index: number;
-  /** The second-granular consensus time of this tx's block, i.e. roughly when the
-[block was proposed](https://github.com/tendermint/tendermint/blob/v0.34.x/spec/core/data_structures.md#header).
- */
-  timestamp: string;
-  /** The cryptographic hash of this transaction's encoding. */
-  hash: string;
-  /** The address of who sent this transaction. */
-  sender: string;
-  /** The nonce used with this transaction, to prevent replay. */
-  nonce: number;
-  /** The fee that this transaction's sender committed
-to pay to execute it.
- */
-  fee: TextBigInt;
-  /** The maximum gas that a transaction can use.
- */
-  gas_limit: TextBigInt;
-  /** The method that was called. */
-  method: ConsensusTxMethod;
-  /** The method call body. This spec does not encode the many possible types; instead, see [the Go API](https://pkg.go.dev/github.com/oasisprotocol/oasis-core/go) of oasis-core. This object will conform to one of the types passed to variable instantiations using `NewMethodName` two levels down the hierarchy, e.g. `MethodTransfer` from `oasis-core/go/staking/api` seen [here](https://pkg.go.dev/github.com/oasisprotocol/oasis-core/go@v0.2300.10/staking/api#pkg-variables). */
-  body: TransactionBody;
-  /** Whether this transaction successfully executed. */
-  success: boolean;
-  /** Error details of a failed transaction. */
-  error?: TxError;
-}
-
-/**
  * A list of consensus transactions.
 
  */
 export type TransactionListAllOf = {
   transactions: Transaction[];
 };
+
+export type TransactionList = List & TransactionListAllOf;
 
 export type ConsensusTxMethod = typeof ConsensusTxMethod[keyof typeof ConsensusTxMethod];
 
@@ -2552,6 +2534,42 @@ export const ConsensusTxMethod = {
   vaultCancelAction: 'vault.CancelAction',
   vaultCreate: 'vault.Create',
 } as const;
+
+/**
+ * A consensus transaction.
+
+ */
+export interface Transaction {
+  /** The block height at which this transaction was executed. */
+  block: number;
+  /** 0-based index of this transaction in its block */
+  index: number;
+  /** The second-granular consensus time of this tx's block, i.e. roughly when the
+[block was proposed](https://github.com/tendermint/tendermint/blob/v0.34.x/spec/core/data_structures.md#header).
+ */
+  timestamp: string;
+  /** The cryptographic hash of this transaction's encoding. */
+  hash: string;
+  /** The address of who sent this transaction. */
+  sender: string;
+  /** The nonce used with this transaction, to prevent replay. */
+  nonce: number;
+  /** The fee that this transaction's sender committed
+to pay to execute it.
+ */
+  fee: TextBigInt;
+  /** The maximum gas that a transaction can use.
+ */
+  gas_limit: TextBigInt;
+  /** The method that was called. */
+  method: ConsensusTxMethod;
+  /** The method call body. This spec does not encode the many possible types; instead, see [the Go API](https://pkg.go.dev/github.com/oasisprotocol/oasis-core/go) of oasis-core. This object will conform to one of the types passed to variable instantiations using `NewMethodName` two levels down the hierarchy, e.g. `MethodTransfer` from `oasis-core/go/staking/api` seen [here](https://pkg.go.dev/github.com/oasisprotocol/oasis-core/go@v0.2300.10/staking/api#pkg-variables). */
+  body: TransactionBody;
+  /** Whether this transaction successfully executed. */
+  success: boolean;
+  /** Error details of a failed transaction. */
+  error?: TxError;
+}
 
 /**
  * A debonding delegation.
@@ -2661,6 +2679,12 @@ export type BlockListAllOf = {
   blocks: Block[];
 };
 
+/**
+ * A list of consensus blocks.
+
+ */
+export type BlockList = List & BlockListAllOf;
+
 export interface Status {
   /** The height of the most recent indexed block. Compare with latest_node_block to measure
 how far behind Nexus is from the chain.
@@ -2683,15 +2707,7 @@ the query would return with limit=infinity.
   is_total_count_clipped: boolean;
 }
 
-export type TransactionList = List & TransactionListAllOf;
-
 export type DebondingDelegationList = List & DebondingDelegationListAllOf;
-
-/**
- * A list of consensus blocks.
-
- */
-export type BlockList = List & BlockListAllOf;
 
 export type CallFormat = string;
 
@@ -2706,6 +2722,8 @@ export type EthOrOasisAddress = string;
  * An Oasis-style (bech32) address.
  */
 export type Address = string;
+
+export type TextBigDecimal = string;
 
 export type TextBigInt = string;
 
