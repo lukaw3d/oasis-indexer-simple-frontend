@@ -11,6 +11,8 @@ export function Home() {
       <a href="https://lukaw3d.github.io/oasis-indexer-simple-frontend/production-mainnet/">production-mainnet</a><br/>
       <a href="https://lukaw3d.github.io/oasis-indexer-simple-frontend/blue-testnet/">blue-testnet</a><br/>
       <a href="https://lukaw3d.github.io/oasis-indexer-simple-frontend/blue-mainnet/">blue-mainnet</a><br/>
+      <a href="https://lukaw3d.github.io/oasis-indexer-simple-frontend/green-testnet/">green-testnet</a><br/>
+      <a href="https://lukaw3d.github.io/oasis-indexer-simple-frontend/green-mainnet/">green-mainnet</a><br/>
       <a href="https://lukaw3d.github.io/oasis-indexer-simple-frontend/default-testnet/">default-testnet</a><br/>
       <a href="https://lukaw3d.github.io/oasis-indexer-simple-frontend/default-mainnet/">default-mainnet (nexus.oasis.io)</a><br/>
 
