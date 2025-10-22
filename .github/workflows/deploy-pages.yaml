@@ -26,8 +26,6 @@ jobs:
         run: yarn
 
       - run: yarn tsc
-      - run: VITE_APP_INDEXER_API=https://testnet.nexus.stg.oasis.io/v1/  yarn vite build --outDir dist/staging-testnet/ --base=/oasis-indexer-simple-frontend/staging-testnet/
-      - run: VITE_APP_INDEXER_API=https://nexus.stg.oasis.io/v1/  yarn vite build --outDir dist/staging-mainnet/ --base=/oasis-indexer-simple-frontend/staging-mainnet/
       - run: VITE_APP_INDEXER_API=https://testnet.nexus.prd.oasis.io/v1/  yarn vite build --outDir dist/production-testnet/ --base=/oasis-indexer-simple-frontend/production-testnet/
       - run: VITE_APP_INDEXER_API=https://nexus.prd.oasis.io/v1/  yarn vite build --outDir dist/production-mainnet/ --base=/oasis-indexer-simple-frontend/production-mainnet/
       - run: VITE_APP_INDEXER_API=https://nexus-blue-testnet.prd0-gke.oasis.io/v1/  yarn vite build --outDir dist/blue-testnet/ --base=/oasis-indexer-simple-frontend/blue-testnet/

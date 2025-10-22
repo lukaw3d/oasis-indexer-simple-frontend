@@ -5,8 +5,6 @@ export function Home() {
   return (
     <div>
       <h2>Use backend:</h2>
-      <a href="https://lukaw3d.github.io/oasis-indexer-simple-frontend/staging-testnet/">staging-testnet</a><br/>
-      <a href="https://lukaw3d.github.io/oasis-indexer-simple-frontend/staging-mainnet/">staging-mainnet</a><br/>
       <a href="https://lukaw3d.github.io/oasis-indexer-simple-frontend/production-testnet/">production-testnet</a><br/>
       <a href="https://lukaw3d.github.io/oasis-indexer-simple-frontend/production-mainnet/">production-mainnet</a><br/>
       <a href="https://lukaw3d.github.io/oasis-indexer-simple-frontend/blue-testnet/">blue-testnet</a><br/>
